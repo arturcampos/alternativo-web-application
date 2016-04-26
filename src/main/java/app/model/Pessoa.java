@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Pessoa.findAll", query="SELECT p FROM Pessoa p")
-public class Pessoa implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
