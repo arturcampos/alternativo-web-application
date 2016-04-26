@@ -25,7 +25,8 @@ public class Plastico implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Pessoa
-	@ManyToOne
+	@ManyToOne(optional=false)
+	@JoinColumn(name="Pessoa_id", referencedColumnName="id")
 	private Pessoa pessoa;
 
 	public Plastico() {

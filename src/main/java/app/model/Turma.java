@@ -23,7 +23,8 @@ public class Turma implements Serializable {
 	private Professor professor;
 
 	//bi-directional many-to-one association to Disciplina
-	@ManyToOne
+	@ManyToOne(optional=false)
+	@JoinColumn(name="Disciplina_id", referencedColumnName="id")
 	private Disciplina disciplina;
 
 	public Turma() {

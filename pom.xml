@@ -20,6 +20,19 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>1.0.10</version>
@@ -45,12 +58,12 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.1.0.Final</version>
 			<scope>provided</scope>
-			<exclusions> 
-            <exclusion>
-                <groupId>dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-            </exclusion>
-        </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- for JPA, use hibernate-entitymanager instead of hibernate-core -->
@@ -59,12 +72,12 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.1.0.Final</version>
 			<scope>provided</scope>
-			<exclusions> 
-            <exclusion>
-                <groupId>dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-            </exclusion>
-        </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- optional -->
@@ -94,7 +107,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- mysql connector-->
+		<!-- mysql connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
