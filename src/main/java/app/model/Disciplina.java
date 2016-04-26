@@ -1,0 +1,90 @@
+package app.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the disciplina database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Disciplina.findAll", query="SELECT d FROM Disciplina d")
+public class Disciplina implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+
+	private String cargahoraria;
+
+	private String nome;
+
+	//bi-directional many-to-many association to Professor
+	@ManyToMany(mappedBy="disciplinas")
+	private List<Professor> professors;
+
+	//bi-directional many-to-one association to Turma
+	@OneToMany(mappedBy="disciplina")
+	private List<Turma> turmas;
+
+	public Disciplina() {
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCargahoraria() {
+		return this.cargahoraria;
+	}
+
+	public void setCargahoraria(String cargahoraria) {
+		this.cargahoraria = cargahoraria;
+	}
+
+	public String getNome() {
+		return this.nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<Professor> getProfessors() {
+		return this.professors;
+	}
+
+	public void setProfessors(List<Professor> professors) {
+		this.professors = professors;
+	}
+
+	public List<Turma> getTurmas() {
+		return this.turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
+	}
+
+	public Turma addTurma(Turma turma) {
+		getTurmas().add(turma);
+		turma.setDisciplina(this);
+
+		return turma;
+	}
+
+	public Turma removeTurma(Turma turma) {
+		getTurmas().remove(turma);
+		turma.setDisciplina(null);
+
+		return turma;
+	}
+
+}
