@@ -15,14 +15,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
  */
 @Entity
 @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a")
-@PrimaryKeyJoinColumn(name="Pessoa_id", referencedColumnName="id")
+@PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
 public class Aluno extends Pessoa {
 
 	private static final long serialVersionUID = 1L;
 
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;*/
+	private Long id;
 
 	private String matricula;
 
@@ -38,13 +36,13 @@ public class Aluno extends Pessoa {
 	@OneToMany(mappedBy = "aluno")
 	private List<Pessoa> pessoas;
 
-/*	public Long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}*/
+	}
 
 	public String getMatricula() {
 		return matricula;
