@@ -2,6 +2,7 @@ package app.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -13,28 +14,33 @@ import javax.persistence.*;
 public class Turma implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TurmaPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	private String codigo;
 
-	//bi-directional many-to-one association to Professor
-	@ManyToOne
-	private Professor professor;
+	//bi-directional many-to-one association to Aluno
+	@OneToMany(mappedBy="turma")
+	private List<Aluno> alunos;
 
 	//bi-directional many-to-one association to Disciplina
-	@ManyToOne(optional=false)
-	@JoinColumn(name="Disciplina_id", referencedColumnName="id")
+	@ManyToOne
 	private Disciplina disciplina;
+
+	//bi-directional many-to-one association to Professor
+	@ManyToOne
+	@JoinColumn(name="Professor_id")
+	private Professor professor;
 
 	public Turma() {
 	}
 
-	public TurmaPK getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(TurmaPK id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -46,12 +52,26 @@ public class Turma implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public Professor getProfessor() {
-		return this.professor;
+	public List<Aluno> getAlunos() {
+		return this.alunos;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+
+	public Aluno addAluno(Aluno aluno) {
+		getAlunos().add(aluno);
+		aluno.setTurma(this);
+
+		return aluno;
+	}
+
+	public Aluno removeAluno(Aluno aluno) {
+		getAlunos().remove(aluno);
+		aluno.setTurma(null);
+
+		return aluno;
 	}
 
 	public Disciplina getDisciplina() {
@@ -60,6 +80,14 @@ public class Turma implements Serializable {
 
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
+	}
+
+	public Professor getProfessor() {
+		return this.professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
 }

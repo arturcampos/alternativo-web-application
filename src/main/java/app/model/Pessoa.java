@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,7 +24,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +61,10 @@ public abstract class Pessoa implements Serializable {
 
 	private String uf;
 
+	//bi-directional one-to-one association to Aluno
+	@OneToOne(mappedBy="pessoa")
+	private Aluno aluno;
+
 	//bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy="pessoa")
 	private List<Documento> documentos;
@@ -70,17 +77,13 @@ public abstract class Pessoa implements Serializable {
 	@OneToMany(mappedBy="pessoa")
 	private List<Evento> eventos;
 
-	//bi-directional many-to-one association to Aluno
-	@ManyToOne
-	private Aluno aluno;
-
 	//bi-directional many-to-one association to Plastico
 	@OneToMany(mappedBy="pessoa")
 	private List<Plastico> plasticos;
 
-	//bi-directional many-to-one association to Professor
-	@OneToMany(mappedBy="pessoa")
-	private List<Professor> professors;
+	//bi-directional one-to-one association to Professor
+	@OneToOne(mappedBy="pessoa")
+	private Professor professor;
 
 	//bi-directional many-to-one association to Tipopessoa
 	@OneToMany(mappedBy="pessoa")
@@ -209,6 +212,14 @@ public abstract class Pessoa implements Serializable {
 		this.uf = uf;
 	}
 
+	public Aluno getAluno() {
+		return this.aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
 	public List<Documento> getDocumentos() {
 		return this.documentos;
 	}
@@ -275,14 +286,6 @@ public abstract class Pessoa implements Serializable {
 		return evento;
 	}
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
 	public List<Plastico> getPlasticos() {
 		return this.plasticos;
 	}
@@ -305,26 +308,12 @@ public abstract class Pessoa implements Serializable {
 		return plastico;
 	}
 
-	public List<Professor> getProfessors() {
-		return this.professors;
+	public Professor getProfessor() {
+		return this.professor;
 	}
 
-	public void setProfessors(List<Professor> professors) {
-		this.professors = professors;
-	}
-
-	public Professor addProfessor(Professor professor) {
-		getProfessors().add(professor);
-		professor.setPessoa(this);
-
-		return professor;
-	}
-
-	public Professor removeProfessor(Professor professor) {
-		getProfessors().remove(professor);
-		professor.setPessoa(null);
-
-		return professor;
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
 	public List<Tipopessoa> getTipopessoas() {

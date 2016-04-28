@@ -3,12 +3,10 @@ package app.model;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -18,34 +16,25 @@ import javax.persistence.PrimaryKeyJoinColumn;
  */
 @Entity
 @NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p")
-@PrimaryKeyJoinColumn(name="Pessoa_id", referencedColumnName="id")
+@PrimaryKeyJoinColumn(name="Pessoa_id")
 public class Professor extends Pessoa {
 	private static final long serialVersionUID = 1L;
 
 	/*@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;*/
+	private int pessoa_id;*/
 
 	private String formacao;
 
 	private String nivelformacao;
 
-	//bi-directional many-to-many association to Disciplina
-	@ManyToMany
-	@JoinTable(
-		name="disciplina_has_professor"
-		, joinColumns={
-			@JoinColumn(name="Professor_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Disciplina_id")
-			}
-		)
-	private List<Disciplina> disciplinas;
-
-	//bi-directional many-to-one association to Pessoa
-	@ManyToOne
+	//bi-directional one-to-one association to Pessoa
+	@OneToOne
 	private Pessoa pessoa;
+
+	//bi-directional many-to-many association to Disciplina
+	@ManyToMany(mappedBy="professors")
+	private List<Disciplina> disciplinas;
 
 	//bi-directional many-to-one association to Turma
 	@OneToMany(mappedBy="professor")
@@ -54,12 +43,12 @@ public class Professor extends Pessoa {
 	public Professor() {
 	}
 
-	/*public Long getId() {
-		return this.id;
+	/*public int getPessoa_id() {
+		return this.pessoa_id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPessoa_id(int pessoa_id) {
+		this.pessoa_id = pessoa_id;
 	}*/
 
 	public String getFormacao() {
@@ -78,20 +67,20 @@ public class Professor extends Pessoa {
 		this.nivelformacao = nivelformacao;
 	}
 
-	public List<Disciplina> getDisciplinas() {
-		return this.disciplinas;
-	}
-
-	public void setDisciplinas(List<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
-	}
-
 	public Pessoa getPessoa() {
 		return this.pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public List<Disciplina> getDisciplinas() {
+		return this.disciplinas;
+	}
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	public List<Turma> getTurmas() {

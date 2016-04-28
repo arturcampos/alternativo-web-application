@@ -10,11 +10,9 @@
         <class>app.model.Evento</class>
         <class>app.model.Pessoa</class>
         <class>app.model.Plastico</class>
-        <class>app.model.PlasticoPK</class>
         <class>app.model.Professor</class>
         <class>app.model.Tipopessoa</class>
         <class>app.model.Turma</class>
-        <class>app.model.TurmaPK</class>
      <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/futurodb" />

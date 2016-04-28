@@ -1,93 +1,105 @@
 package app.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
- * The persistent class for the professor database table.
+ * The persistent class for the aluno database table.
  * 
  */
 @Entity
-@NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a")
-@PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
+@NamedQuery(name="Aluno.findAll", query="SELECT a FROM Aluno a")
+@PrimaryKeyJoinColumn(name="Pessoa_id")
 public class Aluno extends Pessoa {
-
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	/*@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int pessoa_id;*/
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataegresso;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataingresso;
 
 	private String matricula;
 
 	private int tipocotaingresso;
 
-	private Date dataingresso;
-
-	private Date dataegresso;
-
-	@OneToOne
+	//bi-directional many-to-one association to Turma
+	@ManyToOne
 	private Turma turma;
 
-	@OneToMany(mappedBy = "aluno")
-	private List<Pessoa> pessoas;
+	//bi-directional one-to-one association to Pessoa
+	@OneToOne
+	private Pessoa pessoa;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Aluno() {
 	}
 
-	public String getMatricula() {
-		return matricula;
-	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
+	/*public int getPessoa_id() {
+		return this.pessoa_id;
 	}
 
-	public int getTipocotaingresso() {
-		return tipocotaingresso;
-	}
-
-	public void setTipocotaingresso(int tipocotaingresso) {
-		this.tipocotaingresso = tipocotaingresso;
-	}
-
-	public Date getDataingresso() {
-		return dataingresso;
-	}
-
-	public void setDataingresso(Date dataingresso) {
-		this.dataingresso = dataingresso;
-	}
+	public void setPessoa_id(int pessoa_id) {
+		this.pessoa_id = pessoa_id;
+	}*/
 
 	public Date getDataegresso() {
-		return dataegresso;
+		return this.dataegresso;
 	}
 
 	public void setDataegresso(Date dataegresso) {
 		this.dataegresso = dataegresso;
 	}
 
+	public Date getDataingresso() {
+		return this.dataingresso;
+	}
+
+	public void setDataingresso(Date dataingresso) {
+		this.dataingresso = dataingresso;
+	}
+
+	public String getMatricula() {
+		return this.matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public int getTipocotaingresso() {
+		return this.tipocotaingresso;
+	}
+
+	public void setTipocotaingresso(int tipocotaingresso) {
+		this.tipocotaingresso = tipocotaingresso;
+	}
+
 	public Turma getTurma() {
-		return turma;
+		return this.turma;
 	}
 
 	public void setTurma(Turma turma) {
 		this.turma = turma;
 	}
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public Pessoa getPessoa() {
+		return this.pessoa;
 	}
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
+
 }
