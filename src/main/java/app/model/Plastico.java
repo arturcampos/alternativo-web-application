@@ -14,8 +14,9 @@ import java.util.Date;
 public class Plastico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PlasticoPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datacadastro;
@@ -25,18 +26,17 @@ public class Plastico implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Pessoa
-	@ManyToOne(optional=false)
-	@JoinColumn(name="Pessoa_id", referencedColumnName="id")
+	@ManyToOne
 	private Pessoa pessoa;
 
 	public Plastico() {
 	}
 
-	public PlasticoPK getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(PlasticoPK id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

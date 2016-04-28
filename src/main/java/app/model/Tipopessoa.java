@@ -17,9 +17,6 @@ public class Tipopessoa implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="id_pessoa")
-	private int idPessoa;
-
 	private String tipopessoa;
 
 	//bi-directional many-to-one association to Pessoa
@@ -35,14 +32,6 @@ public class Tipopessoa implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public int getIdPessoa() {
-		return this.idPessoa;
-	}
-
-	public void setIdPessoa(int idPessoa) {
-		this.idPessoa = idPessoa;
 	}
 
 	public String getTipopessoa() {

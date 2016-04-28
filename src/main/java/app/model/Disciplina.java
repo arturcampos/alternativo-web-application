@@ -23,7 +23,16 @@ public class Disciplina implements Serializable {
 	private String nome;
 
 	//bi-directional many-to-many association to Professor
-	@ManyToMany(mappedBy="disciplinas")
+	@ManyToMany
+	@JoinTable(
+		name="professor_has_disciplina"
+		, joinColumns={
+			@JoinColumn(name="Disciplina_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Professor_id")
+			}
+		)
 	private List<Professor> professors;
 
 	//bi-directional many-to-one association to Turma
