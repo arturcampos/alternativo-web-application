@@ -19,8 +19,8 @@ public class Tipopessoa implements Serializable {
 
 	private String tipopessoa;
 
-	//bi-directional many-to-one association to Pessoa
-	@ManyToOne
+	//bi-directional one-to-one association to Pessoa
+	@OneToOne
 	private Pessoa pessoa;
 
 	public Tipopessoa() {
