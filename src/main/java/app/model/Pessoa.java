@@ -12,12 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  * The persistent class for the pessoa database table.
@@ -25,6 +23,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="tipopessoa_id", discriminatorType=DiscriminatorType.INTEGER)
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -85,9 +84,9 @@ public abstract class Pessoa implements Serializable {
 	@OneToOne(mappedBy="pessoa")
 	private Professor professor;
 
-	//bi-directional many-to-one association to Tipopessoa
-	@OneToMany(mappedBy="pessoa")
-	private List<Tipopessoa> tipopessoas;
+	//bi-directional one-to-one association to Tipopessoa
+	@OneToOne
+	private Tipopessoa tipopessoa;
 
 	public Pessoa() {
 	}
@@ -316,26 +315,12 @@ public abstract class Pessoa implements Serializable {
 		this.professor = professor;
 	}
 
-	public List<Tipopessoa> getTipopessoas() {
-		return this.tipopessoas;
+	public Tipopessoa getTipopessoa() {
+		return this.tipopessoa;
 	}
 
-	public void setTipopessoas(List<Tipopessoa> tipopessoas) {
-		this.tipopessoas = tipopessoas;
-	}
-
-	public Tipopessoa addTipopessoa(Tipopessoa tipopessoa) {
-		getTipopessoas().add(tipopessoa);
-		tipopessoa.setPessoa(this);
-
-		return tipopessoa;
-	}
-
-	public Tipopessoa removeTipopessoa(Tipopessoa tipopessoa) {
-		getTipopessoas().remove(tipopessoa);
-		tipopessoa.setPessoa(null);
-
-		return tipopessoa;
+	public void setTipopessoas(Tipopessoa tipopessoa) {
+		this.tipopessoa = tipopessoa;
 	}
 
 }
