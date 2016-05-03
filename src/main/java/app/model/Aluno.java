@@ -1,29 +1,32 @@
 package app.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  * The persistent class for the aluno database table.
  * 
  */
 @Entity
-@NamedQuery(name="Aluno.findAll", query="SELECT a FROM Aluno a")
-@PrimaryKeyJoinColumn(name="Pessoa_id")
-public class Aluno extends Pessoa {
+@Table(name = "aluno", schema = "futurodb")
+@NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a")
+public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int pessoa_id;*/
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataegresso;
@@ -35,24 +38,36 @@ public class Aluno extends Pessoa {
 
 	private int tipocotaingresso;
 
-	//bi-directional many-to-one association to Turma
+	// bi-directional many-to-one association to Turma
 	@ManyToOne
 	private Turma turma;
 
-	//bi-directional one-to-one association to Pessoa
+	// bi-directional one-to-one association to Pessoa
 	@OneToOne
 	private Pessoa pessoa;
 
 	public Aluno() {
 	}
 
-	/*public int getPessoa_id() {
-		return this.pessoa_id;
+	public Aluno(Long id, Date dataegresso, Date dataingresso,
+			String matricula, int tipocotaingresso, Turma turma, Pessoa pessoa) {
+		super();
+		this.id = id;
+		this.dataegresso = dataegresso;
+		this.dataingresso = dataingresso;
+		this.matricula = matricula;
+		this.tipocotaingresso = tipocotaingresso;
+		this.turma = turma;
+		this.pessoa = pessoa;
 	}
 
-	public void setPessoa_id(int pessoa_id) {
-		this.pessoa_id = pessoa_id;
-	}*/
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Date getDataegresso() {
 		return this.dataegresso;
@@ -101,5 +116,21 @@ public class Aluno extends Pessoa {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	@Override
+	public Aluno clone() {
+		return new Aluno(id, dataegresso, dataingresso, matricula,
+				tipocotaingresso, turma, pessoa);
+	}
+	
+	public void restaurar(Aluno aluno) {
+		this.id = aluno.getId();
+		this.dataegresso = aluno.getDataegresso();
+		this.dataingresso = aluno.getDataingresso();
+		this.matricula = aluno.getMatricula();
+		this.tipocotaingresso = aluno.getTipocotaingresso();
+		this.turma = aluno.getTurma();
+		this.pessoa = aluno.getPessoa();
+    }
 
 }

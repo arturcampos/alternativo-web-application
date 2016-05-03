@@ -1,7 +1,9 @@
 package app.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,6 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Disciplina", schema="futurodb")
 @NamedQuery(name="Disciplina.findAll", query="SELECT d FROM Disciplina d")
 public class Disciplina implements Serializable {
 	private static final long serialVersionUID = 1L;
