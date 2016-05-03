@@ -11,7 +11,6 @@
         <class>app.model.Pessoa</class>
         <class>app.model.Plastico</class>
         <class>app.model.Professor</class>
-        <class>app.model.Tipopessoa</class>
         <class>app.model.Turma</class>
      <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

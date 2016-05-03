@@ -1,7 +1,9 @@
 package app.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,6 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Turma", schema="futurodb")
 @NamedQuery(name="Turma.findAll", query="SELECT t FROM Turma t")
 public class Turma implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -4,16 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,13 +20,13 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="tipopessoa_id", discriminatorType=DiscriminatorType.INTEGER)
-public abstract class Pessoa implements Serializable {
+@Table(name="pessoa", schema="futurodb")
+@NamedQuery(name="Pessoa.findAll", query="SELECT p FROM Pessoa p")
+public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -61,8 +59,8 @@ public abstract class Pessoa implements Serializable {
 	private String uf;
 
 	//bi-directional one-to-one association to Aluno
-	@OneToOne(mappedBy="pessoa")
-	private Aluno aluno;
+	//@OneToOne(mappedBy="pessoa")
+	//private Aluno aluno;
 
 	//bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy="pessoa")
@@ -81,12 +79,10 @@ public abstract class Pessoa implements Serializable {
 	private List<Plastico> plasticos;
 
 	//bi-directional one-to-one association to Professor
-	@OneToOne(mappedBy="pessoa")
-	private Professor professor;
+	//@OneToOne(mappedBy="pessoa")
+	//private Professor professor;
 
-	//bi-directional one-to-one association to Tipopessoa
-	@OneToOne
-	private Tipopessoa tipopessoa;
+	private String tipopessoa;
 
 	public Pessoa() {
 	}
@@ -211,14 +207,14 @@ public abstract class Pessoa implements Serializable {
 		this.uf = uf;
 	}
 
-	public Aluno getAluno() {
+	/*public Aluno getAluno() {
 		return this.aluno;
-	}
+	}*/
 
-	public void setAluno(Aluno aluno) {
+	/*public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-
+*/
 	public List<Documento> getDocumentos() {
 		return this.documentos;
 	}
@@ -307,19 +303,19 @@ public abstract class Pessoa implements Serializable {
 		return plastico;
 	}
 
-	public Professor getProfessor() {
+	/*public Professor getProfessor() {
 		return this.professor;
 	}
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-
-	public Tipopessoa getTipopessoa() {
+*/
+	public String getTipopessoa() {
 		return this.tipopessoa;
 	}
 
-	public void setTipopessoas(Tipopessoa tipopessoa) {
+	public void setTipopessoas(String tipopessoa) {
 		this.tipopessoa = tipopessoa;
 	}
 

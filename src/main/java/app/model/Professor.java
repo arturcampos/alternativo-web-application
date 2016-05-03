@@ -1,13 +1,17 @@
 package app.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 
 /**
@@ -15,14 +19,14 @@ import javax.persistence.PrimaryKeyJoinColumn;
  * 
  */
 @Entity
+@Table(name="Professor", schema="futurodb")
 @NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p")
-@PrimaryKeyJoinColumn(name="Pessoa_id")
-public class Professor extends Pessoa {
+public class Professor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/*@Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int pessoa_id;*/
+	private Long id;
 
 	private String formacao;
 
@@ -43,13 +47,13 @@ public class Professor extends Pessoa {
 	public Professor() {
 	}
 
-	/*public int getPessoa_id() {
-		return this.pessoa_id;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setPessoa_id(int pessoa_id) {
-		this.pessoa_id = pessoa_id;
-	}*/
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getFormacao() {
 		return this.formacao;
