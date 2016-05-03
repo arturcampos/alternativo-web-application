@@ -1,7 +1,9 @@
 package app.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -10,6 +12,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="Documento", schema="futurodb")
 @NamedQuery(name="Documento.findAll", query="SELECT d FROM Documento d")
 public class Documento implements Serializable {
 	private static final long serialVersionUID = 1L;

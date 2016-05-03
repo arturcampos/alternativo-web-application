@@ -1,7 +1,9 @@
 package app.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -10,6 +12,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="Evento", schema="futurodb")
 @NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e")
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -4,32 +4,26 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  * The persistent class for the pessoa database table.
  * 
  */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Pessoa implements Serializable {
+@Table(name = "pessoa", schema = "futurodb")
+@NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")
+public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -61,36 +55,76 @@ public abstract class Pessoa implements Serializable {
 
 	private String uf;
 
-	//bi-directional one-to-one association to Aluno
-	@OneToOne(mappedBy="pessoa")
-	private Aluno aluno;
-
-	//bi-directional many-to-one association to Documento
-	@OneToMany(mappedBy="pessoa")
+	
+	// bi-directional many-to-one association to Documento
+	@OneToMany(mappedBy = "pessoa")
 	private List<Documento> documentos;
 
-	//bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy="pessoa")
+	// bi-directional many-to-one association to Endereco
+	@OneToMany(mappedBy = "pessoa")
 	private List<Endereco> enderecos;
 
-	//bi-directional many-to-one association to Evento
-	@OneToMany(mappedBy="pessoa")
-	private List<Evento> eventos;
-
-	//bi-directional many-to-one association to Plastico
-	@OneToMany(mappedBy="pessoa")
+	// bi-directional many-to-one association to Plastico
+	@OneToMany(mappedBy = "pessoa")
 	private List<Plastico> plasticos;
 
-	//bi-directional one-to-one association to Professor
-	@OneToOne(mappedBy="pessoa")
-	private Professor professor;
+	// bi-directional one-to-one association to Professor
+	// @OneToOne(mappedBy="pessoa")
+	// private Professor professor;
 
-	//bi-directional many-to-one association to Tipopessoa
-	@OneToMany(mappedBy="pessoa")
-	private List<Tipopessoa> tipopessoas;
+	private String tipopessoa;
 
 	public Pessoa() {
 	}
+	
+	/**
+	 * @param id
+	 * @param datanasc
+	 * @param email
+	 * @param estadocivil
+	 * @param etnia
+	 * @param nacionalidade
+	 * @param naturalidade
+	 * @param necessidadesespeciais
+	 * @param nome
+	 * @param nomemae
+	 * @param nomepai
+	 * @param numerocelular
+	 * @param responsavellegal
+	 * @param sexo
+	 * @param uf
+	 * @param documentos
+	 * @param enderecos
+	 * @param eventos
+	 * @param plasticos
+	 * @param tipopessoa
+	 */
+	public Pessoa(Long id, Date datanasc, String email, String estadocivil, String etnia, String nacionalidade,
+			String naturalidade, String necessidadesespeciais, String nome, String nomemae, String nomepai,
+			String numerocelular, String responsavellegal, String sexo, String uf, List<Documento> documentos,
+			List<Endereco> enderecos, List<Plastico> plasticos, String tipopessoa) {
+		super();
+		this.id = id;
+		this.datanasc = datanasc;
+		this.email = email;
+		this.estadocivil = estadocivil;
+		this.etnia = etnia;
+		this.nacionalidade = nacionalidade;
+		this.naturalidade = naturalidade;
+		this.necessidadesespeciais = necessidadesespeciais;
+		this.nome = nome;
+		this.nomemae = nomemae;
+		this.nomepai = nomepai;
+		this.numerocelular = numerocelular;
+		this.responsavellegal = responsavellegal;
+		this.sexo = sexo;
+		this.uf = uf;
+		this.documentos = documentos;
+		this.enderecos = enderecos;
+		this.plasticos = plasticos;
+		this.tipopessoa = tipopessoa;
+	}
+
 
 	public Long getId() {
 		return this.id;
@@ -212,14 +246,6 @@ public abstract class Pessoa implements Serializable {
 		this.uf = uf;
 	}
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
 	public List<Documento> getDocumentos() {
 		return this.documentos;
 	}
@@ -264,28 +290,6 @@ public abstract class Pessoa implements Serializable {
 		return endereco;
 	}
 
-	public List<Evento> getEventos() {
-		return this.eventos;
-	}
-
-	public void setEventos(List<Evento> eventos) {
-		this.eventos = eventos;
-	}
-
-	public Evento addEvento(Evento evento) {
-		getEventos().add(evento);
-		evento.setPessoa(this);
-
-		return evento;
-	}
-
-	public Evento removeEvento(Evento evento) {
-		getEventos().remove(evento);
-		evento.setPessoa(null);
-
-		return evento;
-	}
-
 	public List<Plastico> getPlasticos() {
 		return this.plasticos;
 	}
@@ -308,34 +312,42 @@ public abstract class Pessoa implements Serializable {
 		return plastico;
 	}
 
-	public Professor getProfessor() {
-		return this.professor;
+	public String getTipopessoa() {
+		return this.tipopessoa;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setTipopessoas(String tipopessoa) {
+		this.tipopessoa = tipopessoa;
 	}
 
-	public List<Tipopessoa> getTipopessoas() {
-		return this.tipopessoas;
+	@Override
+	public Pessoa clone() {
+		return new Pessoa(this.id, this.datanasc, this.email, this.estadocivil, this.etnia, this.nacionalidade,
+				this.naturalidade, this.necessidadesespeciais, this.nome, this.nomemae, this.nomepai,
+				this.numerocelular, this.responsavellegal, this.sexo, this.uf, this.documentos, this.enderecos,
+				this.plasticos, this.tipopessoa);
 	}
 
-	public void setTipopessoas(List<Tipopessoa> tipopessoas) {
-		this.tipopessoas = tipopessoas;
-	}
-
-	public Tipopessoa addTipopessoa(Tipopessoa tipopessoa) {
-		getTipopessoas().add(tipopessoa);
-		tipopessoa.setPessoa(this);
-
-		return tipopessoa;
-	}
-
-	public Tipopessoa removeTipopessoa(Tipopessoa tipopessoa) {
-		getTipopessoas().remove(tipopessoa);
-		tipopessoa.setPessoa(null);
-
-		return tipopessoa;
+	public void restaurar(Pessoa pessoa) {
+		this.id = pessoa.getId();
+		this.datanasc = pessoa.getDatanasc();
+		this.email = pessoa.getEmail();
+		this.estadocivil = pessoa.getEstadocivil();
+		this.etnia = pessoa.getEtnia();
+		this.nacionalidade = pessoa.getNacionalidade();
+		this.naturalidade = pessoa.getNaturalidade();
+		this.necessidadesespeciais = pessoa.getNecessidadesespeciais();
+		this.nome = pessoa.getNome();
+		this.nomemae = pessoa.getNomemae();
+		this.nomepai = pessoa.getNomepai();
+		this.numerocelular = pessoa.getNumerocelular();
+		this.responsavellegal = pessoa.getResponsavellegal();
+		this.sexo = pessoa.getSexo();
+		this.uf = pessoa.getUf();
+		this.documentos = pessoa.getDocumentos();
+		this.enderecos = pessoa.getEnderecos();
+		this.plasticos = pessoa.getPlasticos();
+		this.tipopessoa = pessoa.getTipopessoa();
 	}
 
 }

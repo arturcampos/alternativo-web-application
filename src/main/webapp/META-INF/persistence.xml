@@ -11,7 +11,6 @@
         <class>app.model.Pessoa</class>
         <class>app.model.Plastico</class>
         <class>app.model.Professor</class>
-        <class>app.model.Tipopessoa</class>
         <class>app.model.Turma</class>
      <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -21,7 +20,7 @@
 			<property name="hibernate.default_schema" value="futurodb"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!--  property name="hibernate.hbm2ddl.auto" value="update" /-->
         </properties>
 	</persistence-unit>
 </persistence>
