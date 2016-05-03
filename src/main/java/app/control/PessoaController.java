@@ -1,6 +1,5 @@
 package app.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +24,7 @@ public class PessoaController {
 		if (this.dao == null) {
 			this.dao = new PessoaDao(Pessoa.class);
 		}
-		this.pessoaLista = new ArrayList<Pessoa>();
+		buscarTodos();
 		this.pessoa = new Pessoa();
 	}
 
@@ -41,8 +40,9 @@ public class PessoaController {
 		this.pessoa = this.dao.findById(id);
 	}
 
-	public void remover(Long id) {
-		this.pessoa = this.dao.remove(id);
+	public String remover() {
+		this.pessoa = this.dao.remove(this.pessoa.getId());
+		return "removido";
 	}
 
 	public void atualizar(Pessoa pessoa) {
@@ -51,17 +51,18 @@ public class PessoaController {
 		this.editado = true;
 	}
 
-	public void salvarAtualizar() {
-		this.dao = new PessoaDao(Pessoa.class);
+	public String salvarAtualizar() {
 		this.dao.update(pessoa);
 		this.pessoa = new Pessoa();
 		this.editado = false;
+		return "salvo";
 	}
 
-	public void cancelarAtualizar() {
+	public String cancelarAtualizar() {
 		this.pessoa.restaurar(this.pessoaAnterior);
 		this.pessoa = new Pessoa();
 		editado = false;
+		return "cancelado";
 	}
 
 	public void buscarTodos() {

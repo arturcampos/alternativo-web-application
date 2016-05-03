@@ -16,7 +16,7 @@ USE `futurodb` ;
 -- Table `futurodb`.`Pessoa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Pessoa` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `datanasc` DATETIME NOT NULL,
   `sexo` varchar(255) NOT NULL,
@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Pessoa` (
   `etnia` varchar(255) NOT NULL,
   `nacionalidade` varchar(255) NOT NULL,
   `estadocivil` varchar(255) NOT NULL,
+  `tipopessoa` varchar(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -39,7 +40,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Documento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Documento` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dataexpedicao` DATETIME NOT NULL,
   `datavalidade` DATETIME NOT NULL,
   `orgaoemissor` varchar(255) NOT NULL,
@@ -59,7 +60,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Endereco`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Endereco` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(255) NOT NULL,
   `logradouro` varchar(255) NOT NULL,
   `numero` INT NOT NULL,
@@ -84,7 +85,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`TipoPessoa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`TipoPessoa` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipopessoa` varchar(255) NOT NULL,
   `Pessoa_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -101,7 +102,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Plastico`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Plastico` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `linhadigitavel` varchar(255) NOT NULL,
   `datacadastro` DATETIME NOT NULL,
   `status` varchar(255) NOT NULL,
@@ -120,7 +121,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Evento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Evento` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `datahoraentrada` DATETIME NOT NULL,
   `datahorasaida` DATETIME NOT NULL,
   `Pessoa_id` int(11) NOT NULL,
@@ -138,7 +139,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Disciplina`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Disciplina` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `cargahoraria` varchar(255) NOT NULL,
   PRIMARY KEY (`id`))
@@ -151,9 +152,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `futurodb`.`Professor` (
   `nivelformacao` varchar(255) NOT NULL,
   `formacao` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Pessoa_id` int(11) NOT NULL,
-  INDEX `fk_Professor_Pessoa1_idx` (`Pessoa_id` ASC),
-  PRIMARY KEY (`Pessoa_id`),
+  INDEX `fk_Professor_Pessoa1_idx` (`id` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Professor_Pessoa1`
     FOREIGN KEY (`Pessoa_id`)
     REFERENCES `futurodb`.`Pessoa` (`id`)
@@ -166,7 +168,7 @@ ENGINE = InnoDB;
 -- Table `futurodb`.`Turma`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Turma` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` varchar(255) NOT NULL,
   `Disciplina_id` int(11) NOT NULL,
   `Professor_id` int(11) NOT NULL,
@@ -180,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Turma` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Turma_Professor1`
     FOREIGN KEY (`Professor_id`)
-    REFERENCES `futurodb`.`Professor` (`Pessoa_id`)
+    REFERENCES `futurodb`.`Professor` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -194,10 +196,11 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Aluno` (
   `dataingresso` DATETIME NOT NULL,
   `dataegresso` DATETIME NOT NULL,
   `Turma_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Pessoa_id` int(11) NOT NULL,
   INDEX `fk_Aluno_Turma1_idx` (`Turma_id` ASC),
-  INDEX `fk_Aluno_Pessoa1_idx` (`Pessoa_id` ASC),
-  PRIMARY KEY (`Pessoa_id`),
+  INDEX `fk_Aluno_Pessoa1_idx` (`id` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Aluno_Turma1`
     FOREIGN KEY (`Turma_id`)
     REFERENCES `futurodb`.`Turma` (`id`)
@@ -222,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Professor_has_Disciplina` (
   INDEX `fk_Professor_has_Disciplina_Professor1_idx` (`Professor_id` ASC),
   CONSTRAINT `fk_Professor_has_Disciplina_Professor1`
     FOREIGN KEY (`Professor_id`)
-    REFERENCES `futurodb`.`Professor` (`Pessoa_id`)
+    REFERENCES `futurodb`.`Professor` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Professor_has_Disciplina_Disciplina1`

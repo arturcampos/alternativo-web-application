@@ -9,5 +9,15 @@
 			<default-locale>pt_BR</default-locale>
 		</locale-config>
 	</application>
+	<managed-bean>
+		<managed-bean-name>pessoaController</managed-bean-name>
+		<managed-bean-class>app.control.PessoaController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>alunoController</managed-bean-name>
+		<managed-bean-class>app.control.AlunoController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>
