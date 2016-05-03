@@ -22,13 +22,12 @@ public class AlunoController {
 
 	@PostConstruct
 	public void init() {
-		// dao = new AlunoDao(Aluno.class);
+		this.dao = new AlunoDao(Aluno.class);
 		this.alunoLista = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
 	}
 
 	public void salvar(Aluno aluno) {
-		this.dao = new AlunoDao(Aluno.class);
 		this.dao.save(aluno);
 		this.alunoLista.add(aluno);
 		aluno = new Aluno();
@@ -36,12 +35,10 @@ public class AlunoController {
 	}
 
 	public void buscarPorId(Long id) {
-		this.dao = new AlunoDao(Aluno.class);
 		this.aluno = this.dao.findById(id);
 	}
 
 	public void remover(Long id) {
-		this.dao = new AlunoDao(Aluno.class);
 		this.aluno = this.dao.remove(id);
 	}
 
@@ -52,7 +49,6 @@ public class AlunoController {
 	}
 
 	public void salvarAtualizar() {
-		this.dao = new AlunoDao(Aluno.class);
 		this.dao.update(aluno);
 		this.aluno = new Aluno();
 		this.editado = false;
@@ -65,8 +61,7 @@ public class AlunoController {
     }
 
 	public void buscarTodos() {
-		 this.dao = new AlunoDao(Aluno.class);
-		 alunoLista = this.dao.findAll();
+		 this.alunoLista = this.dao.findAll();
 	}
 
 	public void limparAluno() {
