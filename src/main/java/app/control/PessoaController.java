@@ -1,45 +1,90 @@
 package app.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import app.dao.PessoaDao;
 import app.model.Pessoa;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class PessoaController {
 
-	PessoaDao dao;
-	Pessoa pessoa;
-	List<Pessoa> pessoas;
+	private PessoaDao dao;
+	private Pessoa pessoa;
+	private Pessoa pessoaAnterior = null;
+	private List<Pessoa> pessoaLista;
+	private boolean editado;
 
 	@PostConstruct
 	public void init() {
-		dao = new PessoaDao(Pessoa.class);
+		if (this.dao == null) {
+			this.dao = new PessoaDao(Pessoa.class);
+		}
+		this.pessoaLista = new ArrayList<Pessoa>();
+		this.pessoa = new Pessoa();
 	}
 
 	public void salvar(Pessoa pessoa) {
+		this.dao = new PessoaDao(Pessoa.class);
 		this.dao.save(pessoa);
+		this.pessoaLista.add(pessoa);
+		pessoa = new Pessoa();
+
 	}
 
-	public Pessoa buscarPorId(Long id) {
-		return this.dao.findById(id);
+	public void buscarPorId(Long id) {
+		this.pessoa = this.dao.findById(id);
 	}
 
-	public Pessoa remover(Long id) {
-		return this.dao.remove(id);
+	public void remover(Long id) {
+		this.pessoa = this.dao.remove(id);
 	}
 
 	public void atualizar(Pessoa pessoa) {
-		this.dao.update(pessoa);
+		this.pessoaAnterior = pessoa.clone();
+		this.pessoa = pessoa;
+		this.editado = true;
 	}
 
-	public List<Pessoa> buscarTodos() {
-		return this.dao.findAll();
+	public void salvarAtualizar() {
+		this.dao = new PessoaDao(Pessoa.class);
+		this.dao.update(pessoa);
+		this.pessoa = new Pessoa();
+		this.editado = false;
+	}
+
+	public void cancelarAtualizar() {
+		this.pessoa.restaurar(this.pessoaAnterior);
+		this.pessoa = new Pessoa();
+		editado = false;
+	}
+
+	public void buscarTodos() {
+		pessoaLista = this.dao.findAll();
+	}
+
+	public void limparPessoa() {
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
+	}
+
+	public Pessoa getPessoaAnterior() {
+		return pessoaAnterior;
+	}
+
+	public void setPessoaAnterior(Pessoa pessoaAnterior) {
+		this.pessoaAnterior = pessoaAnterior;
 	}
 
 	public PessoaDao getDao() {
@@ -59,10 +104,10 @@ public class PessoaController {
 	}
 
 	public List<Pessoa> getPessoas() {
-		return pessoas;
+		return pessoaLista;
 	}
 
 	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+		this.pessoaLista = pessoas;
 	}
 }
