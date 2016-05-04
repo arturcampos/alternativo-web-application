@@ -1,5 +1,6 @@
 package app.control;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,8 +12,12 @@ import app.model.Pessoa;
 
 @ManagedBean
 @RequestScoped
-public class PessoaController {
+public class PessoaController implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private PessoaDao dao;
 	private Pessoa pessoa;
 	private Pessoa pessoaAnterior = null;

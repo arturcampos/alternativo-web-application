@@ -17,7 +17,7 @@
 					<f:facet name="header">Email</f:facet>#{pessoa.email}</h:column>
 				<h:column>
 					<h:commandButton value="edit"
-						action="#{pessoaController.atualizar(pessoa)}"/>
+						action="#{pessoaController.atualizar(pessoa)}" actionListener="atualizar?faces-redirect=true"/>
 				</h:column>
 				<h:column>
 					<h:commandButton value="delete"

@@ -10,66 +10,22 @@
 		<h:panelGroup rendered="#{pessoaController.editado}">
 			<h3>Editar Pessoa #{pessoaController.pessoa.nome}</h3>
 			<h:form>
+				<p>Nome:<h:inputText value="#{pessoaController.pessoa.nome}"/></p>
+				<p>Sexo:<h:inputText value="#{pessoaController.pessoa.sexo}" /></p>
+				<p>Data de nascimento:<h:inputText value="#{pessoaController.pessoa.datanasc}" /></p>
+				<p>Email:<h:inputText value="#{pessoaController.pessoa.email}" /></p>
+				<p>Estado Civil:<h:inputText value="#{pessoaController.pessoa.estadocivil}" /></p>
+				<p>Etnia:<h:inputText value="#{pessoaController.pessoa.etnia}" /></p>
+				<p>Nacionalidade:<h:inputText value="#{pessoaController.pessoa.nacionalidade}" /></p>
+				<p>Naturalidade:<h:inputText value="#{pessoaController.pessoa.naturalidade}" /></p>
+				<p>UF:<h:inputText value="#{pessoaController.pessoa.uf}" /></p>
+				<p>Necessidades Especiais:<h:inputText value="#{pessoaController.pessoa.necessidadesespeciais}" /></p>
+				<p>Nome da Mãe:<h:inputText value="#{pessoaController.pessoa.nomemae}" /></p>
+				<p>Nome do Pai:<h:inputText value="#{pessoaController.pessoa.nomepai}" /></p>
+				<p>Numero do Celular:<h:inputText value="#{pessoaController.pessoa.numerocelular}" /></p>
 				<p>
-					Nome:
-					<h:inputText value="#{pessoaController.pessoa.nome}">
-
-					</h:inputText>
-				</p>
-				<p>
-					Sexo:
-					<h:inputText value="#{pessoaController.pessoa.sexo}" />
-				</p>
-				<p>
-					Data de nascimento :
-					<h:inputText value="#{pessoaController.pessoa.datanasc}" />
-				</p>
-				<p>
-					Email:
-					<h:inputText value="#{pessoaController.pessoa.email}" />
-				</p>
-				<p>
-					Estado Civil:
-					<h:inputText value="#{pessoaController.pessoa.estadocivil}" />
-				</p>
-				<p>
-					Etnia:
-					<h:inputText value="#{pessoaController.pessoa.etnia}" />
-				</p>
-				<p>
-					Nacionalidade:
-					<h:inputText value="#{pessoaController.pessoa.nacionalidade}" />
-				</p>
-				<p>
-					Naturalidade:
-					<h:inputText value="#{pessoaController.pessoa.naturalidade}" />
-				</p>
-				<p>
-					UF:
-					<h:inputText value="#{pessoaController.pessoa.uf}" />
-				</p>
-				<p>
-					Necessidades Especiais:
-					<h:inputText
-						value="#{pessoaController.pessoa.necessidadesespeciais}" />
-				</p>
-				<p>
-					Nome da Mãe:
-					<h:inputText value="#{pessoaController.pessoa.nomemae}" />
-				</p>
-				<p>
-					Nome do Pai:
-					<h:inputText value="#{pessoaController.pessoa.nomepai}" />
-				</p>
-				<p>
-					Numero do Celular:
-					<h:inputText value="#{pessoaController.pessoa.numerocelular}" />
-				</p>
-				<p>
-					<h:commandButton value="save"
-						action="#{pessoaController.salvarAtualizar}" />
-					<h:commandButton value="cancel"
-						action="#{pessoaController.cancelarAtualizar}" />
+					<h:commandButton value="save" action="#{pessoaController.salvarAtualizar}" />
+					<h:commandButton value="cancel"	action="#{pessoaController.cancelarAtualizar}" />
 				</p>
 			</h:form>
 		</h:panelGroup>
