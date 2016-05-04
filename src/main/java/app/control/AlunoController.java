@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AlunoController {
 
 	private AlunoDao dao;
@@ -115,3 +115,4 @@ public class AlunoController {
 	}
 
 }
+

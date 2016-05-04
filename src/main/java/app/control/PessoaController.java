@@ -1,6 +1,5 @@
 package app.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,15 +24,15 @@ public class PessoaController {
 		if (this.dao == null) {
 			this.dao = new PessoaDao(Pessoa.class);
 		}
-		this.pessoaLista = new ArrayList<Pessoa>();
+		buscarTodos();
 		this.pessoa = new Pessoa();
 	}
 
-	public void salvar(Pessoa pessoa) {
-		this.dao = new PessoaDao(Pessoa.class);
-		this.dao.save(pessoa);
-		this.pessoaLista.add(pessoa);
+	public String salvar() {
+		this.dao.save(this.pessoa);
+		this.pessoaLista.add(this.pessoa);
 		pessoa = new Pessoa();
+		return "salvo";
 
 	}
 
@@ -41,27 +40,30 @@ public class PessoaController {
 		this.pessoa = this.dao.findById(id);
 	}
 
-	public void remover(Long id) {
-		this.pessoa = this.dao.remove(id);
+	public String remover() {
+		this.pessoa = this.dao.remove(this.pessoa.getId());
+		return "removido";
 	}
 
-	public void atualizar(Pessoa pessoa) {
+	public String atualizar() {
 		this.pessoaAnterior = pessoa.clone();
-		this.pessoa = pessoa;
+		//this.pessoa = pessoa;
 		this.editado = true;
+		return "atualizando";
 	}
 
-	public void salvarAtualizar() {
-		this.dao = new PessoaDao(Pessoa.class);
+	public String salvarAtualizar() {
 		this.dao.update(pessoa);
 		this.pessoa = new Pessoa();
 		this.editado = false;
+		return "atualizado";
 	}
 
-	public void cancelarAtualizar() {
+	public String cancelarAtualizar() {
 		this.pessoa.restaurar(this.pessoaAnterior);
 		this.pessoa = new Pessoa();
 		editado = false;
+		return "cancelado";
 	}
 
 	public void buscarTodos() {

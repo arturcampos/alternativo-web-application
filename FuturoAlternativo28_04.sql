@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Pessoa` (
   `etnia` varchar(255) NOT NULL,
   `nacionalidade` varchar(255) NOT NULL,
   `estadocivil` varchar(255) NOT NULL,
+  `tipopessoa` varchar(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
