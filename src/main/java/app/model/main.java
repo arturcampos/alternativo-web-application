@@ -16,9 +16,6 @@ public class main {
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 
-		EntityManager em = JpaUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
 		
 		Pessoa p = new Pessoa();
 		p.setNome("Teste 2");
@@ -48,11 +45,6 @@ public class main {
 		pc.setPessoa(p);
 		pc.salvar();
 		
-		
-		/*em.persist(p);
-		tx.commit();
-		em.close();
-		JpaUtil.close();*/
 				
 	}
 

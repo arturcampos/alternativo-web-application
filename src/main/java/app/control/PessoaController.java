@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import app.dao.PessoaDao;
 import app.model.Pessoa;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PessoaController {
 
 	private PessoaDao dao;
@@ -32,45 +32,67 @@ public class PessoaController {
 		this.dao.save(this.pessoa);
 		this.pessoaLista.add(this.pessoa);
 		pessoa = new Pessoa();
-		return "salvo";
+		return "listar";
 
 	}
 
-	public void buscarPorId(Long id) {
+	public String buscarPorId(Long id) {
 		this.pessoa = this.dao.findById(id);
+		return "atualizar";
 	}
 
 	public String remover() {
 		this.pessoa = this.dao.remove(this.pessoa.getId());
-		return "removido";
+		return "listar";
 	}
 
-	public String atualizar() {
+	public String atualizar(Long id) {
+		buscarPorId(id);
 		this.pessoaAnterior = pessoa.clone();
 		//this.pessoa = pessoa;
 		this.editado = true;
-		return "atualizando";
+		return "atualizar";
 	}
 
 	public String salvarAtualizar() {
 		this.dao.update(pessoa);
 		this.pessoa = new Pessoa();
 		this.editado = false;
-		return "atualizado";
+		return "listar";
 	}
 
 	public String cancelarAtualizar() {
 		this.pessoa.restaurar(this.pessoaAnterior);
 		this.pessoa = new Pessoa();
 		editado = false;
-		return "cancelado";
+		return "listar";
 	}
 
-	public void buscarTodos() {
+	public String buscarTodos() {
 		pessoaLista = this.dao.findAll();
+		return "listar";
 	}
 
-	public void limparPessoa() {
+	public String limparPessoa() {
+		this.pessoa.setDatanasc(null);
+		this.pessoa.setEmail("");
+		this.pessoa.setEstadocivil("");
+		this.pessoa.setEtnia("");
+		this.pessoa.setNacionalidade("");
+		this.pessoa.setNaturalidade("");
+		this.pessoa.setNecessidadesespeciais("");
+		this.pessoa.setNome("");
+		this.pessoa.setNomemae("");
+		this.pessoa.setNomepai("");
+		this.pessoa.setNumerocelular("");
+		this.pessoa.setResponsavellegal("");
+		this.pessoa.setSexo("");
+		this.pessoa.setUf("");
+		this.pessoa.setDocumentos(null);
+		this.pessoa.setEnderecos(null);
+		this.pessoa.setPlasticos(null);
+		this.pessoa.setTipopessoas("");
+		return "salvar";
 	}
 
 	public boolean isEditado() {
