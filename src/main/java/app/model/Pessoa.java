@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,7 +25,7 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -55,7 +57,6 @@ public class Pessoa implements Serializable {
 
 	private String uf;
 
-	
 	// bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy = "pessoa")
 	private List<Documento> documentos;
@@ -67,10 +68,6 @@ public class Pessoa implements Serializable {
 	// bi-directional many-to-one association to Plastico
 	@OneToMany(mappedBy = "pessoa")
 	private List<Plastico> plasticos;
-
-	// bi-directional one-to-one association to Professor
-	// @OneToOne(mappedBy="pessoa")
-	// private Professor professor;
 
 	private String tipopessoa;
 
@@ -349,5 +346,4 @@ public class Pessoa implements Serializable {
 		this.plasticos = pessoa.getPlasticos();
 		this.tipopessoa = pessoa.getTipopessoa();
 	}
-
 }
