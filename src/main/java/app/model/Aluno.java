@@ -132,5 +132,4 @@ public class Aluno implements Serializable {
 		this.turma = aluno.getTurma();
 		this.pessoa = aluno.getPessoa();
     }
-
 }

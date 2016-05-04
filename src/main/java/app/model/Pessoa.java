@@ -1,6 +1,6 @@
 package app.model;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +57,6 @@ public class Pessoa implements Serializable {
 
 	private String uf;
 
-	
 	// bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy = "pessoa")
 	private List<Documento> documentos;
@@ -69,10 +68,6 @@ public class Pessoa implements Serializable {
 	// bi-directional many-to-one association to Plastico
 	@OneToMany(mappedBy = "pessoa")
 	private List<Plastico> plasticos;
-
-	// bi-directional one-to-one association to Professor
-	// @OneToOne(mappedBy="pessoa")
-	// private Professor professor;
 
 	private String tipopessoa;
 
@@ -351,5 +346,4 @@ public class Pessoa implements Serializable {
 		this.plasticos = pessoa.getPlasticos();
 		this.tipopessoa = pessoa.getTipopessoa();
 	}
-
 }

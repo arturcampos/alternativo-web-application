@@ -10,7 +10,8 @@ import javax.faces.bean.SessionScoped;
 import app.dao.AlunoDao;
 import app.model.Aluno;
 
-
+@ManagedBean
+@SessionScoped
 public class AlunoController {
 
 	private AlunoDao dao;
@@ -114,3 +115,4 @@ public class AlunoController {
 	}
 
 }
+

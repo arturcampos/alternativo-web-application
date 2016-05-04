@@ -28,11 +28,11 @@ public class PessoaController {
 		this.pessoa = new Pessoa();
 	}
 
-	public void salvar(Pessoa pessoa) {
-		this.dao = new PessoaDao(Pessoa.class);
-		this.dao.save(pessoa);
-		this.pessoaLista.add(pessoa);
+	public String salvar() {
+		this.dao.save(this.pessoa);
+		this.pessoaLista.add(this.pessoa);
 		pessoa = new Pessoa();
+		return "salvo";
 
 	}
 
@@ -45,17 +45,18 @@ public class PessoaController {
 		return "removido";
 	}
 
-	public void atualizar(Pessoa pessoa) {
+	public String atualizar() {
 		this.pessoaAnterior = pessoa.clone();
-		this.pessoa = pessoa;
+		//this.pessoa = pessoa;
 		this.editado = true;
+		return "atualizando";
 	}
 
 	public String salvarAtualizar() {
 		this.dao.update(pessoa);
 		this.pessoa = new Pessoa();
 		this.editado = false;
-		return "salvo";
+		return "atualizado";
 	}
 
 	public String cancelarAtualizar() {

@@ -12,7 +12,7 @@
             <h:column><f:facet name="header">ID</f:facet>#{pessoa.id}</h:column>
             <h:column><f:facet name="header">Name</f:facet>#{pessoa.nome}</h:column>
             <h:column>
-                <h:commandButton value="edit" action="#{pessoaController.atualizar(pessoa)}" />
+                <h:commandButton value="edit" action="#{pessoaController.atualizar}" />
             </h:column>
             <h:column>
                 <h:commandButton value="delete" action="#{pessoaController.remover}" />
@@ -29,7 +29,7 @@
         <h:form>
             <p>Name: <h:inputText value="#{pessoaController.pessoa.nome}" /></p>
             <p>
-                <h:commandButton value="add" action="#{pessoaController.salvar(pessoa)}" />
+                <h:commandButton value="add" action="#{pessoaController.salvar)}" />
                 <!-- <h:commandButton value="reset" action="#{simpleCrudBean.resetAdd}" /-->
             </p>
         </h:form>
