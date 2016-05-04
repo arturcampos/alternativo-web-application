@@ -5,11 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import app.control.PessoaController;
-import app.dao.JpaUtil;
 
 public class main {
 

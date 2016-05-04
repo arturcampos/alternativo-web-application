@@ -73,6 +73,9 @@
 				</p>
 			</h:form>
 		</h:panelGroup>
+		<h:panelGroup rendered="#{!pessoaController.editado}">
+			<h3>Não existem dados para atualziar</h3>
+		</h:panelGroup>
 	</ui:define>
 
 </ui:composition>

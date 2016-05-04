@@ -12,7 +12,7 @@
             <h:column><f:facet name="header">ID</f:facet>#{pessoa.id}</h:column>
             <h:column><f:facet name="header">Name</f:facet>#{pessoa.nome}</h:column>
             <h:column>
-                <h:commandButton value="edit" action="#{pessoaController.atualizar}" />
+                <h:commandButton value="edit" action="#{pessoaController.atualizar(pessoa)}" />
             </h:column>
             <h:column>
                 <h:commandButton value="delete" action="#{pessoaController.remover}" />

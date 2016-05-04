@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import app.dao.PessoaDao;
 import app.model.Pessoa;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class PessoaController {
 
 	private PessoaDao dao;
@@ -46,8 +46,8 @@ public class PessoaController {
 		return "listar";
 	}
 
-	public String atualizar(Long id) {
-		buscarPorId(id);
+	public String atualizar(Pessoa pessoa) {
+		this.pessoa = pessoa;
 		this.pessoaAnterior = pessoa.clone();
 		//this.pessoa = pessoa;
 		this.editado = true;
@@ -56,9 +56,9 @@ public class PessoaController {
 
 	public String salvarAtualizar() {
 		this.dao.update(pessoa);
-		this.pessoa = new Pessoa();
+		//this.pessoa = new Pessoa();
 		this.editado = false;
-		return "listar";
+		return "Inicio";
 	}
 
 	public String cancelarAtualizar() {
