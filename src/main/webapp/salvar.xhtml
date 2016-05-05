@@ -4,47 +4,127 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/Layout.xhtml">
-	
+
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+	<script>
+	var elem = document.getElementById("security_question_1");
+	elem.onchange = function(){
+	    var hiddenDiv = document.getElementById("aluno_div");
+	    hiddenDiv.style.display = (this.value == "") ? "none":"block";
+	};
+</script>
 	<ui:define name="content">
-		<!-- h:outputLabel value="#{pessoaBean.mensagemErro}"/-->		
-        <h:panelGroup>
-        <br/>
-        <br/>
-        <h3>Adicionar Pessoa</h3>
-        <h:form id="salvar_form">
-            <p>Nome: <p:inputText value="#{pessoaBean.pessoa.nome}" required="true"/></p>
-            <p>Sexo: <p:inputText value="#{pessoaBean.pessoa.sexo}" /></p>
-            <p>Data de nascimento : <p:calendar value="#{pessoaBean.pessoa.datanasc}"  pattern="dd/MM/yyyy" required="true"/></p>
-            <p>Email: <p:inputText value="#{pessoaBean.pessoa.email}" required="true"/></p>
-            <p>Estado Civil: <p:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" >
-            		<f:selectItem itemValue="" itemLabel="-" noSelectionOption="true"/>
-   					<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
-   					<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
-   					<f:selectItem itemValue="DIVORCIADO(A)" itemLabel="Divorciado(a)" />
-   					<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-				</p:selectOneMenu> 
-            </p>
-            <p>Etnia: <p:inputText value="#{pessoaBean.pessoa.etnia}" required="true"/></p>
-            <p>Nacionalidade: <p:inputText value="#{pessoaBean.pessoa.nacionalidade}" required="true"/></p>
-            <p>Naturalidade: <p:inputText value="#{pessoaBean.pessoa.naturalidade}" required="true"/></p>
-            <p>UF: <p:inputText value="#{pessoaBean.pessoa.uf}" required="true"/></p>
-            <p>Necessidades Especiais: <p:inputText value="#{pessoaBean.pessoa.necessidadesespeciais}" required="true"/></p>
-            <p>Nome da Mãe: <p:inputText value="#{pessoaBean.pessoa.nomemae}" required="true"/></p>
-            <p>Nome do Pai: <p:inputText value="#{pessoaBean.pessoa.nomepai}" required="true"/></p>
-            <p>Numero do Celular: <p:inputText value="#{pessoaBean.pessoa.responsavellegal}" required="true"/></p>
-            <p>Responsavel Legal: <p:inputText value="#{pessoaBean.pessoa.numerocelular}" required="true"/></p>
-            <p>Tipo:<p:selectOneMenu value="#{pessoaBean.pessoa.tipopessoa}" >
-            		<f:selectItem itemValue="" itemLabel="-" noSelectionOption="true"/>
-   					<f:selectItem itemValue="ALUNO" itemLabel="Aluno" />
-   					<f:selectItem itemValue="PROFESSOR" itemLabel="Professor" />
-				</p:selectOneMenu>            
-            </p>
-            <p>
-                <p:commandButton value="add" actionListener="#{pessoaBean.salvar}" process="salvar_form" type="submit"/>
-                <p:commandButton value="reset" action="#{pessoaBean.limparPessoa}"/>
-            </p>
-        </h:form>
-    </h:panelGroup>
+		<!-- h:outputLabel value="#{pessoaBean.mensagemErro}"/-->
+		<h:panelGroup>
+			<br />
+			<br />
+			<h3>Adicionar Pessoa</h3>
+			<h:form id="salvar_form">
+				<p>
+					Nome:
+					<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" />
+				</p>
+				<p>
+					Sexo:
+					<h:inputText value="#{pessoaBean.pessoa.sexo}" />
+				</p>
+				<p>
+					Data de nascimento :
+					<h:calendar value="#{pessoaBean.pessoa.datanasc}"
+						pattern="dd/MM/yyyy" required="true" />
+				</p>
+				<p>
+					Email:
+					<h:inputText value="#{pessoaBean.pessoa.email}" required="true" />
+				</p>
+				<p>
+					Estado Civil:
+					<h:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}">
+						<f:selectItem itemValue="" itemLabel="-" noSelectionOption="true" />
+						<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
+						<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
+						<f:selectItem itemValue="DIVORCIADO(A)" itemLabel="Divorciado(a)" />
+						<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+					</h:selectOneMenu>
+				</p>
+				<p>
+					Etnia:
+					<h:inputText value="#{pessoaBean.pessoa.etnia}" required="true" />
+				</p>
+				<p>
+					Nacionalidade:
+					<h:inputText value="#{pessoaBean.pessoa.nacionalidade}"
+						required="true" />
+				</p>
+				<p>
+					Naturalidade:
+					<h:inputText value="#{pessoaBean.pessoa.naturalidade}"
+						required="true" />
+				</p>
+				<p>
+					UF:
+					<h:inputText value="#{pessoaBean.pessoa.uf}" required="true" />
+				</p>
+				<p>
+					Necessidades Especiais:
+					<h:inputText value="#{pessoaBean.pessoa.necessidadesespeciais}"
+						required="true" />
+				</p>
+				<p>
+					Nome da Mãe:
+					<h:inputText value="#{pessoaBean.pessoa.nomemae}" required="true" />
+				</p>
+				<p>
+					Nome do Pai:
+					<h:inputText value="#{pessoaBean.pessoa.nomepai}" required="true" />
+				</p>
+				<p>
+					Numero do Celular:
+					<h:inputText value="#{pessoaBean.pessoa.responsavellegal}"
+						required="true" />
+				</p>
+				<p>
+					Responsavel Legal:
+					<h:inputText value="#{pessoaBean.pessoa.numerocelular}"
+						required="true" />
+				</p>
+				<p>
+					Tipo:
+					<h:selectOneMenu value="#{pessoaBean.pessoa.tipopessoa}" >
+						<f:selectItem itemValue="" itemLabel="Aluno/Professor" noSelectionOption="true" />
+						<f:selectItem itemValue="ALUNO" itemLabel="Aluno" />
+						<f:selectItem itemValue="PROFESSOR" itemLabel="Professor" />
+					</h:selectOneMenu>
+				</p>
+				<div style="display:none" id='aluno_div'>
+					<p>
+						Tipo de cota:
+						<h:selectOneMenu value="#{alunoBean.aluno.tipocotaingresso}" id="tipocota_select">
+							<f:selectItem itemValue="-1" itemLabel="-"
+								noSelectionOption="true" />
+							<f:selectItem itemValue="1" itemLabel="cota 1" />
+							<f:selectItem itemValue="2" itemLabel="conta 2" />
+							<f:selectItem itemValue="3" itemLabel="conta 3" />
+						</h:selectOneMenu>
+					</p>
+					<p>
+						Data Ingresso:
+						<h:calendar value="#{alunoBean.aluno.dataingresso}"
+							required="true" pattern="dd/MM/yyyy" />
+					</p>
+					<p>
+					Responsavel Legal:
+					<h:inputText value="#{pessoaBean.pessoa.numerocelular}"
+						required="true" />
+					</p>
+				</div>
+				<h:commandButton value="add" actionListener="#{pessoaBean.salvar}"
+					process="salvar_form" type="submit" />
+				<h:commandButton value="reset" action="#{pessoaBean.limparPessoa}" />
+			</h:form>
+		</h:panelGroup>
 	</ui:define>
-	
+
 </ui:composition>
