@@ -7,29 +7,39 @@
 
 	<ui:define name="content">
 		<h3>Atualizar dados</h3>
-		<h:panelGroup rendered="#{pessoaController.editado}">
-			<h3>Editar Pessoa #{pessoaController.pessoa.nome}</h3>
-			<h:form>
-				<p>Nome:<h:inputText value="#{pessoaController.pessoa.nome}"/></p>
-				<p>Sexo:<h:inputText value="#{pessoaController.pessoa.sexo}" /></p>
-				<p>Data de nascimento:<h:inputText value="#{pessoaController.pessoa.datanasc}" /></p>
-				<p>Email:<h:inputText value="#{pessoaController.pessoa.email}" /></p>
-				<p>Estado Civil:<h:inputText value="#{pessoaController.pessoa.estadocivil}" /></p>
-				<p>Etnia:<h:inputText value="#{pessoaController.pessoa.etnia}" /></p>
-				<p>Nacionalidade:<h:inputText value="#{pessoaController.pessoa.nacionalidade}" /></p>
-				<p>Naturalidade:<h:inputText value="#{pessoaController.pessoa.naturalidade}" /></p>
-				<p>UF:<h:inputText value="#{pessoaController.pessoa.uf}" /></p>
-				<p>Necessidades Especiais:<h:inputText value="#{pessoaController.pessoa.necessidadesespeciais}" /></p>
-				<p>Nome da Mãe:<h:inputText value="#{pessoaController.pessoa.nomemae}" /></p>
-				<p>Nome do Pai:<h:inputText value="#{pessoaController.pessoa.nomepai}" /></p>
-				<p>Numero do Celular:<h:inputText value="#{pessoaController.pessoa.numerocelular}" /></p>
+		<h:panelGroup rendered="#{pessoaBean.editado}">
+			<h3>Editar Pessoa #{pessoaBean.pessoa.nome}</h3>
+			<h:form id="atualizar_form">
+				<p>Nome:<p:inputText value="#{pessoaBean.pessoa.nome}"/></p>
+				<p>Sexo:<p:inputText value="#{pessoaBean.pessoa.sexo}" /></p>
+				<p>Data de nascimento:<p:calendar value="#{pessoaBean.pessoa.datanasc}" pattern="dd/MM/yyyy"/></p>
+				<p>Email:<p:inputText value="#{pessoaBean.pessoa.email}" /></p>
+				<p>Estado Civil:<p:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" >
+   					<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
+   					<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
+   					<f:selectItem itemValue="DIVORCIADO(A)" itemLabel="Divorciado(a)" />
+   					<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+				</p:selectOneMenu></p>
+				<p>Etnia:<p:inputText value="#{pessoaBean.pessoa.etnia}" /></p>
+				<p>Nacionalidade:<p:inputText value="#{pessoaBean.pessoa.nacionalidade}" /></p>
+				<p>Naturalidade:<p:inputText value="#{pessoaBean.pessoa.naturalidade}" /></p>
+				<p>UF:<p:inputText value="#{pessoaBean.pessoa.uf}" /></p>
+				<p>Necessidades Especiais:<p:inputText value="#{pessoaBean.pessoa.necessidadesespeciais}" /></p>
+				<p>Nome da Mãe:<p:inputText value="#{pessoaBean.pessoa.nomemae}" /></p>
+				<p>Nome do Pai:<p:inputText value="#{pessoaBean.pessoa.nomepai}" /></p>
+				<p>Numero do Celular:<p:inputText value="#{pessoaBean.pessoa.numerocelular}" /></p>
 				<p>
-					<h:commandButton value="save" action="#{pessoaController.salvarAtualizar}" />
-					<h:commandButton value="cancel"	action="#{pessoaController.cancelarAtualizar}" />
+					<h:panelGroup rendered="pessoaBean.pessoa.tipopessoa = 'ALUNO' and not empty alunoBean.buscarPorId(pessoaBean.pessoa.id)">
+					</h:panelGroup>
+					
+				</p>
+				<p>
+					<p:commandButton value="save" action="#{pessoaBean.salvarAtualizar}" type="submit" process="atualizar_form"/>
+					<p:commandButton value="cancel"	action="#{pessoaBean.cancelarAtualizar}" />
 				</p>
 			</h:form>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{!pessoaController.editado}">
+		<h:panelGroup rendered="#{!pessoaBean.editado}">
 			<h3>Não existem dados para atualziar</h3>
 		</h:panelGroup>
 	</ui:define>

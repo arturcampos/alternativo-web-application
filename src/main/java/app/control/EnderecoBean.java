@@ -11,7 +11,7 @@ import app.model.Endereco;
 
 @ManagedBean
 @SessionScoped
-public class EnderecoController {
+public class EnderecoBean {
 	EnderecoDao dao;
 	Endereco endereco;
 	List<Endereco> enderecos;

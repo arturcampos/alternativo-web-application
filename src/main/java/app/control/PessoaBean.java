@@ -1,42 +1,50 @@
 package app.control;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 import app.dao.PessoaDao;
 import app.model.Pessoa;
 
-@ManagedBean
-@RequestScoped
-public class PessoaController implements Serializable{
+public class PessoaBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private PessoaDao dao;
+	private PessoaDao dao = null;
 	private Pessoa pessoa;
 	private Pessoa pessoaAnterior = null;
 	private List<Pessoa> pessoaLista;
 	private boolean editado;
+	private String mensagemErro = null;
 
 	@PostConstruct
 	public void init() {
 		if (this.dao == null) {
 			this.dao = new PessoaDao(Pessoa.class);
 		}
-		buscarTodos();
 		this.pessoa = new Pessoa();
 	}
 
-	public String salvar() {
+	public String salvar() throws ParseException {
+		System.out.println(this.pessoa.toString());
+		if (pessoa.getDatanasc() == null) {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = formatter.parse("03/05/2000");
+			pessoa.setDatanasc(date);
+		}
 		this.dao.save(this.pessoa);
 		this.pessoaLista.add(this.pessoa);
 		pessoa = new Pessoa();
+		this.mensagemErro = null;
+
 		return "listar";
 
 	}
@@ -52,17 +60,18 @@ public class PessoaController implements Serializable{
 	}
 
 	public String atualizar(Pessoa pessoa) {
-		this.pessoa = pessoa;
+		this.pessoa = pessoa.clone();
 		this.pessoaAnterior = pessoa.clone();
-		//this.pessoa = pessoa;
+		pessoa = new Pessoa();
 		this.editado = true;
 		return "atualizar";
 	}
 
 	public String salvarAtualizar() {
 		this.dao.update(pessoa);
-		//this.pessoa = new Pessoa();
+		// this.pessoa = new Pessoa();
 		this.editado = false;
+		this.pessoa = new Pessoa();
 		return "Inicio";
 	}
 
@@ -138,5 +147,13 @@ public class PessoaController implements Serializable{
 
 	public void setPessoas(List<Pessoa> pessoas) {
 		this.pessoaLista = pessoas;
+	}
+
+	public String getMensagemErro() {
+		return mensagemErro;
+	}
+
+	public void setMensagemErro(String mensagemErro) {
+		this.mensagemErro = mensagemErro;
 	}
 }

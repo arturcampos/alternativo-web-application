@@ -12,7 +12,7 @@ import app.model.Aluno;
 
 @ManagedBean
 @RequestScoped
-public class AlunoController {
+public class AlunoBean {
 
 	private AlunoDao dao;
 	private Aluno aluno;

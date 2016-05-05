@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import app.control.PessoaController;
+import app.control.PessoaBean;
 
 public class main {
 
@@ -35,11 +35,11 @@ public class main {
 		p.setTipopessoas("Aluno");
 
 		
-		PessoaController pc = new PessoaController();
+		PessoaBean pc = new PessoaBean();
 		pc.init();
 		
 		pc.setPessoa(p);
-		pc.salvar();
+		//pc.salvar();
 		
 				
 	}

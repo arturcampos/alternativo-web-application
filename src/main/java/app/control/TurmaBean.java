@@ -11,7 +11,7 @@ import app.model.Turma;
 
 @ManagedBean
 @RequestScoped
-public class TurmaController {
+public class TurmaBean {
 	TurmaDao dao;
 	Turma turma;
 	List<Turma> turmas;

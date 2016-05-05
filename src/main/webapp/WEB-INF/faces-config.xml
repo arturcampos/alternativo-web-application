@@ -10,17 +10,25 @@
 		</locale-config>
 	</application>
 	<managed-bean>
-		<managed-bean-name>pessoaController</managed-bean-name>
-		<managed-bean-class>app.control.PessoaController</managed-bean-class>
+		<managed-bean-name>pessoaBean</managed-bean-name>
+		<managed-bean-class>app.control.PessoaBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<navigation-rule>
+		<display-name>Inicio.xhtml</display-name>
+		<from-view-id>/Inicio.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listar</from-outcome>
+			<to-view-id>/listar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 	<navigation-rule>
 		<display-name>listar.xhtml</display-name>
 		<from-view-id>/listar.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>atualizar</from-outcome>
 			<to-view-id>/atualizar.xhtml</to-view-id>
-			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -29,6 +37,23 @@
 		<navigation-case>
 			<from-outcome>Inicio</from-outcome>
 			<to-view-id>/Inicio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Inicio.xhtml</display-name>
+		<from-view-id>/Inicio.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>atualizar</from-outcome>
+			<to-view-id>/atualizar.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Inicio.xhtml</display-name>
+		<from-view-id>/Inicio.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>salvar</from-outcome>
+			<to-view-id>/salvar.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

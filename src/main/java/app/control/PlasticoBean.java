@@ -11,7 +11,7 @@ import app.model.Plastico;
 
 @ManagedBean
 @RequestScoped
-public class PlasticoController {
+public class PlasticoBean {
 	PlasticoDao dao;
 	Plastico plastico;
 	List<Plastico> plasticos;

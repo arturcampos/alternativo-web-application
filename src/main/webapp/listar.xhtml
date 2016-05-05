@@ -7,8 +7,8 @@
 
 	<ui:define name="content">
 		<h3>Lista</h3>
-		<h:form rendered="#{not empty pessoaController.pessoas}">
-			<h:dataTable value="#{pessoaController.pessoas}" var="pessoa">
+		<h:form rendered="#{not empty pessoaBean.pessoas}">
+			<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>#{pessoa.nome}</h:column>
 				<h:column>
@@ -16,17 +16,17 @@
 				<h:column>
 					<f:facet name="header">Email</f:facet>#{pessoa.email}</h:column>
 				<h:column>
-					<h:commandButton value="edit"
-						action="#{pessoaController.atualizar(pessoa)}" actionListener="atualizar?faces-redirect=true"/>
+					<h:commandButton id="btn_edit" value="edit"
+						action="#{pessoaBean.atualizar(pessoa)}" type="submit"/>
 				</h:column>
 				<h:column>
 					<h:commandButton value="delete"
-						action="#{pessoaController.remover}" />
+						action="#{pessoaBean.remover}" />
 				</h:column>
 			</h:dataTable>
 		</h:form>
 
-		<h:panelGroup rendered="#{empty pessoaController.pessoas}">
+		<h:panelGroup rendered="#{empty pessoaBean.pessoas}">
 			<p>Não Há pessoas Cadastradas</p>
 		</h:panelGroup>
 	</ui:define>

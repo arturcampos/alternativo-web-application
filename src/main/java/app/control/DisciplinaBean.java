@@ -11,7 +11,7 @@ import app.model.Disciplina;
 
 @ManagedBean
 @RequestScoped
-public class DisciplinaController {
+public class DisciplinaBean {
 
 	DisciplinaDao dao;
 	Disciplina disciplina;

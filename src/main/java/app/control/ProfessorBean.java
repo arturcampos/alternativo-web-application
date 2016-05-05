@@ -11,7 +11,7 @@ import app.model.Professor;
 
 @ManagedBean
 @SessionScoped
-public class ProfessorController {
+public class ProfessorBean {
 
 	ProfessorDao dao;
 	Professor professor;
