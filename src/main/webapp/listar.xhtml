@@ -6,26 +6,27 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
+	<p:message id="messages" autoUpdate="true" rendered="pessoaBean.msg != null"/>
 		<h3>Lista</h3>
-		<h:form rendered="#{not empty pessoaBean.pessoas}">
+		<h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
 			<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>#{pessoa.nome}</h:column>
 				<h:column>
-					<f:facet name="header">Data de Nascimento</f:facet>#{pessoa.datanasc}</h:column>
+					<f:facet name="header">Tipo</f:facet>#{pessoa.tipopessoa}</h:column>
 				<h:column>
 					<f:facet name="header">Email</f:facet>#{pessoa.email}</h:column>
 				<h:column>
-					<h:commandButton id="btn_edit" value="edit"
-						action="#{pessoaBean.atualizar(pessoa)}" type="submit"/>
+					<p:commandButton id="btn_edit" value="edit"
+						action="#{pessoaBean.atualizar(pessoa)}" type="submit"
+						process="list_form" />
 				</h:column>
 				<h:column>
-					<h:commandButton value="delete"
-						action="#{pessoaBean.remover}" />
+					<p:commandButton value="delete"
+						action="#{pessoaBean.remover(pessoa.id)}" type="submit"/>
 				</h:column>
 			</h:dataTable>
 		</h:form>
-
 		<h:panelGroup rendered="#{empty pessoaBean.pessoas}">
 			<p>Não Há pessoas Cadastradas</p>
 		</h:panelGroup>

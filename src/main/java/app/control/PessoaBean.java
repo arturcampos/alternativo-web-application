@@ -1,10 +1,8 @@
 package app.control;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,29 +21,30 @@ public class PessoaBean implements Serializable {
 	private Pessoa pessoaAnterior = null;
 	private List<Pessoa> pessoaLista;
 	private boolean editado;
-	private String mensagemErro = null;
+	private String msg = null;
 
 	@PostConstruct
 	public void init() {
 		if (this.dao == null) {
 			this.dao = new PessoaDao(Pessoa.class);
 		}
+		this.pessoaLista = new ArrayList<Pessoa>();
 		this.pessoa = new Pessoa();
 	}
 
-	public String salvar() throws ParseException {
+	public String salvar(){
 		System.out.println(this.pessoa.toString());
-		if (pessoa.getDatanasc() == null) {
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = formatter.parse("03/05/2000");
-			pessoa.setDatanasc(date);
+		
+		try{
+			this.dao.save(this.pessoa);
+			this.pessoaLista.add(this.pessoa);
+			pessoa = new Pessoa();
+			this.msg = "Informações salvas com sucesso";
+		}catch(Exception e){
+			this.msg = "Erro ao Salvar informações";
 		}
-		this.dao.save(this.pessoa);
-		this.pessoaLista.add(this.pessoa);
-		pessoa = new Pessoa();
-		this.mensagemErro = null;
-
-		return "listar";
+		
+		return "Inicio";
 
 	}
 
@@ -54,9 +53,9 @@ public class PessoaBean implements Serializable {
 		return "atualizar";
 	}
 
-	public String remover() {
-		this.pessoa = this.dao.remove(this.pessoa.getId());
-		return "listar";
+	public String remover(Long id) {
+		this.pessoa = this.dao.remove(id);
+		return "Inicio";
 	}
 
 	public String atualizar(Pessoa pessoa) {
@@ -88,24 +87,27 @@ public class PessoaBean implements Serializable {
 	}
 
 	public String limparPessoa() {
-		this.pessoa.setDatanasc(null);
-		this.pessoa.setEmail("");
-		this.pessoa.setEstadocivil("");
-		this.pessoa.setEtnia("");
-		this.pessoa.setNacionalidade("");
-		this.pessoa.setNaturalidade("");
-		this.pessoa.setNecessidadesespeciais("");
-		this.pessoa.setNome("");
-		this.pessoa.setNomemae("");
-		this.pessoa.setNomepai("");
-		this.pessoa.setNumerocelular("");
-		this.pessoa.setResponsavellegal("");
-		this.pessoa.setSexo("");
-		this.pessoa.setUf("");
-		this.pessoa.setDocumentos(null);
-		this.pessoa.setEnderecos(null);
-		this.pessoa.setPlasticos(null);
-		this.pessoa.setTipopessoas("");
+		if (this.pessoa != null) {
+			this.pessoa.setId(null);
+			this.pessoa.setDatanasc(null);
+			this.pessoa.setEmail("");
+			this.pessoa.setEstadocivil("");
+			this.pessoa.setEtnia("");
+			this.pessoa.setNacionalidade("");
+			this.pessoa.setNaturalidade("");
+			this.pessoa.setNecessidadesespeciais("");
+			this.pessoa.setNome("");
+			this.pessoa.setNomemae("");
+			this.pessoa.setNomepai("");
+			this.pessoa.setNumerocelular("");
+			this.pessoa.setResponsavellegal("");
+			this.pessoa.setSexo("");
+			this.pessoa.setUf("");
+			this.pessoa.setDocumentos(null);
+			this.pessoa.setEnderecos(null);
+			this.pessoa.setPlasticos(null);
+			this.pessoa.setTipopessoa("");
+		}
 		return "salvar";
 	}
 
@@ -149,11 +151,11 @@ public class PessoaBean implements Serializable {
 		this.pessoaLista = pessoas;
 	}
 
-	public String getMensagemErro() {
-		return mensagemErro;
+	public String getMsgErro() {
+		return msg;
 	}
 
-	public void setMensagemErro(String mensagemErro) {
-		this.mensagemErro = mensagemErro;
+	public void setMsg(String mensagemErro) {
+		this.msg = mensagemErro;
 	}
 }

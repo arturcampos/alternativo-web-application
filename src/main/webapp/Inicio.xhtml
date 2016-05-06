@@ -6,15 +6,21 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h3></h3>
+	<p:message id="messages" autoUpdate="true" rendered="pessoaBean.msg != null">
+		#{pessoaBean.msg}
+	</p:message>
+	<br/>
+		<h3>Inico</h3>
+		<br/>
+		<br/>
 		<p>
 			<h:form>
 				<p>
-					<h:commandButton value="Listar"
+					<p:commandButton value="Listar"
 						action="#{pessoaBean.buscarTodos}" />
 				</p>
 				<p>
-					<h:commandButton value="Nova Pessoa" action="salvar" immediate="true" />
+					<p:commandButton value="Nova Pessoa" action="#{pessoaBean.limparPessoa}" immediate="true" />
 				</p>
 			</h:form>
 		</p>

@@ -313,7 +313,7 @@ public class Pessoa implements Serializable {
 		return this.tipopessoa;
 	}
 
-	public void setTipopessoas(String tipopessoa) {
+	public void setTipopessoa(String tipopessoa) {
 		this.tipopessoa = tipopessoa;
 	}
 

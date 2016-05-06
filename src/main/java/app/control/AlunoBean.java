@@ -5,26 +5,34 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
+import app.model.Pessoa;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AlunoBean {
 
 	private AlunoDao dao;
 	private Aluno aluno;
+	private Pessoa pessoa;
+	private Pessoa pessoaAnterior = null;
 	private Aluno alunoAnterior = null;
 	private List<Aluno> alunoLista;
 	private boolean editado;
+	private String mensagemErro = null;
 
 	@PostConstruct
 	public void init() {
+		if (this.dao == null) {
+			this.dao = new AlunoDao(Aluno.class);
+		}
 		this.dao = new AlunoDao(Aluno.class);
 		this.alunoLista = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
+		this.pessoa = new Pessoa();
 	}
 
 	public void salvar(Aluno aluno) {
@@ -53,15 +61,15 @@ public class AlunoBean {
 		this.aluno = new Aluno();
 		this.editado = false;
 	}
-	
+
 	public void cancelarAtualizar() {
-        this.aluno.restaurar(this.alunoAnterior);
-        this.aluno = new Aluno();
-        editado = false;
-    }
+		this.aluno.restaurar(this.alunoAnterior);
+		this.aluno = new Aluno();
+		editado = false;
+	}
 
 	public void buscarTodos() {
-		 this.alunoLista = this.dao.findAll();
+		this.alunoLista = this.dao.findAll();
 	}
 
 	public void limparAluno() {
@@ -114,5 +122,28 @@ public class AlunoBean {
 		this.alunoLista = alunos;
 	}
 
-}
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
 
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Pessoa getPessoaAnterior() {
+		return pessoaAnterior;
+	}
+
+	public void setPessoaAnterior(Pessoa pessoaAnterior) {
+		this.pessoaAnterior = pessoaAnterior;
+	}
+
+	public String getMensagemErro() {
+		return mensagemErro;
+	}
+
+	public void setMensagemErro(String mensagemErro) {
+		this.mensagemErro = mensagemErro;
+	}
+
+}
