@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="content">
+		<h3>Atualizar dados</h3>
+		<h:panelGroup rendered="#{pessoaBean.editado}">
+			<h3>Editar Pessoa #{pessoaBean.pessoa.nome}</h3>
+			<h:form id="atualizar_form">
+				<p>Nome:<p:inputText value="#{pessoaBean.pessoa.nome}"/></p>
+				<p>Sexo:<p:inputText value="#{pessoaBean.pessoa.sexo}" /></p>
+				<p>Data de nascimento:<p:calendar value="#{pessoaBean.pessoa.datanasc}" pattern="dd/MM/yyyy"/></p>
+				<p>Email:<p:inputText value="#{pessoaBean.pessoa.email}" /></p>
+				<p>Estado Civil:<p:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" >
+   					<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
+   					<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
+   					<f:selectItem itemValue="DIVORCIADO(A)" itemLabel="Divorciado(a)" />
+   					<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+				</p:selectOneMenu></p>
+				<p>Etnia:<p:inputText value="#{pessoaBean.pessoa.etnia}" /></p>
+				<p>Nacionalidade:<p:inputText value="#{pessoaBean.pessoa.nacionalidade}" /></p>
+				<p>Naturalidade:<p:inputText value="#{pessoaBean.pessoa.naturalidade}" /></p>
+				<p>UF:<p:inputText value="#{pessoaBean.pessoa.uf}" /></p>
+				<p>Necessidades Especiais:<p:inputText value="#{pessoaBean.pessoa.necessidadesespeciais}" /></p>
+				<p>Nome da Mãe:<p:inputText value="#{pessoaBean.pessoa.nomemae}" /></p>
+				<p>Nome do Pai:<p:inputText value="#{pessoaBean.pessoa.nomepai}" /></p>
+				<p>Numero do Celular:<p:inputText value="#{pessoaBean.pessoa.numerocelular}" /></p>
+				<p>
+					<h:panelGroup rendered="pessoaBean.pessoa.tipopessoa = 'ALUNO' and not empty alunoBean.buscarPorId(pessoaBean.pessoa.id)">
+					</h:panelGroup>
+					
+				</p>
+				<p>
+					<p:commandButton value="save" action="#{pessoaBean.salvarAtualizar}" type="submit" process="atualizar_form"/>
+					<p:commandButton value="cancel"	action="#{pessoaBean.cancelarAtualizar}" />
+				</p>
+			</h:form>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{!pessoaBean.editado}">
+			<h3>Não existem dados para atualziar</h3>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>

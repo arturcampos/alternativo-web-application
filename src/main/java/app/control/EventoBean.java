@@ -11,7 +11,7 @@ import app.model.Evento;
 
 @ManagedBean
 @RequestScoped
-public class EventoController {
+public class EventoBean {
 
 	EventoDao dao;
 	Evento evento;

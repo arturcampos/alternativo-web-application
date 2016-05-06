@@ -11,7 +11,7 @@ import app.model.Documento;
 
 @ManagedBean
 @SessionScoped
-public class DocumentoController {
+public class DocumentoBean {
 	DocumentoDao dao;
 	Documento documento;
 	List<Documento> documentos;

@@ -32,8 +32,11 @@ public class DaoImpl<T> implements Dao<T> {
 	public void save(T obj) {
 		EntityTransaction tx = entitymanager.getTransaction();
 		tx.begin();
-		entitymanager.persist(obj);
-		tx.commit();
+		try {
+			entitymanager.persist(obj);
+		} finally {
+			tx.commit();
+		}
 	}
 
 	public T remove(Serializable id) {
@@ -41,8 +44,11 @@ public class DaoImpl<T> implements Dao<T> {
 		if (obj != null) {
 			EntityTransaction tx = entitymanager.getTransaction();
 			tx.begin();
-			entitymanager.remove(obj);
-			tx.commit();
+			try {
+				entitymanager.remove(obj);
+			} finally {
+				tx.commit();
+			}
 		}
 		return obj;
 	}
@@ -63,8 +69,11 @@ public class DaoImpl<T> implements Dao<T> {
 	public void update(T obj) {
 		EntityTransaction tx = entitymanager.getTransaction();
 		tx.begin();
-		entitymanager.merge(obj);
-		tx.commit();
+		try {
+			entitymanager.merge(obj);
+		} finally {
+			tx.commit();
+		}
 	}
 
 }

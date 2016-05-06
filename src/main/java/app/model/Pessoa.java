@@ -25,7 +25,7 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -73,7 +73,7 @@ public class Pessoa implements Serializable {
 
 	public Pessoa() {
 	}
-	
+
 	/**
 	 * @param id
 	 * @param datanasc
@@ -122,7 +122,6 @@ public class Pessoa implements Serializable {
 		this.tipopessoa = tipopessoa;
 	}
 
-
 	public Long getId() {
 		return this.id;
 	}
@@ -133,6 +132,7 @@ public class Pessoa implements Serializable {
 
 	public Date getDatanasc() {
 		return this.datanasc;
+
 	}
 
 	public void setDatanasc(Date datanasc) {
@@ -313,7 +313,7 @@ public class Pessoa implements Serializable {
 		return this.tipopessoa;
 	}
 
-	public void setTipopessoas(String tipopessoa) {
+	public void setTipopessoa(String tipopessoa) {
 		this.tipopessoa = tipopessoa;
 	}
 
@@ -345,5 +345,19 @@ public class Pessoa implements Serializable {
 		this.enderecos = pessoa.getEnderecos();
 		this.plasticos = pessoa.getPlasticos();
 		this.tipopessoa = pessoa.getTipopessoa();
+	}
+
+	public String toString() {
+		return new String("id = " + this.id + "\n" + "datanasc = " + this.datanasc + "\n" + "email = " + this.email
+				+ "\n" + "estadocivil = " + this.estadocivil + "\n" + "etnia = " + this.etnia + "\n"
+				+ "nacionalidade = " + this.nacionalidade + "\n" + "naturalidade = " + this.naturalidade + "\n"
+				+ "necessidadesespeciais = " + this.necessidadesespeciais + "\n" + "nome = " + this.nome + "\n"
+				+ "nomemae = " + this.nomemae + "\n" + "nomepai = " + this.nomepai + "\n" + "numerocelular = "
+				+ this.numerocelular + "\n" + "responsavellegal = " + this.responsavellegal + "\n" + "sexo = "
+				+ this.sexo + "\n" + "uf = " + this.uf + "\n" + "documentos = " + this.documentos + "\n"
+				+ "enderecos = " + this.enderecos + "\n" + "plasticos = " + this.plasticos + "\n" + "tipopessoa = "
+				+ this.tipopessoa + "\n"
+
+		);
 	}
 }
