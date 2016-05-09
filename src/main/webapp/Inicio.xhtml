@@ -6,24 +6,87 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
+	
+	<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</div><!--/.row-->
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Dashboard</h1>
+		</div>
+	</div><!--/.row-->
+	
+	
+	<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<span class="glyphicon glyphicon-user fa-4x"></span>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">120</div>
+							<div class="text-muted">
+							<h:form>
+								<p:commandLink value="Gerenciamento de pessoas"
+						action="#{pessoaBean.buscarTodos}" />
+							</h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-orange panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<span class="glyphicon glyphicon-tasks fa-4x"></span>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">52</div>
+							<div class="text-muted"><a href="">Visualizar gráficos</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-teal panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<span class="glyphicon glyphicon-eye-open fa-4x"></span>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">24</div>
+							<div class="text-muted"><a href="">Visualizar relatórios</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-red panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<span class="glyphicon glyphicon-folder-open fa-4x"></span>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">25.2k</div>
+							<div class="text-muted"><a href="">Visualizar arquivos</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+		
+		
+	
 	<p:message id="messages" autoUpdate="true" rendered="pessoaBean.msg != null">
 		#{pessoaBean.msg}
 	</p:message>
-	<br/>
-		<h3>Inico</h3>
-		<br/>
-		<br/>
-		<p>
-			<h:form>
-				<p>
-					<p:commandButton value="Listar"
-						action="#{pessoaBean.buscarTodos}" />
-				</p>
-				<p>
-					<p:commandButton value="Nova Pessoa" action="#{pessoaBean.limparPessoa}" immediate="true" />
-				</p>
-			</h:form>
-		</p>
+
 	</ui:define>
 
 </ui:composition>

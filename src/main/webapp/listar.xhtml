@@ -6,30 +6,62 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-	<p:message id="messages" autoUpdate="true" rendered="pessoaBean.msg != null"/>
-		<h3>Lista</h3>
-		<h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
-			<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
-				<h:column>
-					<f:facet name="header">Nome</f:facet>#{pessoa.nome}</h:column>
-				<h:column>
-					<f:facet name="header">Tipo</f:facet>#{pessoa.tipopessoa}</h:column>
-				<h:column>
-					<f:facet name="header">Email</f:facet>#{pessoa.email}</h:column>
-				<h:column>
-					<p:commandButton id="btn_edit" value="edit"
-						action="#{pessoaBean.atualizar(pessoa)}" type="submit"
-						process="list_form" />
-				</h:column>
-				<h:column>
-					<p:commandButton value="delete"
-						action="#{pessoaBean.remover(pessoa.id)}" type="submit"/>
-				</h:column>
-			</h:dataTable>
-		</h:form>
-		<h:panelGroup rendered="#{empty pessoaBean.pessoas}">
-			<p>Não Há pessoas Cadastradas</p>
-		</h:panelGroup>
+	
+	<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+			<li class="active">Listagem de pessoas</li>
+		</ol>
+	</div><!--/.row-->
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Listagem de pessoas</h1>
+		</div>
+	</div><!--/.row-->
+	
+		
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Pessoas cadastradas</div>
+				<div class="panel-body">
+					<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+					    <thead>
+					    <tr>
+					        <th data-field="nome" data-checkbox="true" >Nome</th>
+					        <th data-field="tipo" data-sortable="true">Tipo pessoa</th>
+					        <th data-field="email"  data-sortable="true">E-mail</th>
+					        <th data-field="editar" data-sortable="true">Editar</th>
+					        <th data-field="deletar" data-sortable="true">Deletar</th>
+					    </tr>
+					    </thead>
+					    <h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
+					    <tbody>
+						    	<ui:repeat var="pessoa" value="#{pessoaBean.pessoas}" varStatus="status">
+							    	<tr>
+							    		<td>#{pessoa.nome}</td>
+										<td>#{pessoa.tipopessoa}</td>
+										<td>#{pessoa.email}</td>
+										<td>
+											<p:commandLink id="btn_edit" value="Editar"
+					action="#{pessoaBean.atualizar(pessoa)}" type="submit"
+					process="list_form" /> <span class="glyphicon glyphicon-pencil"></span> 
+										</td>
+										<td>
+											<p:commandLink value="Deletar"
+					action="#{pessoaBean.remover(pessoa.id)}" type="submit"/> <span class="glyphicon glyphicon-trash"></span>
+										</td>
+							    	</tr>
+						    	</ui:repeat>
+						    </tbody>
+					    </h:form>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+		
 	</ui:define>
 
 </ui:composition>
