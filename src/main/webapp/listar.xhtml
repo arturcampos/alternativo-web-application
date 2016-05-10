@@ -6,62 +6,69 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-	
-	<div class="row">
-		<ol class="breadcrumb">
-			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-			<li class="active">Listagem de pessoas</li>
-		</ol>
-	</div><!--/.row-->
 
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Listagem de pessoas</h1>
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Listagem de pessoas</li>
+			</ol>
 		</div>
-	</div><!--/.row-->
-	
-		
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">Pessoas cadastradas</div>
-				<div class="panel-body">
-					<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
-					    <thead>
-					    <tr>
-					        <th data-field="nome" data-checkbox="true" >Nome</th>
-					        <th data-field="tipo" data-sortable="true">Tipo pessoa</th>
-					        <th data-field="email"  data-sortable="true">E-mail</th>
-					        <th data-field="editar" data-sortable="true">Editar</th>
-					        <th data-field="deletar" data-sortable="true">Deletar</th>
-					    </tr>
-					    </thead>
-					    <h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
-					    <tbody>
-						    	<ui:repeat var="pessoa" value="#{pessoaBean.pessoas}" varStatus="status">
-							    	<tr>
-							    		<td>#{pessoa.nome}</td>
-										<td>#{pessoa.tipopessoa}</td>
-										<td>#{pessoa.email}</td>
-										<td>
-											<p:commandLink id="btn_edit" value="Editar"
-					action="#{pessoaBean.atualizar(pessoa)}" type="submit"
-					process="list_form" /> <span class="glyphicon glyphicon-pencil"></span> 
-										</td>
-										<td>
-											<p:commandLink value="Deletar"
-					action="#{pessoaBean.remover(pessoa.id)}" type="submit"/> <span class="glyphicon glyphicon-trash"></span>
-										</td>
-							    	</tr>
-						    	</ui:repeat>
-						    </tbody>
-					    </h:form>
-					</table>
+		<!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Listagem de pessoas</h1>
+			</div>
+		</div>
+		<!--/.row-->
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Pessoas cadastradas</div>
+					<div class="panel-body">
+						<table data-toggle="table" data-show-refresh="true"
+							data-show-toggle="true" data-show-columns="true"
+							data-search="true" data-select-item-name="toolbar1"
+							data-pagination="true" data-sort-name="name"
+							data-sort-order="desc">
+							<thead>
+								<tr>
+									<th data-field="nome" data-sortable="true">Nome</th>
+									<th data-field="tipo" data-sortable="true">Tipo pessoa</th>
+									<th data-field="email" data-sortable="true">E-mail</th>
+									<th data-field="editar" data-sortable="true">Editar</th>
+									<th data-field="deletar" data-sortable="true">Deletar</th>
+								</tr>
+							</thead>
+							<h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
+								<tbody>
+									<ui:repeat var="pessoa" value="#{pessoaBean.pessoas}"
+										varStatus="status">
+										<tr>
+											<td>#{pessoa.nome}</td>
+											<td>#{pessoa.tipopessoa}</td>
+											<td>#{pessoa.email}</td>
+											<td><h:outputLink id="btn_edit"
+													value="#{pessoaBean.atualizar(pessoa)}.xhtml"
+													class="glyphicon glyphicon-pencil" type="submit"
+													process="list_form" > Editar</h:outputLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
+											</td>
+											<td><h:outputLink
+													value="#{pessoaBean.remover(pessoa.id)}.xhtml"
+													type="submit" process="list_form"
+													class="glyphicon glyphicon-trash"> Deletar</h:outputLink></td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</h:form>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-		
+
 	</ui:define>
 
 </ui:composition>

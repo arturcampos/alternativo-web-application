@@ -66,6 +66,14 @@
 			<to-view-id>/Inicio.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>listar.xhtml</display-name>
+		<from-view-id>/listar.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>salvar</from-outcome>
+			<to-view-id>/salvar.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>

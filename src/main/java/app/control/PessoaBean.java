@@ -1,7 +1,6 @@
 package app.control;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class PessoaBean implements Serializable {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
+			System.out.println("Passei aqui");
 			this.msg = "Informações salvas com sucesso";
 		}catch(Exception e){
 			this.msg = "Erro ao Salvar informações";
@@ -108,7 +108,7 @@ public class PessoaBean implements Serializable {
 			this.pessoa.setPlasticos(null);
 			this.pessoa.setTipopessoa("");
 		}
-		return "salvar";
+		return "Inicio";
 	}
 
 	public boolean isEditado() {

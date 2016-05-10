@@ -32,6 +32,11 @@
    <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
     PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml" TITLE="Inicio" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#listar.xhtml:2" NAME="item2"
+   PATH="/listar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="salvar::#salvar.xhtml" NAME="output"
+    PATH="/salvar.xhtml" TARGET="rules:#salvar.xhtml" TITLE="salvar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#atualizar.xhtml" PATH="/atualizar.xhtml"
   SHAPE="672,32,50,41" model-entity="JSFProcessGroup">
