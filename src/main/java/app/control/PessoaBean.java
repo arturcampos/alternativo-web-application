@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import app.dao.PessoaDao;
 import app.model.Pessoa;
@@ -38,13 +40,12 @@ public class PessoaBean implements Serializable {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
-			System.out.println("Passei aqui");
-			this.msg = "Informações salvas com sucesso";
+			info("Informações salvas com sucesso");
 		}catch(Exception e){
-			this.msg = "Erro ao Salvar informações";
+			error("Erro ao Salvar informações: " + e.getMessage());
 		}
 		
-		return "Inicio";
+		return "salvar";
 
 	}
 
@@ -55,7 +56,10 @@ public class PessoaBean implements Serializable {
 
 	public String remover(Long id) {
 		this.pessoa = this.dao.remove(id);
-		return "Inicio";
+		if(!this.pessoaLista.isEmpty() && this.pessoaLista != null){
+			this.pessoaLista.remove(this.pessoa);
+		}
+		return "salvar";
 	}
 
 	public String atualizar(Pessoa pessoa) {
@@ -158,4 +162,20 @@ public class PessoaBean implements Serializable {
 	public void setMsg(String mensagemErro) {
 		this.msg = mensagemErro;
 	}
+	
+	public void info(String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));
+    }
+     
+    public void warn(String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
+    }
+     
+    public void error(String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+    }
+     
+    public void fatal(String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
+    }
 }

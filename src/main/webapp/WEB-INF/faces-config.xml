@@ -74,6 +74,13 @@
 			<to-view-id>/salvar.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<render-kit>
+        <renderer>
+            <component-family>javax.faces.Messages</component-family>
+            <renderer-type>javax.faces.Messages</renderer-type>
+            <renderer-class>app.util.BootstrapMessagesRenderer</renderer-class>
+        </renderer>
+    </render-kit>
 	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>

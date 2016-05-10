@@ -6,38 +6,109 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h3>Atualizar dados</h3>
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#{request.contextPath}/Inicio.xhtml"><span
+						class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Atualizar dados</li>
+			</ol>
+		</div>
+		<!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Atualizar dados de
+					#{pessoaBean.pessoa.nome}</h1>
+			</div>
+		</div>
+		<!--/.row-->
 		<h:panelGroup rendered="#{pessoaBean.editado}">
-			<h3>Editar Pessoa #{pessoaBean.pessoa.nome}</h3>
-			<h:form id="atualizar_form">
-				<p>Nome:<p:inputText value="#{pessoaBean.pessoa.nome}"/></p>
-				<p>Sexo:<p:inputText value="#{pessoaBean.pessoa.sexo}" /></p>
-				<p>Data de nascimento:<p:calendar value="#{pessoaBean.pessoa.datanasc}" pattern="dd/MM/yyyy"/></p>
-				<p>Email:<p:inputText value="#{pessoaBean.pessoa.email}" /></p>
-				<p>Estado Civil:<p:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" >
-   					<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
-   					<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
-   					<f:selectItem itemValue="DIVORCIADO(A)" itemLabel="Divorciado(a)" />
-   					<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-				</p:selectOneMenu></p>
-				<p>Etnia:<p:inputText value="#{pessoaBean.pessoa.etnia}" /></p>
-				<p>Nacionalidade:<p:inputText value="#{pessoaBean.pessoa.nacionalidade}" /></p>
-				<p>Naturalidade:<p:inputText value="#{pessoaBean.pessoa.naturalidade}" /></p>
-				<p>UF:<p:inputText value="#{pessoaBean.pessoa.uf}" /></p>
-				<p>Necessidades Especiais:<p:inputText value="#{pessoaBean.pessoa.necessidadesespeciais}" /></p>
-				<p>Nome da Mãe:<p:inputText value="#{pessoaBean.pessoa.nomemae}" /></p>
-				<p>Nome do Pai:<p:inputText value="#{pessoaBean.pessoa.nomepai}" /></p>
-				<p>Numero do Celular:<p:inputText value="#{pessoaBean.pessoa.numerocelular}" /></p>
-				<p>
-					<h:panelGroup rendered="pessoaBean.pessoa.tipopessoa = 'ALUNO' and not empty alunoBean.buscarPorId(pessoaBean.pessoa.id)">
-					</h:panelGroup>
-					
-				</p>
-				<p>
-					<p:commandButton value="save" action="#{pessoaBean.salvarAtualizar}" type="submit" process="atualizar_form"/>
-					<p:commandButton value="cancel"	action="#{pessoaBean.cancelarAtualizar}" />
-				</p>
-			</h:form>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Preencha o formulário.</div>
+						<div class="panel-body">
+							<h:form id="salvar_form">
+								<h:messages id="messages" showDetail="true" closable="true"
+									autoUpdate="true" />
+								<div class="col-md-6">
+									<div class="form-group">
+										Nome:
+										<p:inputText value="#{pessoaBean.pessoa.nome}"
+											styleClass="form-control" id="Nome"/>
+									</div>
+									<div class="form-group">
+										Sexo:
+										<p:inputText value="#{pessoaBean.pessoa.sexo}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Data de nascimento:
+										<p:calendar value="#{pessoaBean.pessoa.datanasc}"
+											pattern="dd/MM/yyyy" styleClass="form-date"/>
+									</div>
+									<div class="form-group">
+										Email:
+										<p:inputText value="#{pessoaBean.pessoa.email}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Estado Civil:
+										<h:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" styleClass="form-control">
+											<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
+											<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
+											<f:selectItem itemValue="DIVORCIADO(A)"
+												itemLabel="Divorciado(a)" />
+											<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+										</h:selectOneMenu>
+									</div>
+									<div class="form-group">
+										Etnia:
+										<p:inputText value="#{pessoaBean.pessoa.etnia}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Nacionalidade:
+										<p:inputText value="#{pessoaBean.pessoa.nacionalidade}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Naturalidade:
+										<p:inputText value="#{pessoaBean.pessoa.naturalidade}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										UF:
+										<p:inputText value="#{pessoaBean.pessoa.uf}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Necessidades Especiais:
+										<p:inputText
+											value="#{pessoaBean.pessoa.necessidadesespeciais}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Nome da Mãe:
+										<p:inputText value="#{pessoaBean.pessoa.nomemae}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Nome do Pai:
+										<p:inputText value="#{pessoaBean.pessoa.nomepai}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										Numero do Celular:
+										<p:inputText value="#{pessoaBean.pessoa.numerocelular}" styleClass="form-control"/>
+									</div>
+									<div class="form-group">
+										<h:commandButton value="save"
+											action="#{pessoaBean.salvarAtualizar}" type="submit"
+											process="atualizar_form" styleClass="btn btn-primary">
+											<span>    </span>
+											</h:commandButton>
+											
+										<h:commandButton value="cancel"
+											action="#{pessoaBean.cancelarAtualizar}" styleClass="btn btn-primary" />
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!pessoaBean.editado}">
 			<h3>Não existem dados para atualziar</h3>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
  <PROCESS-ITEM NAME="rules:#Inicio.xhtml" PATH="/Inicio.xhtml"
-  SHAPE="200,40,50,73" model-entity="JSFProcessGroup">
+  SHAPE="512,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#Inicio.xhtml:0" NAME="item"
-   PATH="/Inicio.xhtml" SHAPE="400,222,47,15" model-entity="JSFProcessItem">
+   PATH="/Inicio.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="listar::#listar.xhtml" NAME="output"
     PATH="/listar.xhtml" TARGET="rules:#listar.xhtml" TITLE="listar" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
@@ -20,7 +20,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#listar.xhtml" PATH="/listar.xhtml"
-  SHAPE="560,176,50,41" model-entity="JSFProcessGroup">
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#listar.xhtml:0" NAME="item"
    PATH="/listar.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="atualizar::#atualizar.xhtml" NAME="output"
@@ -39,7 +39,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#atualizar.xhtml" PATH="/atualizar.xhtml"
-  SHAPE="672,32,50,41" model-entity="JSFProcessGroup">
+  SHAPE="272,33,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#atualizar.xhtml:0" NAME="item"
    PATH="/atualizar.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
@@ -47,7 +47,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#salvar.xhtml" PATH="/salvar.xhtml"
-  SHAPE="352,272,50,25" model-entity="JSFProcessGroup">
+  SHAPE="752,33,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#salvar.xhtml:0" NAME="item"
    PATH="/salvar.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
