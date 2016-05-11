@@ -33,20 +33,19 @@ public class PessoaBean implements Serializable {
 		this.pessoa = new Pessoa();
 	}
 
-	public String salvar(){
+	public String salvar() {
 		System.out.println(this.pessoa.toString());
-		
-		try{
+
+		try {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
 			info("Informações salvas com sucesso");
-		}catch(Exception e){
+			return "salvar";
+		} catch (Exception e) {
 			error("Erro ao Salvar informações: " + e.getMessage());
-		}
-		
-		return "salvar";
-
+			return "salvar";
+		} 
 	}
 
 	public String buscarPorId(Long id) {
@@ -56,10 +55,10 @@ public class PessoaBean implements Serializable {
 
 	public String remover(Long id) {
 		this.pessoa = this.dao.remove(id);
-		if(!this.pessoaLista.isEmpty() && this.pessoaLista != null){
+		if (!this.pessoaLista.isEmpty() && this.pessoaLista != null) {
 			this.pessoaLista.remove(this.pessoa);
 		}
-		return "salvar";
+		return "listar";
 	}
 
 	public String atualizar(Pessoa pessoa) {
@@ -162,20 +161,24 @@ public class PessoaBean implements Serializable {
 	public void setMsg(String mensagemErro) {
 		this.msg = mensagemErro;
 	}
-	
+
 	public void info(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));
-    }
-     
-    public void warn(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
-    }
-     
-    public void error(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
-    }
-     
-    public void fatal(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
-    }
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));
+	}
+
+	public void warn(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
+	}
+
+	public void error(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+	}
+
+	public void fatal(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
+	}
 }

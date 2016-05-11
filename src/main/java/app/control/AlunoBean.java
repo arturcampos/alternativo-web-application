@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
+import app.model.Documento;
+import app.model.Endereco;
 import app.model.Pessoa;
 
 @ManagedBean
@@ -18,11 +22,11 @@ public class AlunoBean {
 	private AlunoDao dao;
 	private Aluno aluno;
 	private Pessoa pessoa;
-	private Pessoa pessoaAnterior = null;
+	private List<Documento> documentos;
+	private List<Endereco> enderecos;
 	private Aluno alunoAnterior = null;
 	private List<Aluno> alunoLista;
 	private boolean editado;
-	private String mensagemErro = null;
 
 	@PostConstruct
 	public void init() {
@@ -35,31 +39,88 @@ public class AlunoBean {
 		this.pessoa = new Pessoa();
 	}
 
-	public void salvar(Aluno aluno) {
-		this.dao.save(aluno);
-		this.alunoLista.add(aluno);
-		aluno = new Aluno();
+	public String salvar(Aluno aluno) {
+		try {
+			
+			this.pessoa.setTipopessoa("ALUNO");
+			
+			// adicionando documentos à pessoa
+			this.pessoa.setDocumentos(this.documentos);
 
+			// adicionando endereços à pessoa
+			this.pessoa.setEnderecos(this.enderecos);
+
+			// adicionando pessoa à alunos
+			this.aluno.setPessoa(this.pessoa);
+
+			// executando metod DAO para salvar aluno
+			this.dao.save(aluno);
+
+			this.alunoLista.add(aluno);
+			aluno = new Aluno();
+			info("Informações salvas com sucesso");
+			return "salvar";
+		} catch (Exception e) {
+			error("Erro ao Salvar informações: " + e.getMessage());
+			return "salvar";
+		}
 	}
 
-	public void buscarPorId(Long id) {
-		this.aluno = this.dao.findById(id);
+	public String buscarPorId(Long id) {
+		try {
+
+			this.aluno = this.dao.findById(id);
+			if (this.aluno != null) {
+				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
+			} else {
+				warn("Aluno não encontrado!");
+			}
+			return "atualizar";
+		} catch (Exception e) {
+			error("Erro ao consultar dados do aluno!");
+			return "atualizar";
+		}
 	}
 
-	public void remover(Long id) {
-		this.aluno = this.dao.remove(id);
+	public String remover(Long id) {
+		try {
+			this.aluno = this.dao.remove(id);
+			if (!this.alunoLista.isEmpty() && this.alunoLista != null) {
+				this.alunoLista.remove(this.aluno);
+				info("Aluno removido: " + this.aluno.getPessoa().getNome());
+				this.aluno = new Aluno();
+			} else {
+				warn("Houve um problema para remover o aluno, verifique na listagem");
+			}
+			return "listar";
+		} catch (Exception e) {
+
+		}
+		return "listar";
 	}
 
-	public void atualizar(Aluno aluno) {
-		this.setAlunoAnterior(aluno.clone());
-		this.aluno = aluno;
-		this.editado = true;
+	public String atualizar(Aluno aluno) {
+		try {
+			this.aluno = aluno.clone();
+			this.alunoAnterior = aluno.clone();
+			this.editado = true;
+			return "atualizar";
+		} catch (Exception e) {
+			return "atualizar";
+		}
 	}
 
-	public void salvarAtualizar() {
-		this.dao.update(aluno);
-		this.aluno = new Aluno();
-		this.editado = false;
+	public String salvarAtualizar() {
+		try{
+			this.dao.update(this.aluno);
+			this.editado = false;
+			info("Dados de "+ this.aluno.getPessoa().getNome() + " atualizados");
+			this.aluno = new Aluno();
+			return "Inicio";
+		}catch(Exception e){
+			error("Erro ao atualizar as informações!");
+			return "atualizar";
+		}
 	}
 
 	public void cancelarAtualizar() {
@@ -130,20 +191,40 @@ public class AlunoBean {
 		this.pessoa = pessoa;
 	}
 
-	public Pessoa getPessoaAnterior() {
-		return pessoaAnterior;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setPessoaAnterior(Pessoa pessoaAnterior) {
-		this.pessoaAnterior = pessoaAnterior;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 
-	public String getMensagemErro() {
-		return mensagemErro;
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public void setMensagemErro(String mensagemErro) {
-		this.mensagemErro = mensagemErro;
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public void info(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));
+	}
+
+	public void warn(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
+	}
+
+	public void error(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+	}
+
+	public void fatal(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
 	}
 
 }

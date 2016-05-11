@@ -33,25 +33,25 @@
 									autoUpdate="true" />
 								<div class="col-md-6">
 									<div class="form-group">
-										Nome:
+										<label>Nome:</label>
 										<p:inputText value="#{pessoaBean.pessoa.nome}"
 											styleClass="form-control" id="Nome"/>
 									</div>
 									<div class="form-group">
-										Sexo:
+										<label>Sexo:</label>
 										<p:inputText value="#{pessoaBean.pessoa.sexo}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Data de nascimento:
+										<label>Data de nascimento:</label>
 										<p:calendar value="#{pessoaBean.pessoa.datanasc}"
 											pattern="dd/MM/yyyy" styleClass="form-date"/>
 									</div>
 									<div class="form-group">
-										Email:
+										<label>Email:</label>
 										<p:inputText value="#{pessoaBean.pessoa.email}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Estado Civil:
+										<label>Estado Civil:</label>
 										<h:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}" styleClass="form-control">
 											<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
 											<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
@@ -61,45 +61,43 @@
 										</h:selectOneMenu>
 									</div>
 									<div class="form-group">
-										Etnia:
+										<label>Etnia:</label>
 										<p:inputText value="#{pessoaBean.pessoa.etnia}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Nacionalidade:
+										<label>Nacionalidade:</label>
 										<p:inputText value="#{pessoaBean.pessoa.nacionalidade}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Naturalidade:
+										<label>Naturalidade:</label>
 										<p:inputText value="#{pessoaBean.pessoa.naturalidade}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										UF:
+										<label>UF:</label>
 										<p:inputText value="#{pessoaBean.pessoa.uf}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Necessidades Especiais:
+										<label>Necessidades Especiais:</label>
 										<p:inputText
 											value="#{pessoaBean.pessoa.necessidadesespeciais}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Nome da Mãe:
+										<label>Nome da Mãe:</label>
 										<p:inputText value="#{pessoaBean.pessoa.nomemae}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Nome do Pai:
+										<label>Nome do Pai:</label>
 										<p:inputText value="#{pessoaBean.pessoa.nomepai}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
-										Numero do Celular:
+										<label>Numero do Celular:</label>
 										<p:inputText value="#{pessoaBean.pessoa.numerocelular}" styleClass="form-control"/>
 									</div>
 									<div class="form-group">
 										<h:commandButton value="save"
 											action="#{pessoaBean.salvarAtualizar}" type="submit"
-											process="atualizar_form" styleClass="btn btn-primary">
+											process="atualizar_form" styleClass="btn btn-primary"/>
 											<span>    </span>
-											</h:commandButton>
-											
 										<h:commandButton value="cancel"
 											action="#{pessoaBean.cancelarAtualizar}" styleClass="btn btn-primary" />
 									</div>

@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Listagem de pessoas</li>
+			</ol>
+		</div>
+		<!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Listagem de Alunos</h1>
+			</div>
+		</div>
+		<!--/.row-->
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Alunos cadastrados</div>
+					<div class="panel-body">
+						<table data-toggle="table" data-show-refresh="true"
+							data-show-toggle="true" data-show-columns="true"
+							data-search="true" data-select-item-name="toolbar1"
+							data-pagination="true" data-sort-name="name"
+							data-sort-order="desc">
+							<thead>
+								<tr>
+									<th data-field="nome" data-sortable="true">Nome</th>
+									<th data-field="tipo" data-sortable="true">Tipo pessoa</th>
+									<th data-field="email" data-sortable="true">E-mail</th>
+									<th data-field="editar" data-sortable="true">Editar</th>
+									<th data-field="deletar" data-sortable="true">Deletar</th>
+								</tr>
+							</thead>
+							<h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
+								<tbody>
+									<ui:repeat var="pessoa" value="#{pessoaBean.pessoas}"
+										varStatus="status">
+										<tr>
+											<td>#{pessoa.nome}</td>
+											<td>#{pessoa.tipopessoa}</td>
+											<td>#{pessoa.email}</td>
+											<td><h:commandLink id="btn_edit"
+													action="#{pessoaBean.atualizar(pessoa)}"
+													class="glyphicon glyphicon-pencil" type="submit"
+													immediate="true" process="list_form" > Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
+											</td>
+											<td><h:commandLink
+													action="#{pessoaBean.remover(pessoa.id)}"
+													type="submit" process="list_form"
+													class="glyphicon glyphicon-trash" immediate="true"> Deletar</h:commandLink></td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</h:form>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
