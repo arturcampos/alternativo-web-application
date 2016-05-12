@@ -74,35 +74,52 @@
 			</li>
 			<li class="parent ">
 				<a href="#" >
-					<span data-toggle="collapse" href="#sub-item-1" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Alunos
+					<span data-toggle="collapse" href="#gerenciar-aluno" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Alunos
 				</a>
-				<ul class="children collapse" id="sub-item-1">
+				<ul class="children collapse" id="gerenciar-aluno">
 					<li>
-						<a class="" href="#{request.contextPath}/salvarAluno.xthml">
-							<span class="glyphicon glyphicon-chevron-right"/> Adicionar
-						</a>
+						<h:link class="" outcome="salvarAluno">
+							<span class="glyphicon glyphicon-chevron-right"/> Adicionar aluno
+						</h:link>
 					</li>
 					<li>
-						<a class="" href="#{request.contextPath}/listarAluno.xthml">
-							<span class="glyphicon glyphicon-chevron-right"/> Buscar
-						</a>
+						<h:link class="" outcome="listarAluno">
+							<span class="glyphicon glyphicon-chevron-right"/> Buscar aluno
+						</h:link>
 					</li>
 				</ul>
 			</li>
 			<li class="parent ">
 				<a href="#" >
-					<span data-toggle="collapse" href="#sub-item-2" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Professores 
+					<span data-toggle="collapse" href="#gerenciar-professor" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Professores 
 				</a>
-				<ul class="children collapse" id="sub-item-2">
+				<ul class="children collapse" id="gerenciar-professor">
 					<li>
-						<a class="" href="#{request.contextPath}/salvarProfessor.xthml">
-							<span class="glyphicon glyphicon-chevron-right"/> Adicionar
-						</a>
+						<h:link class="" outcome="salvarProfessor">
+							<span class="glyphicon glyphicon-chevron-right"/> Adicionar professor
+						</h:link>
 					</li>
 					<li>
-						<a class="" href="#{request.contextPath}/listarProfessor.xthml">
-							<span class="glyphicon glyphicon-chevron-right"/> Buscar
-						</a>
+						<h:link class="" outcome="listarProfessor">
+							<span class="glyphicon glyphicon-chevron-right"/> Buscar professor
+						</h:link>
+					</li>
+				</ul>
+			</li>
+			<li class="parent ">
+				<a href="#" >
+					<span data-toggle="collapse" href="#gerenciar-turma" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Turmas 
+				</a>
+				<ul class="children collapse" id="gerenciar-turma">
+					<li>
+						<h:link class="" outcome="#">
+							<span class="glyphicon glyphicon-chevron-right"/> Nova turma
+						</h:link>
+					</li>
+					<li>
+						<h:link class="" outcome="#">
+							<span class="glyphicon glyphicon-chevron-right"/> Buscar truma
+						</h:link>
 					</li>
 				</ul>
 			</li>

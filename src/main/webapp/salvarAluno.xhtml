@@ -27,14 +27,14 @@
 		<h:panelGroup>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">Preencha o formulário.</div>
-						<h:form id="salvar_form">
-							<h:messages id="messages" showDetail="true" closable="true"
+					<h:form id="salvar_form">
+						<div class="panel panel-default">
+							<div class="panel-heading">Preencha o formulário.</div>
+							<h:messages id="messages" showDetail="false" closable="true"
 								autoUpdate="true" />
 							<div class="panel-body tabs">
 								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab-aluno" data-toggle="tab">Aluno</a></li>
+									<li class=""><a href="#tab-aluno" data-toggle="tab">Aluno</a></li>
 									<li class=""><a href="#tab-documento" data-toggle="tab">Documento</a></li>
 									<li class=""><a href="#tab-endereco" data-toggle="tab">Endereço</a></li>
 								</ul>
@@ -186,18 +186,15 @@
 
 									</div>
 								</div>
-								<br />
-							<br />
-							<div class="col-md-2"></div>
+							</div>
 
-							<div class="col-md-4">
-								<p:commandButton value="Salvar" process="salvar_form"
-									type="submit" action="#{alunoBean.salvar}"
-									styleClass="btn btn-primary" update="salvar_form" />
-							</div>
-							</div>
-						</h:form>
-					</div>
+						</div>
+						<div align="right">
+							<p:commandButton value="Salvar" process="salvar_form"
+								type="submit" action="#{alunoBean.salvar}"
+								styleClass="btn btn-primary" update="salvar_form"/>
+						</div>
+					</h:form>
 				</div>
 			</div>
 		</h:panelGroup>
