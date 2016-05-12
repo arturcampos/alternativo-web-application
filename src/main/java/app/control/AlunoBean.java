@@ -14,6 +14,8 @@ import app.model.Aluno;
 import app.model.Documento;
 import app.model.Endereco;
 import app.model.Pessoa;
+import app.util.Status;
+import app.util.TipoPessoa;
 
 @ManagedBean
 @SessionScoped
@@ -23,7 +25,9 @@ public class AlunoBean {
 	private Aluno aluno;
 	private Pessoa pessoa;
 	private List<Documento> documentos;
+	private Documento documento;
 	private List<Endereco> enderecos;
+	private Endereco endereco;
 	private Aluno alunoAnterior = null;
 	private List<Aluno> alunoLista;
 	private boolean editado;
@@ -37,19 +41,25 @@ public class AlunoBean {
 		this.alunoLista = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
 		this.pessoa = new Pessoa();
+		this.documentos = new ArrayList<Documento>();
+		this.setDocumento(new Documento());
+		this.enderecos = new ArrayList<Endereco>();
+		this.setEndereco(new Endereco());
 	}
 
 	public String salvar(Aluno aluno) {
 		try {
 			
-			this.pessoa.setTipopessoa("ALUNO");
+			this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 			
 			// adicionando documentos à pessoa
 			this.pessoa.setDocumentos(this.documentos);
 
 			// adicionando endereços à pessoa
 			this.pessoa.setEnderecos(this.enderecos);
-
+			
+			//alterando status para ativo
+			this.aluno.setStatus(Status.ATIVO.toString());
 			// adicionando pessoa à alunos
 			this.aluno.setPessoa(this.pessoa);
 
@@ -205,6 +215,22 @@ public class AlunoBean {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public Documento getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(Documento documento) {
+		this.documento = documento;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public void info(String message) {

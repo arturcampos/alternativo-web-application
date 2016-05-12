@@ -45,12 +45,14 @@ public class Aluno implements Serializable {
 	// bi-directional one-to-one association to Pessoa
 	@OneToOne
 	private Pessoa pessoa;
+	
+	private String status;
 
 	public Aluno() {
 	}
 
 	public Aluno(Long id, Date dataegresso, Date dataingresso,
-			String matricula, int tipocotaingresso, Turma turma, Pessoa pessoa) {
+			String matricula, int tipocotaingresso, Turma turma, Pessoa pessoa, String status) {
 		super();
 		this.id = id;
 		this.dataegresso = dataegresso;
@@ -59,6 +61,7 @@ public class Aluno implements Serializable {
 		this.tipocotaingresso = tipocotaingresso;
 		this.turma = turma;
 		this.pessoa = pessoa;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -120,7 +123,7 @@ public class Aluno implements Serializable {
 	@Override
 	public Aluno clone() {
 		return new Aluno(id, dataegresso, dataingresso, matricula,
-				tipocotaingresso, turma, pessoa);
+				tipocotaingresso, turma, pessoa, status);
 	}
 	
 	public void restaurar(Aluno aluno) {
@@ -131,6 +134,15 @@ public class Aluno implements Serializable {
 		this.tipocotaingresso = aluno.getTipocotaingresso();
 		this.turma = aluno.getTurma();
 		this.pessoa = aluno.getPessoa();
+		this.status = aluno.getStatus();
     }
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getStatus(){
+		return this.status;
+	}
 
 }

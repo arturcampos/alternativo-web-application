@@ -27,6 +27,8 @@ public class Documento implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	private String numero;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataexpedicao;
@@ -83,6 +85,14 @@ public class Documento implements Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public Pessoa getPessoa() {
