@@ -49,29 +49,30 @@ public class AlunoBean {
 
 	public String salvar(Aluno aluno) {
 		try {
-			
+
 			this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
-			
-			// adicionando documentos à pessoa
+
+			// adicionando documentos ï¿½ pessoa
 			this.pessoa.setDocumentos(this.documentos);
 
-			// adicionando endereços à pessoa
+			// adicionando endereï¿½os ï¿½ pessoa
 			this.pessoa.setEnderecos(this.enderecos);
-			
-			//alterando status para ativo
+
+			// alterando status para ativo
 			this.aluno.setStatus(Status.ATIVO.toString());
-			// adicionando pessoa à alunos
+			// adicionando pessoa ï¿½ alunos
 			this.aluno.setPessoa(this.pessoa);
 
+			// 
 			// executando metod DAO para salvar aluno
 			this.dao.save(aluno);
 
 			this.alunoLista.add(aluno);
 			aluno = new Aluno();
-			info("Informações salvas com sucesso");
+			info("InformaÃ§Ãµes salvas com sucesso");
 			return "salvar";
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaÃ§Ãµes: " + e.getMessage());
 			return "salvar";
 		}
 	}
@@ -83,7 +84,7 @@ public class AlunoBean {
 			if (this.aluno != null) {
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno não encontrado!");
+				warn("Aluno nÃ£o encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
@@ -109,6 +110,38 @@ public class AlunoBean {
 		return "listar";
 	}
 
+	public String adicionarDocumento() {
+		try{
+			if (this.documentos == null) {
+				this.documentos = new ArrayList<Documento>();
+			}
+
+			this.documentos.add(this.documento);
+			info("Documento "+ documento.getNumero() +" adicionado!");
+			this.documento = new Documento();
+			
+		}catch(Exception e){
+			error("Erro ao adicionar documento Ã  lista");
+		}
+		
+		
+		return null;
+	}
+	
+	public String removerDocumento(Documento documento){
+		if((this.documentos != null) && (!this.documentos.isEmpty())){
+			this.documentos.remove(documento);
+			info("Documento removido com sucesso!");
+		}
+		else{
+			warn("NÃ£o existem documentos Ã  serem removidos");
+		}
+		
+		
+		
+		return null; 	
+	}
+
 	public String atualizar(Aluno aluno) {
 		try {
 			this.aluno = aluno.clone();
@@ -121,14 +154,15 @@ public class AlunoBean {
 	}
 
 	public String salvarAtualizar() {
-		try{
+		try {
 			this.dao.update(this.aluno);
 			this.editado = false;
-			info("Dados de "+ this.aluno.getPessoa().getNome() + " atualizados");
+			info("Dados de " + this.aluno.getPessoa().getNome()
+					+ " atualizados");
 			this.aluno = new Aluno();
 			return "Inicio";
-		}catch(Exception e){
-			error("Erro ao atualizar as informações!");
+		} catch (Exception e) {
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizar";
 		}
 	}
@@ -239,18 +273,26 @@ public class AlunoBean {
 	}
 
 	public void warn(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!",
+						message));
 	}
 
 	public void error(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+		FacesContext.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+								message));
 	}
 
 	public void fatal(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
+		FacesContext.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!",
+								message));
 	}
 
 }
