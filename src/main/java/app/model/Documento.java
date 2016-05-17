@@ -29,6 +29,8 @@ public class Documento implements Serializable {
 	private Long id;
 	
 	private String numero;
+	
+	private String tipo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataexpedicao;
@@ -93,6 +95,14 @@ public class Documento implements Serializable {
 
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public Pessoa getPessoa() {
