@@ -1,5 +1,6 @@
 package app.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import app.util.TipoPessoa;
 
 @ManagedBean
 @SessionScoped
-public class AlunoBean {
+public class AlunoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private AlunoDao dao;
 	private Aluno aluno;
@@ -63,17 +66,17 @@ public class AlunoBean {
 			// adicionando pessoa ï¿½ alunos
 			this.aluno.setPessoa(this.pessoa);
 
-			// 
+			//
 			// executando metod DAO para salvar aluno
 			this.dao.save(aluno);
 
 			this.alunoLista.add(aluno);
 			aluno = new Aluno();
-			info("InformaÃ§Ãµes salvas com sucesso");
-			return "salvar";
+			info("Informações salvas com sucesso");
+			return "salvarAluno";
 		} catch (Exception e) {
-			error("Erro ao Salvar informaÃ§Ãµes: " + e.getMessage());
-			return "salvar";
+			error("Erro ao Salvar informações: " + e.getMessage());
+			return "salvarAluno";
 		}
 	}
 
@@ -84,12 +87,12 @@ public class AlunoBean {
 			if (this.aluno != null) {
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno nÃ£o encontrado!");
+				warn("Aluno não encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
 			error("Erro ao consultar dados do aluno!");
-			return "atualizar";
+			return "atualizarAluno";
 		}
 	}
 
@@ -103,7 +106,7 @@ public class AlunoBean {
 			} else {
 				warn("Houve um problema para remover o aluno, verifique na listagem");
 			}
-			return "listar";
+			return "listarAluno";
 		} catch (Exception e) {
 
 		}
@@ -115,31 +118,28 @@ public class AlunoBean {
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
 			}
-
+			
 			this.documentos.add(this.documento);
 			info("Documento "+ documento.getNumero() +" adicionado!");
 			this.documento = new Documento();
-			
+			info("Documento adicionado com sucesso.");
 		}catch(Exception e){
-			error("Erro ao adicionar documento Ã  lista");
+			error("Erro ao adicionar documento à lista");
 		}
 		
 		
 		return null;
 	}
-	
-	public String removerDocumento(Documento documento){
-		if((this.documentos != null) && (!this.documentos.isEmpty())){
+
+	public String removerDocumento(Documento documento) {
+		if ((this.documentos != null) && (!this.documentos.isEmpty())) {
 			this.documentos.remove(documento);
 			info("Documento removido com sucesso!");
+		} else {
+			warn("Não existem documentos Ã  serem removidos");
 		}
-		else{
-			warn("NÃ£o existem documentos Ã  serem removidos");
-		}
-		
-		
-		
-		return null; 	
+
+		return null;
 	}
 
 	public String atualizar(Aluno aluno) {
@@ -157,12 +157,11 @@ public class AlunoBean {
 		try {
 			this.dao.update(this.aluno);
 			this.editado = false;
-			info("Dados de " + this.aluno.getPessoa().getNome()
-					+ " atualizados");
+			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			this.aluno = new Aluno();
 			return "Inicio";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informaï¿½ï¿½es!");
+			error("Erro ao atualizar as informações!");
 			return "atualizar";
 		}
 	}
@@ -273,26 +272,18 @@ public class AlunoBean {
 	}
 
 	public void warn(String message) {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!",
-						message));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", message));
 	}
 
 	public void error(String message) {
-		FacesContext.getCurrentInstance()
-				.addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-								message));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
 	}
 
 	public void fatal(String message) {
-		FacesContext.getCurrentInstance()
-				.addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!",
-								message));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
 	}
 
 }

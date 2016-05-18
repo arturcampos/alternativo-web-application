@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+        http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 	<managed-bean>
 		<managed-bean-name>pessoaBean</managed-bean-name>
 		<managed-bean-class>app.control.PessoaBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>alunoBean</managed-bean-name>
+		<managed-bean-class>app.control.AlunoBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<navigation-rule>
@@ -75,12 +81,13 @@
 		</navigation-case>
 	</navigation-rule>
 	<render-kit>
-        <renderer>
-            <component-family>javax.faces.Messages</component-family>
-            <renderer-type>javax.faces.Messages</renderer-type>
-            <renderer-class>app.util.BootstrapMessagesRenderer</renderer-class>
-        </renderer>
-    </render-kit>
+		<renderer>
+			<display-name>MessagesBootstrap</display-name>
+			<component-family>javax.faces.Messages</component-family>
+			<renderer-type>javax.faces.Messages</renderer-type>
+			<renderer-class>app.util.BootstrapMessagesRenderer</renderer-class>
+		</renderer>
+	</render-kit>
 	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
