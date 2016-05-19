@@ -37,6 +37,7 @@ public class AlunoBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		System.out.println("init");
 		if (this.dao == null) {
 			this.dao = new AlunoDao(Aluno.class);
 		}
@@ -47,7 +48,8 @@ public class AlunoBean implements Serializable {
 		this.documentos = new ArrayList<Documento>();
 		this.setDocumento(new Documento());
 		this.enderecos = new ArrayList<Endereco>();
-		this.setEndereco(new Endereco());
+		this.endereco = new Endereco();
+		this.documento = new Documento();
 	}
 
 	public String salvar(Aluno aluno) {
@@ -113,33 +115,29 @@ public class AlunoBean implements Serializable {
 		return "listar";
 	}
 
-	public String adicionarDocumento() {
+	public void adicionarDocumento() {
 		try{
+			System.out.println(this.documento.toString());
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
 			}
-			
-			this.documentos.add(this.documento);
+			Documento doc = this.documento.clone();
+			this.documentos.add(doc);
 			info("Documento "+ documento.getNumero() +" adicionado!");
 			this.documento = new Documento();
 			info("Documento adicionado com sucesso.");
 		}catch(Exception e){
 			error("Erro ao adicionar documento à lista");
 		}
-		
-		
-		return null;
 	}
-
-	public String removerDocumento(Documento documento) {
+	public void removerDocumento(final Documento documento) {
+		
 		if ((this.documentos != null) && (!this.documentos.isEmpty())) {
 			this.documentos.remove(documento);
 			info("Documento removido com sucesso!");
 		} else {
-			warn("Não existem documentos Ã  serem removidos");
+			warn("Não existem documentos à serem removidos");
 		}
-
-		return null;
 	}
 
 	public String atualizar(Aluno aluno) {
@@ -174,6 +172,18 @@ public class AlunoBean implements Serializable {
 
 	public void buscarTodos() {
 		this.alunoLista = this.dao.findAll();
+	}
+	
+	public String buscarPorMatricula(String matricula){
+		try{
+			if(this.alunoLista == null){
+				this.alunoLista = new ArrayList<Aluno>();
+			}
+			this.alunoLista = this.dao.findByRegistrationNumber(matricula);
+		}catch(Exception e){
+			
+		}
+		return "listarAluno";
 	}
 
 	public void limparAluno() {

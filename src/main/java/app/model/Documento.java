@@ -126,8 +126,8 @@ public class Documento implements Serializable {
 
 	@Override
 	public String toString() {
-		return new String("Número:" + this.numero + "\nOrgam Emissor:" + this.orgaoemissor + "\nData de Emissão:"
-				+ this.dataexpedicao + "\nDataValidade:" + this.datavalidade);
+		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoemissor + "\nData de Emissão:"
+				+ this.dataexpedicao + "\nData Validade:" + this.datavalidade);
 	}
 
 	public Documento clone() {
