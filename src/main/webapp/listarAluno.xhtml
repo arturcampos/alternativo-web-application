@@ -35,29 +35,29 @@
 							data-sort-order="desc">
 							<thead>
 								<tr>
+									<th data-field="matricula" data-sortable="true">Matricula</th>
 									<th data-field="nome" data-sortable="true">Nome</th>
-									<th data-field="tipo" data-sortable="true">Tipo pessoa</th>
-									<th data-field="email" data-sortable="true">E-mail</th>
+									<th data-field="tipo-cota" data-sortable="true">Cota</th>
 									<th data-field="editar" data-sortable="true">Editar</th>
 									<th data-field="deletar" data-sortable="true">Deletar</th>
 								</tr>
 							</thead>
-							<h:form rendered="#{not empty pessoaBean.pessoas}" id="list_form">
+							<h:form rendered="#{not empty alunoBean.alunos" id="list-form">
 								<tbody>
-									<ui:repeat var="pessoa" value="#{pessoaBean.pessoas}"
+									<ui:repeat var="aluno" value="#{alunoBean.alunos}"
 										varStatus="status">
 										<tr>
-											<td>#{pessoa.nome}</td>
-											<td>#{pessoa.tipopessoa}</td>
-											<td>#{pessoa.email}</td>
+											<td>#{aluno.matricula}</td>
+											<td>#{aluno.pessoa.nome}</td>
+											<td>#{aluno.tipoCotaIngresso}</td>
 											<td><h:commandLink id="btn_edit"
-													action="#{pessoaBean.atualizar(pessoa)}"
+													action="#{alunoBean.atualizar(aluno)}"
 													class="glyphicon glyphicon-pencil" type="submit"
-													immediate="true" process="list_form" > Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
+													immediate="true" process="@form" > Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
 											</td>
 											<td><h:commandLink
-													action="#{pessoaBean.remover(pessoa.id)}"
-													type="submit" process="list_form"
+													action="#{alunoBean.remover(aluno.id)}"
+													type="submit" process="@form"
 													class="glyphicon glyphicon-trash" immediate="true"> Deletar</h:commandLink></td>
 										</tr>
 									</ui:repeat>

@@ -9,12 +9,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
 import app.model.Documento;
 import app.model.Endereco;
 import app.model.Pessoa;
+import app.util.AlunoUtil;
 import app.util.Status;
 import app.util.TipoPessoa;
 
@@ -32,8 +34,11 @@ public class AlunoBean implements Serializable {
 	private List<Endereco> enderecos;
 	private Endereco endereco;
 	private Aluno alunoAnterior = null;
-	private List<Aluno> alunoLista;
+	private List<Aluno> alunos;
 	private boolean editado;
+	private String alunoTab;
+	private String documentoTab;
+	private String enderecoTab;
 
 	@PostConstruct
 	public void init() {
@@ -42,7 +47,7 @@ public class AlunoBean implements Serializable {
 			this.dao = new AlunoDao(Aluno.class);
 		}
 		this.dao = new AlunoDao(Aluno.class);
-		this.alunoLista = new ArrayList<Aluno>();
+		this.alunos = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
 		this.pessoa = new Pessoa();
 		this.documentos = new ArrayList<Documento>();
@@ -50,32 +55,41 @@ public class AlunoBean implements Serializable {
 		this.enderecos = new ArrayList<Endereco>();
 		this.endereco = new Endereco();
 		this.documento = new Documento();
+		this.setAlunoTab("active");
+		this.setEnderecoTab("");
+		this.setDocumentoTab("");
 	}
 
-	public String salvar(Aluno aluno) {
+	public String salvar() {
 		try {
-
+			
 			this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-			// adicionando documentos ï¿½ pessoa
+			// adicionando documentos à pessoa
 			this.pessoa.setDocumentos(this.documentos);
 
-			// adicionando endereï¿½os ï¿½ pessoa
+			// adicionando endereço pessoa
 			this.pessoa.setEnderecos(this.enderecos);
 
 			// alterando status para ativo
 			this.aluno.setStatus(Status.ATIVO.toString());
-			// adicionando pessoa ï¿½ alunos
+			
+			//Gerando matricula e atribuindo ao aluno
+			String matricula = AlunoUtil.GerarMatricula();
+			this.aluno.setMatricula(matricula);
+			
+			// adicionando pessoa à alunos
 			this.aluno.setPessoa(this.pessoa);
 
-			//
+			System.out.println(this.aluno.toString());
+			System.out.println(this.pessoa.toString());
 			// executando metod DAO para salvar aluno
 			this.dao.save(aluno);
 
-			this.alunoLista.add(aluno);
-			aluno = new Aluno();
+			this.alunos.add(aluno);
+			init();
 			info("Informações salvas com sucesso");
-			return "salvarAluno";
+			return "salvarAluno?faces-redirect=true";
 		} catch (Exception e) {
 			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno";
@@ -101,8 +115,8 @@ public class AlunoBean implements Serializable {
 	public String remover(Long id) {
 		try {
 			this.aluno = this.dao.remove(id);
-			if (!this.alunoLista.isEmpty() && this.alunoLista != null) {
-				this.alunoLista.remove(this.aluno);
+			if (this.alunos != null && !this.alunos.isEmpty()) {
+				this.alunos.remove(this.aluno);
 				info("Aluno removido: " + this.aluno.getPessoa().getNome());
 				this.aluno = new Aluno();
 			} else {
@@ -115,21 +129,25 @@ public class AlunoBean implements Serializable {
 		return "listar";
 	}
 
-	public void adicionarDocumento() {
+	public void adicionarDocumento(ActionEvent actionEvent) {
 		try{
-			System.out.println(this.documento.toString());
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
 			}
 			Documento doc = this.documento.clone();
 			this.documentos.add(doc);
-			info("Documento "+ documento.getNumero() +" adicionado!");
+			info("Documento "+ documento.getTipo() + " "+ documento.getNumero() +" adicionado!");
 			this.documento = new Documento();
-			info("Documento adicionado com sucesso.");
+			
+			
+			this.alunoTab = "";
+			this.documentoTab = "active";
+			this.enderecoTab = "";
 		}catch(Exception e){
 			error("Erro ao adicionar documento à lista");
 		}
 	}
+	
 	public void removerDocumento(final Documento documento) {
 		
 		if ((this.documentos != null) && (!this.documentos.isEmpty())) {
@@ -140,6 +158,34 @@ public class AlunoBean implements Serializable {
 		}
 	}
 
+	public void adicionarEndereco(ActionEvent actionEvent) {
+		try{
+			if (this.enderecos == null) {
+				this.enderecos = new ArrayList<Endereco>();
+			}
+			Endereco end = this.endereco.clone();
+			this.enderecos.add(end);
+			info("Endereco adicionado!");
+			this.endereco = new Endereco();
+			this.alunoTab = "";
+			this.documentoTab = "";
+			this.enderecoTab = "active";
+			
+		}catch(Exception e){
+			error("Erro ao adicionar endereco à lista");
+		}
+	}
+	
+public void removerEndereco(ActionEvent actionEvent, final Endereco endereco) {
+		
+		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
+			this.enderecos.remove(endereco);
+			info("Endereço removido com sucesso!");
+		} else {
+			warn("Não existem endereços à serem removidos");
+		}
+	}
+	
 	public String atualizar(Aluno aluno) {
 		try {
 			this.aluno = aluno.clone();
@@ -171,15 +217,15 @@ public class AlunoBean implements Serializable {
 	}
 
 	public void buscarTodos() {
-		this.alunoLista = this.dao.findAll();
+		this.alunos = this.dao.findAll();
 	}
 	
 	public String buscarPorMatricula(String matricula){
 		try{
-			if(this.alunoLista == null){
-				this.alunoLista = new ArrayList<Aluno>();
+			if(this.alunos == null){
+				this.alunos = new ArrayList<Aluno>();
 			}
-			this.alunoLista = this.dao.findByRegistrationNumber(matricula);
+			this.alunos.add(this.dao.findByRegistrationNumber(matricula));
 		}catch(Exception e){
 			
 		}
@@ -187,11 +233,11 @@ public class AlunoBean implements Serializable {
 	}
 
 	public void limparAluno() {
-		this.aluno.setDataegresso(null);
-		this.aluno.setDataingresso(null);
+		this.aluno.setDataEgresso(null);
+		this.aluno.setDataIngresso(null);
 		this.aluno.setMatricula(null);
 		this.aluno.setPessoa(null);
-		this.aluno.setTipocotaingresso(-1);
+		this.aluno.setTipoCotaIngresso(-1);
 		this.aluno.setTurma(null);
 		this.aluno.setId(null);
 	}
@@ -229,11 +275,11 @@ public class AlunoBean implements Serializable {
 	}
 
 	public List<Aluno> getAlunos() {
-		return alunoLista;
+		return alunos;
 	}
 
 	public void setAlunos(List<Aluno> alunos) {
-		this.alunoLista = alunos;
+		this.alunos = alunos;
 	}
 
 	public Pessoa getPessoa() {
@@ -274,6 +320,30 @@ public class AlunoBean implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getAlunoTab() {
+		return alunoTab;
+	}
+
+	public void setAlunoTab(String alunoTab) {
+		this.alunoTab = alunoTab;
+	}
+
+	public String getDocumentoTab() {
+		return documentoTab;
+	}
+
+	public void setDocumentoTab(String documentoTab) {
+		this.documentoTab = documentoTab;
+	}
+
+	public String getEnderecoTab() {
+		return enderecoTab;
+	}
+
+	public void setEnderecoTab(String enderecoTab) {
+		this.enderecoTab = enderecoTab;
 	}
 
 	public void info(String message) {

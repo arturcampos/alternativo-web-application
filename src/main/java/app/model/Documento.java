@@ -130,6 +130,7 @@ public class Documento implements Serializable {
 				+ this.dataexpedicao + "\nData Validade:" + this.datavalidade);
 	}
 
+	@Override
 	public Documento clone() {
 		return new Documento(this.id, this.numero, this.tipo, this.dataexpedicao, this.datavalidade, this.orgaoemissor,
 				this.uf, this.pessoa);
