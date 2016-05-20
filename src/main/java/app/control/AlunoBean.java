@@ -67,9 +67,11 @@ public class AlunoBean implements Serializable {
 
 			// adicionando documentos à pessoa
 			this.pessoa.setDocumentos(this.documentos);
+			vincularDocumento(this.pessoa, this.documentos);
 
 			// adicionando endereço pessoa
 			this.pessoa.setEnderecos(this.enderecos);
+			vincularEndereco(this.pessoa, this.enderecos);
 
 			// alterando status para ativo
 			this.aluno.setStatus(Status.ATIVO.toString());
@@ -114,8 +116,10 @@ public class AlunoBean implements Serializable {
 
 	public String remover(Long id) {
 		try {
-			this.aluno = this.dao.remove(id);
+			this.aluno = this.dao.findById(id);
 			if (this.alunos != null && !this.alunos.isEmpty()) {
+				this.aluno.setStatus(Status.INATIVO.toString());
+				this.dao.update(this.aluno);
 				this.alunos.remove(this.aluno);
 				info("Aluno removido: " + this.aluno.getPessoa().getNome());
 				this.aluno = new Aluno();
@@ -124,7 +128,7 @@ public class AlunoBean implements Serializable {
 			}
 			return "listarAluno";
 		} catch (Exception e) {
-
+			error("Houve um problema para remover o aluno, verifique na listagem");
 		}
 		return "listar";
 	}
@@ -183,6 +187,18 @@ public void removerEndereco(ActionEvent actionEvent, final Endereco endereco) {
 			info("Endereço removido com sucesso!");
 		} else {
 			warn("Não existem endereços à serem removidos");
+		}
+	}
+
+	private void vincularDocumento(Pessoa p, List<Documento> docs){
+		for(Documento d : docs){
+			d.setPessoa(p);
+		}
+	}
+	
+	private void vincularEndereco(Pessoa p, List<Endereco> ends){
+		for(Endereco e : ends){
+			e.setPessoa(p);
 		}
 	}
 	
