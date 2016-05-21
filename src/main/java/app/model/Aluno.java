@@ -24,7 +24,8 @@ import javax.persistence.TemporalType;
 @Table(name = "aluno", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
 		@NamedQuery(name = "Aluno.findLastRegistrationNumber", query = "SELECT MAX(a.matricula) as last FROM Aluno a"),
-		@NamedQuery(name="Aluno.findByRegistrationNumber", query="SELECT a FROM Aluno a WHERE a.matricula LIKE :wantedNumber")})
+		@NamedQuery(name="Aluno.findByRegistrationNumber", query="SELECT a FROM Aluno a WHERE a.matricula LIKE :wantedNumber"),
+		@NamedQuery(name="Aluno.findByStatus", query="SELECT a FROM Aluno a WHERE a.status LIKE :wantedStatus")})
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -27,7 +27,28 @@
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Alunos cadastrados</div>
+					<h:messages id="messages" showDetail="true" closable="true"
+								autoUpdate="true" />
 					<div class="panel-body">
+						<div class="col-lg-12" align="right">
+							<h:form id="matricula-form">
+							<div class="col-md-8"></div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<p:inputText styleClass="form-control" value="#{matricula}" style="height: 40px"/>
+										<span />
+									</div>
+								</div>
+								<div class="col-md-1" align="left">
+									<div class="form-group">
+										<p:commandButton
+											styleClass="btn btn-primary glyphicon glyphicon-zoom-in"
+											action="#{alunoBean.buscarPorMatricula(matricula)}"
+											value="" process="@form" />
+									</div>
+								</div>
+							</h:form>
+						</div>
 						<table data-toggle="table" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="toolbar1"
@@ -38,11 +59,12 @@
 									<th data-field="matricula" data-sortable="true">Matricula</th>
 									<th data-field="nome" data-sortable="true">Nome</th>
 									<th data-field="tipo-cota" data-sortable="true">Cota</th>
+									<th data-field="tipo-cota" data-sortable="true">Documento</th>
 									<th data-field="editar" data-sortable="true">Editar</th>
 									<th data-field="deletar" data-sortable="true">Deletar</th>
 								</tr>
 							</thead>
-							<h:form rendered="#{not empty alunoBean.alunos" id="list-form">
+							<h:form rendered="#{not empty alunoBean.alunos}" id="list-form">
 								<tbody>
 									<ui:repeat var="aluno" value="#{alunoBean.alunos}"
 										varStatus="status">
@@ -50,15 +72,16 @@
 											<td>#{aluno.matricula}</td>
 											<td>#{aluno.pessoa.nome}</td>
 											<td>#{aluno.tipoCotaIngresso}</td>
+											<td>#{aluno.pessoa.documentos[1].tipo}</td>
 											<td><h:commandLink id="btn_edit"
 													action="#{alunoBean.atualizar(aluno)}"
 													class="glyphicon glyphicon-pencil" type="submit"
-													immediate="true" process="@form" > Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
+													process="@form"> Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
 											</td>
 											<td><h:commandLink
-													action="#{alunoBean.remover(aluno.id)}"
-													type="submit" process="@form"
-													class="glyphicon glyphicon-trash" immediate="true"> Deletar</h:commandLink></td>
+													action="#{alunoBean.remover(aluno.id)}" type="submit"
+													process="@form" class="glyphicon glyphicon-trash"
+													immediate="true"> Deletar</h:commandLink></td>
 										</tr>
 									</ui:repeat>
 								</tbody>

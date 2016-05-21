@@ -143,8 +143,8 @@ public class BootstrapMessagesRenderer extends MessagesRenderer {
 
             writer.startElement("div", null);
             writer.writeAttribute("class", alertIcon, alertIcon);
-            writer.endElement("div");
-            writer.startElement("div", null);
+            /*writer.startElement("div", null);
+            writer.endElement("div");*/
             if (uiMessages.isShowSummary()) {
                 writer.startElement("strong", uiMessages);
                 writer.writeText(summary, uiMessages, null);

@@ -32,7 +32,7 @@
 							<!-- div class="large">15</div-->
 							<div class="text-muted">
 							<h:form>
-							<a href="#{request.contextPath}/professor.xhtml">Professores</a>
+							<a href="#{request.contextPath}/listarProfessor.xhtml">Professores</a>
 							</h:form>
 							</div>
 						</div>
@@ -47,7 +47,7 @@
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<!--  div class="large">120</div-->
-							<div class="text-muted"><a href="#{request.contextPath}/aluno.xhtml">Alunos</a></div>
+							<div class="text-muted"><h:form id="link-form-aluno"><p:commandLink action="#{alunoBean.buscarTodosPorStatus('ATIVO')}" process="link-form-aluno">Alunos</p:commandLink></h:form></div>
 						</div>
 					</div>
 				</div>

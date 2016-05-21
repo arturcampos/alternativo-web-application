@@ -3,6 +3,7 @@ package app.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +34,7 @@ public class Professor implements Serializable {
 	private String nivelformacao;
 
 	//bi-directional one-to-one association to Pessoa
-	@OneToOne
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private Pessoa pessoa;
 
 	//bi-directional many-to-many association to Disciplina
@@ -46,6 +47,29 @@ public class Professor implements Serializable {
 
 	public Professor() {
 	}
+	
+	
+
+	/**
+	 * @param id
+	 * @param formacao
+	 * @param nivelformacao
+	 * @param pessoa
+	 * @param disciplinas
+	 * @param turmas
+	 */
+	public Professor(Long id, String formacao, String nivelformacao, Pessoa pessoa, List<Disciplina> disciplinas,
+			List<Turma> turmas) {
+		super();
+		this.id = id;
+		this.formacao = formacao;
+		this.nivelformacao = nivelformacao;
+		this.pessoa = pessoa;
+		this.disciplinas = disciplinas;
+		this.turmas = turmas;
+	}
+
+
 
 	public Long getId() {
 		return this.id;
@@ -107,6 +131,11 @@ public class Professor implements Serializable {
 		turma.setProfessor(null);
 
 		return turma;
+	}
+	
+	@Override
+	public Professor clone(){
+		return new Professor(this.id, this.formacao, this.nivelformacao, this.pessoa, this.disciplinas, this.turmas);
 	}
 
 }
