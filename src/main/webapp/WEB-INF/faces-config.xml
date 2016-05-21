@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+        http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 	<managed-bean>
 		<managed-bean-name>pessoaBean</managed-bean-name>
 		<managed-bean-class>app.control.PessoaBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>alunoBean</managed-bean-name>
+		<managed-bean-class>app.control.AlunoBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<navigation-rule>
@@ -74,7 +80,15 @@
 			<to-view-id>/salvar.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<render-kit>
+	<navigation-rule>
+		<display-name>atualizar.xhtml</display-name>
+		<from-view-id>/atualizar.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listarAluno?faces-redirect=true</from-outcome>
+			<to-view-id>/listarAluno.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<render-kit>
         <renderer>
             <component-family>javax.faces.Messages</component-family>
             <renderer-type>javax.faces.Messages</renderer-type>

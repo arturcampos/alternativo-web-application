@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,15 +59,15 @@ public class Pessoa implements Serializable {
 	private String uf;
 
 	// bi-directional many-to-one association to Documento
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
 	private List<Documento> documentos;
 
 	// bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
 
 	// bi-directional many-to-one association to Plastico
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
 	private List<Plastico> plasticos;
 
 	private String tipopessoa;

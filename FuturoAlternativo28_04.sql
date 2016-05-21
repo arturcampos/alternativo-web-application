@@ -41,8 +41,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `futurodb`.`Documento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(255) not null,
+  `numero` varchar(255) not null,
   `dataexpedicao` DATETIME NOT NULL,
-  `datavalidade` DATETIME NOT NULL,
+  `datavalidade` DATETIME,
   `orgaoemissor` varchar(255) NOT NULL,
   `uf` varchar(255) NOT NULL,
   `Pessoa_id` int(11) NOT NULL,
@@ -74,23 +76,6 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Endereco` (
   PRIMARY KEY (`id`),
   INDEX `fk_Endereco_Pessoa1_idx` (`Pessoa_id` ASC),
   CONSTRAINT `fk_Endereco_Pessoa1`
-    FOREIGN KEY (`Pessoa_id`)
-    REFERENCES `futurodb`.`Pessoa` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `futurodb`.`TipoPessoa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `futurodb`.`TipoPessoa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipopessoa` varchar(255) NOT NULL,
-  `Pessoa_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_TipoPessoa_Pessoa1_idx` (`Pessoa_id` ASC),
-  CONSTRAINT `fk_TipoPessoa_Pessoa1`
     FOREIGN KEY (`Pessoa_id`)
     REFERENCES `futurodb`.`Pessoa` (`id`)
     ON DELETE NO ACTION
@@ -197,6 +182,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Aluno` (
   `dataegresso` DATETIME NOT NULL,
   `Turma_id` int(11) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) not null,
   `Pessoa_id` int(11) NOT NULL,
   INDEX `fk_Aluno_Turma1_idx` (`Turma_id` ASC),
   INDEX `fk_Aluno_Pessoa1_idx` (`id` ASC),

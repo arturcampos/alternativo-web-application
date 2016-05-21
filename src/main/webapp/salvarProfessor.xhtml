@@ -19,7 +19,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Cadastrar Aluno</h1>
+				<h1 class="page-header">Cadastrar Professor</h1>
 			</div>
 		</div>
 		<!--/.row-->
@@ -27,130 +27,381 @@
 		<h:panelGroup>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">Preencha o formulário.</div>
-						<div class="panel-body">
-													<!--div class="alert bg-success" role="alert">
-								<span class="glyphicon glyphicon-flag"></span> Exemplo de
-								mensagem de sucesso <a href="#" class="pull-right"><span
-									class="glyphicon glyphicon-remove"></span></a>
-							</div>
-							<div class="alert bg-warning" role="alert">
-								<span class="glyphicon glyphicon-exclamation-sign"></span>
-								Exemplo de mensagem de aviso <a href="#" class="pull-right"><span
-									class="glyphicon glyphicon-remove"></span></a>
-							</div>
-							<div class="alert bg-danger" role="alert">
-								<span class="glyphicon glyphicon-ban-circle"></span> Exemplo de
-								mensagem de erro <a href="#" class="pull-right"><span
-									class="glyphicon glyphicon-remove"></span></a>
-							</div-->
-							<h:form id="salvar_form">
-								<h:messages id="messages" showDetail="true" closable="true" autoUpdate="true" />
-								<div class="col-md-6">
-									<div class="form-group">
-										<label>Nome:</label>
-										<p:inputText value="#{pessoaBean.pessoa.nome}" required="true"
-											styleClass="form-control" id="Nome" />
-									</div>
-									<div class="form-group">
-										<label>Sexo:</label>
-										<p:inputText value="#{pessoaBean.pessoa.sexo}"
-											styleClass="form-control" id="Sexo" />
-									</div>
-									<div class="form-group">
-										<label>Data de nascimento :</label>
-										<p:calendar value="#{pessoaBean.pessoa.datanasc}"
-											pattern="dd/MM/yyyy" required="true" styleClass="form-date"
-											id="Data_Nascimento" />
-									</div>
-									<div class="form-group">
-										<label>Email:</label>
-										<p:inputText value="#{pessoaBean.pessoa.email}"
-											required="true" styleClass="form-control" id="Email" />
-									</div>
-									<div class="form-group">
-										<label>Estado Civil:</label>
-										<h:selectOneMenu value="#{pessoaBean.pessoa.estadocivil}"
-											styleClass="form-control" id="Estado_Civil">
-											<f:selectItem itemValue="" itemLabel="-"
-												noSelectionOption="true" />
-											<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
-											<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
-											<f:selectItem itemValue="DIVORCIADO(A)"
-												itemLabel="Divorciado(a)" />
-											<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-										</h:selectOneMenu>
-									</div>
-									<div class="form-group">
-										<label>Etnia:</label>
-										<p:inputText value="#{pessoaBean.pessoa.etnia}"
-											required="true" styleClass="form-control" id="Etnia" />
-									</div>
-									<div class="form-group">
-										<label>Nacionalidade:</label>
-										<p:inputText value="#{pessoaBean.pessoa.nacionalidade}"
-											required="true" styleClass="form-control" id="Nacionalidade" />
-									</div>
-									<div class="form-group">
-										<label>Naturalidade:</label>
-										<p:inputText value="#{pessoaBean.pessoa.naturalidade}"
-											required="true" styleClass="form-control" id="Naturalidade" />
-									</div>
-									<div class="form-group">
-										<label>UF:</label>
-										<p:inputText value="#{pessoaBean.pessoa.uf}" required="true"
-											styleClass="form-control" id="UF" />
-									</div>
-									<div class="form-group">
-										<label>Necessidades Especiais:</label>
-										<p:inputText
-											value="#{pessoaBean.pessoa.necessidadesespeciais}"
-											required="true" styleClass="form-control"
-											id="Necessidades_Especiais" />
-									</div>
-									<div class="form-group">
-										<label>Nome da Mãe:</label>
-										<p:inputText value="#{pessoaBean.pessoa.nomemae}"
-											required="true" styleClass="form-control" id="Nome_Mae" />
-									</div>
-									<div class="form-group">
-										<label>Nome do Pai:</label>
-										<p:inputText value="#{pessoaBean.pessoa.nomepai}"
-											required="true" styleClass="form-control" id="Nome_Pai" />
-									</div>
-									<div class="form-group">
-										<label>Numero do Celular:</label>
-										<p:inputText value="#{pessoaBean.pessoa.responsavellegal}"
-											required="true" styleClass="form-control" id="Numero_Celular" />
-									</div>
-									<div class="form-group">
-										<label>Responsavel Legal:</label>
-										<p:inputText value="#{pessoaBean.pessoa.numerocelular}"
-											required="true" styleClass="form-control"
-											id="Responsavel_Legal" />
-									</div>
-									<div class="form-group">
-										<label>Tipo de cadastro:</label>
-										<h:selectOneMenu value="#{pessoaBean.pessoa.tipopessoa}"
-											styleClass="form-control" id="Tipo_Cadastro">
-											<f:selectItem itemValue="" itemLabel="-"
-												noSelectionOption="true" />
-											<f:selectItem itemValue="ALUNO" itemLabel="Aluno" />
-											<f:selectItem itemValue="PROFESSOR" itemLabel="Professor" />
-										</h:selectOneMenu>
-									</div>
-									<p:commandButton value="Salvar" process="salvar_form"
-										type="submit" action="#{pessoaBean.salvar}"
-										styleClass="btn btn-primary" update="salvar_form" />
+					<h:form id="salvar-form">
+						<div class="panel panel-default">
+							<div class="panel-heading">Preencha o formulário.</div>
+							<h:messages id="messages" showDetail="true" closable="true"
+								autoUpdate="true" />
+							<div class="panel-body tabs">
+								<ul class="nav nav-pills">
+									<li class="#{professorBean.professorTab}"><a
+										href="#tab-professor" data-toggle="tab">Professor</a></li>
+									<li class="#{professorBean.documentoTab}"><a
+										href="#tab-documento" data-toggle="tab">Documento</a></li>
+									<li class="#{professorBean.enderecoTab}"><a
+										href="#tab-endereco" data-toggle="tab">Endereço</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane #{professorBean.professorTab}"
+										id="tab-professor">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Nome:</label>
+												<p:inputText value="#{professorBean.pessoa.nome}"
+													required="true" styleClass="form-control" id="Nome" />
+											</div>
+											<div class="form-group">
+												<label>Sexo:</label>
+												<p:inputText value="#{professorBean.pessoa.sexo}"
+													styleClass="form-control" id="Sexo" />
+											</div>
+											<div class="form-group">
+												<label>Data de nascimento :</label>
+												<p:calendar value="#{professorBean.pessoa.datanasc}"
+													pattern="dd/MM/yyyy" required="true" id="Data-Nascimento"
+													locale="pt_BR" />
+											</div>
+											<div class="form-group">
+												<label>Email:</label>
+												<p:inputText value="#{professorBean.pessoa.email}"
+													required="true" styleClass="form-control" id="Email" />
+											</div>
+											<div class="form-group">
+												<label>Estado Civil:</label>
+												<h:selectOneMenu value="#{professorBean.pessoa.estadocivil}"
+													styleClass="form-control" id="Estado_Civil">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="SOLTEIRO(A)"
+														itemLabel="Solteiro(a)" />
+													<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
+													<f:selectItem itemValue="DIVORCIADO(A)"
+														itemLabel="Divorciado(a)" />
+													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+												</h:selectOneMenu>
+											</div>
+											<div class="form-group">
+												<label>Etnia:</label>
+												<p:inputText value="#{professorBean.pessoa.etnia}"
+													required="true" styleClass="form-control" id="Etnia" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Nacionalidade:</label>
+												<p:inputText value="#{professorBean.pessoa.nacionalidade}"
+													required="true" styleClass="form-control"
+													id="Nacionalidade" />
+											</div>
+											<div class="form-group">
+												<label>Naturalidade:</label>
+												<p:inputText value="#{professorBean.pessoa.naturalidade}"
+													required="true" styleClass="form-control" id="Naturalidade" />
+											</div>
 
+											<div class="form-group">
+												<label>UF:</label>
+												<p:inputText value="#{professorBean.pessoa.uf}"
+													required="true" styleClass="form-control" id="UF"
+													style="width: 70px" />
+											</div>
+											<div class="form-group">
+												<label>Necessidades Especiais:</label>
+												<p:inputText
+													value="#{professorBean.pessoa.necessidadesespeciais}"
+													required="true" styleClass="form-control"
+													id="Necessidades-Especiais" />
+											</div>
+											<div class="form-group">
+												<label>Nome da Mãe:</label>
+												<p:inputText value="#{professorBean.pessoa.nomemae}"
+													required="true" styleClass="form-control" id="Nome-Mae" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Nome do Pai:</label>
+												<p:inputText value="#{professorBean.pessoa.nomepai}"
+													required="true" styleClass="form-control" id="Nome-Pai" />
+											</div>
+											<div class="form-group">
+												<label>Numero do Celular:</label>
+												<p:inputText
+													value="#{professorBean.pessoa.responsavellegal}"
+													required="true" styleClass="form-control"
+													id="Numero-Celular" />
+											</div>
+											<div class="form-group">
+												<label>Responsavel Legal:</label>
+												<p:inputText value="#{professorBean.pessoa.numerocelular}"
+													styleClass="form-control" id="Responsavel-Legal" />
+											</div>
+											<div class="form-group">
+												<label>Nível de formação:</label>
+												<h:selectOneMenu
+													value="#{professorBean.professor.nivelformacao}"
+													styleClass="form-control" id="nivel-formacao">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="ENSINO FUNDAMENTAL COMPLETO"
+														itemLabel="Fundamental Completo" />
+													<f:selectItem itemValue="ENSINO FUNDAMENTAL INCOMPLETO"
+														itemLabel="Fundamental Incompleto" />
+													<f:selectItem itemValue="ENSINO MEDIO COMPLETO"
+														itemLabel="Ensino Médio Completo" />
+													<f:selectItem itemValue="ENSINO MEDIO INCOMPLETO"
+														itemLabel="Ensino Médio Incompleto" />
+													<f:selectItem itemValue="ENSINO TECNICO COMPLETO"
+														itemLabel="Ensino Técnico Completo" />
+													<f:selectItem itemValue="ENSINO TECNICO INCOMPLETO"
+														itemLabel="Ensino Técnico Incompleto" />
+													<f:selectItem itemValue="ENSINO SUPERIOR COMPLETO"
+														itemLabel="Ensino Superior Completo" />
+													<f:selectItem itemValue="ENSINO SUPERIOR INCOMPLETO"
+														itemLabel="Ensino Superior Incompleto" />
+												</h:selectOneMenu>
+											</div>
+											<div class="form-group">
+												<label>Formação:</label><span style="color: red"
+													class="small">(Caso não se aplique, preencha com
+													N.A.)</span>
+												<p:inputText required="true" styleClass="form-control"
+													id="formacao" value="#{professorBean.professor.formacao}"
+													locale="pt_BR" />
+											</div>
+										</div>
+									</div>
+									<!-- INICIO TAB DOCUMENTO -->
+									<div class="tab-pane #{professorBean.documentoTab}"
+										id="tab-documento">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Tipo de documento:</label>
+												<h:selectOneMenu value="#{professorBean.documento.tipo}"
+													styleClass="form-control" id="tipo-doc">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="CPF" itemLabel="CPF" />
+													<f:selectItem itemValue="RG" itemLabel="RG" />
+													<f:selectItem itemValue="PASSAPORTE" itemLabel="Passaporte" />
+													<f:selectItem itemValue="CNPJ" itemLabel="CNPJ" />
+													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+												</h:selectOneMenu>
+											</div>
+											<div class="form-group">
+												<label>Numero:</label>
+												<p:inputText value="#{professorBean.documento.numero}"
+													styleClass="form-control" id="numero-doc" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Data de expedição:</label>
+												<p:calendar value="#{professorBean.documento.dataexpedicao}"
+													pattern="dd/MM/yyyy" styleClass="form-date"
+													id="data-emissao" locale="pt_BR" />
+											</div>
+											<div class="form-group">
+												<label>Data vencimento:</label>
+												<p:calendar value="#{professorBean.documento.datavalidade}"
+													pattern="dd/MM/yyyy" styleClass="form-date"
+													id="data-validade" locale="pt_BR" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>UF:</label>
+												<p:inputText value="#{professorBean.documento.uf}"
+													styleClass="form-control" id="uf-doc" style="width: 70px" />
+											</div>
+											<div class="form-group">
+												<label>Orgão emissor:</label>
+												<p:inputText value="#{professorBean.documento.orgaoemissor}"
+													styleClass="form-control" id="emissor-doc" />
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="form-group">
+												<p:commandButton value="Adicionar"
+													actionListener="#{professorBean.adicionarDocumento}"
+													styleClass="btn btn-secondary"
+													process="@this, tipo-doc, numero-doc, data-validade, data-emissao, uf-doc, emissor-doc"
+													update="@form" id="btn-add-doc" />
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="form-group">
+												<table data-toggle="table" id="docs-table">
+													<thead>
+														<tr>
+															<th data-field="numero" data-sortable="true">Número</th>
+															<th data-field="tipo" data-sortable="true">Tipo de documento</th>
+															<th data-field="dataexpedicao" data-sortable="true">Data de Expedicao</th>
+															<th data-field="datavalidade" data-sortable="true">Data	de validade</th>
+															<th data-field="uf" data-sortable="true">UF</th>
+															<th data-field="orgaoemissor" data-sortable="true">Orgão Emissor</th>
+															<th data-field="remover" data-sortable="true">Remover</th>
+														</tr>
+													</thead>
+													<tbody id="docs-table-body">
+														<ui:repeat var="documento"
+															value="#{professorBean.documentos}" varStatus="status">
+															<tr>
+																<td>#{documento.numero}</td>
+																<td>#{documento.tipo}</td>
+																<td>#{documento.dataexpedicao}</td>
+																<td>#{documento.datavalidade}</td>
+																<td>#{documento.uf}</td>
+																<td>#{documento.orgaoemissor}</td>
+																<td><p:commandLink
+																		actionListener="#{professorBean.removerDocumento(documento)}"
+																		process="@this" class="glyphicon glyphicon-trash"
+																		update="@form"> Remover</p:commandLink></td>
+															</tr>
+														</ui:repeat>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- FIM TAB DOCUMENTO -->
+									<!-- INICIO TAB ENDERECO -->
+									<div class="tab-pane #{professorBean.enderecoTab}"
+										id="tab-endereco">
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>CEP:</label>
+												<p:inputText value="#{professorBean.endereco.cep}"
+													styleClass="form-control" id="cep-end" />
+											</div>
+											<div class="form-group">
+												<label>Logradouro:</label>
+												<p:inputText value="#{professorBean.endereco.logradouro}"
+													styleClass="form-control" id="logradouro-end" />
+											</div>
+											<div class="form-group">
+												<label>Número:</label>
+												<p:inputText value="#{professorBean.endereco.numero}"
+													styleClass="form-control" id="numero-end" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Bairro:</label>
+												<p:inputText value="#{professorBean.endereco.bairro}"
+													styleClass="form-control" id="bairro-end" />
+											</div>
+
+
+											<div class="form-group">
+												<label>Cidade:</label>
+												<p:inputText value="#{professorBean.endereco.cidade}"
+													styleClass="form-control" id="cidade-end" />
+											</div>
+
+											<div class="form-group">
+												<label>UF:</label>
+												<p:inputText value="#{professorBean.endereco.uf}"
+													styleClass="form-control" id="uf-end" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Endereço para correspondências:</label>
+
+												<h:selectOneMenu
+													value="#{professorBean.endereco.enderecocorrespondencia}"
+													styleClass="form-control" id="correspondencia-end">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="SIM" itemLabel="SIM" />
+													<f:selectItem itemValue="NAO" itemLabel="NÃO" />
+												</h:selectOneMenu>
+											</div>
+											<div class="form-group">
+												<label>Tipo de Endereço:</label>
+
+												<h:selectOneMenu value="#{professorBean.endereco.tipo}"
+													styleClass="form-control" id="tipo-end">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="RESIDENCIAL"
+														itemLabel="Residencial" />
+													<f:selectItem itemValue="COMERCIAL" itemLabel="Comercial" />
+													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+												</h:selectOneMenu>
+											</div>
+											<div class="form-group">
+												<label>Telefone:</label>
+												<p:inputText value="#{professorBean.endereco.telefone}"
+													styleClass="form-control" id="telefone-end" />
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="form-group">
+												<p:commandButton value="Adicionar"
+													actionListener="#{professorBean.adicionarEndereco}"
+													styleClass="btn btn-secondary"
+													process="@this, tipo-end, cep-end, logradouro-end, numero-end, bairro-end, cidade-end, uf-end, correspondencia-end, telefone-end"
+													update="@form" id="btn-add-end" />
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<table data-toggle="table" id="end-table">
+												<thead>
+													<tr>
+														<th data-field="cep" data-sortable="true">CEP</th>
+														<th data-field="logradouro" data-sortable="true">Logradouro</th>
+														<th data-field="numero" data-sortable="true">Numero</th>
+														<th data-field="bairro" data-sortable="true">Bairro</th>
+														<th data-field="cidade" data-sortable="true">Cidade</th>
+														<th data-field="uf" data-sortable="true">UF</th>
+														<th data-field="enderecocorrespondencia"
+															data-sortable="true">Correspondência</th>
+														<th data-field="telefone" data-sortable="true">Telefone</th>
+														<th data-field="remover" data-sortable="true">Remover</th>
+													</tr>
+												</thead>
+												<tbody>
+													<ui:repeat var="endereco"
+														value="#{professorBean.enderecos}" varStatus="status">
+														<tr>
+															<td>#{endereco.cep}</td>
+															<td>#{endereco.logradouro}</td>
+															<td>#{endereco.numero}</td>
+															<td>#{endereco.bairro}</td>
+															<td>#{endereco.cidade}</td>
+															<td>#{endereco.uf}</td>
+															<td>#{endereco.enderecocorrespondencia}</td>
+															<td>#{endereco.telefone}</td>
+															<td><p:commandLink
+																	actionListener="#{professorBean.removerEndereco(endereco)}"
+																	process="@this" class="glyphicon glyphicon-trash"
+																	update="@form"> Remover</p:commandLink></td>
+														</tr>
+													</ui:repeat>
+												</tbody>
+											</table>
+											<div class="col-lg-12">
+												<br />
+											</div>
+										</div>
+									</div>
+									<!-- FIM TAB DOCUMENTO -->
 								</div>
-							</h:form>
+							</div>
 						</div>
-					</div>
+						<div class="col-lg-12">
+							<div class="form-group" align="right">
+								<p:commandButton value="Salvar" process="salvar-form"
+									type="submit" action="#{professorBean.salvar}"
+									styleClass="btn btn-primary" update="salvar-form" />
+							</div>
+						</div>
+					</h:form>
 				</div>
 			</div>
 		</h:panelGroup>
 	</ui:define>
-
 </ui:composition>
