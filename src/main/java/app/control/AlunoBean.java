@@ -62,8 +62,7 @@ public class AlunoBean implements Serializable {
 		this.setEnderecoTab("");
 		this.setDocumentoTab("");
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return
@@ -115,6 +114,7 @@ public class AlunoBean implements Serializable {
 
 			this.aluno = this.dao.findById(id);
 			if (this.aluno != null) {
+				System.out.println("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
 				warn("Aluno não encontrado!");
@@ -274,17 +274,18 @@ public class AlunoBean implements Serializable {
 			return "Inicio";
 		} catch (Exception e) {
 			error("Erro ao atualizar as informações!");
-			return "atualizar";
+			return "atualizarAluno?faces-redirect=true";
 		}
 	}
 
 	/**
 	 * 
 	 */
-	public void cancelarAtualizar() {
+	public String cancelarAtualizar() {
 		this.aluno.restaurar(this.alunoAnterior);
 		this.aluno = new Aluno();
 		editado = false;
+		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -300,7 +301,6 @@ public class AlunoBean implements Serializable {
 	 * @return
 	 */
 	public String buscarTodosPorStatus(String status) {
-		System.out.println(status);
 		String retorno = null;
 		try {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
@@ -323,18 +323,20 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
-			System.out.println(matricula);
 			if (this.alunos == null) {
 				this.alunos = new ArrayList<Aluno>();
+			} else {
+				this.alunos.clear();
 			}
 			Aluno aluno = this.dao.findByRegistrationNumber(matricula);
-			if(aluno != null){
+			if (aluno != null) {
 				this.alunos.add(aluno);
-			}
-			else{
+				info("Consulta realizada com sucesso");
+			} else {
 				warn("Matricula não existe.");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			error("Erro ao consultar aluno - " + e.getMessage());
 		}
 		return "listarAluno?faces-redirect=true";
@@ -416,7 +418,7 @@ public class AlunoBean implements Serializable {
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -432,7 +434,7 @@ public class AlunoBean implements Serializable {
 	public void setAlunos(List<Aluno> alunos) {
 		this.alunos = alunos;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -520,6 +522,7 @@ public class AlunoBean implements Serializable {
 	public String getAlunoTab() {
 		return alunoTab;
 	}
+
 	/**
 	 * 
 	 * @param alunoTab

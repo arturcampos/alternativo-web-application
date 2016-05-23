@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -16,7 +17,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Endereco", schema = "futurodb")
-@NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
+@NamedQueries({ 
+	@NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
+	@NamedQuery(name = "Endereco.findByPersonId", query = "SELECT e FROM Endereco e WHERE e.Pessoa_id = :personId")
+})
+
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 

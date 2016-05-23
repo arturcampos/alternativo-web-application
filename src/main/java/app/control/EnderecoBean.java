@@ -41,6 +41,9 @@ public class EnderecoBean {
 		return this.dao.findAll();
 	}
 
+	public void atualizarEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
 	public EnderecoDao getDao() {
 		return dao;
 	}

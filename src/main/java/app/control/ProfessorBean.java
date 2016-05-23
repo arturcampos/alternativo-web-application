@@ -60,8 +60,7 @@ public class ProfessorBean implements Serializable {
 		this.setEnderecoTab("");
 		this.setDocumentoTab("");
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return
@@ -95,6 +94,11 @@ public class ProfessorBean implements Serializable {
 		}
 	}
 
+	public String criar(){
+		init();
+		return "salvarProfessor?faces-redirect=true";
+	}
+	
 	/**
 	 * 
 	 * @param id
@@ -109,7 +113,7 @@ public class ProfessorBean implements Serializable {
 			} else {
 				warn("Professor não encontrado!");
 			}
-			return "atualizar";
+			return "atualizarProfessor";
 		} catch (Exception e) {
 			error("Erro ao consultar dados do professor!");
 			return "atualizarProfessor";
@@ -270,16 +274,22 @@ public class ProfessorBean implements Serializable {
 	/**
 	 * 
 	 */
-	public void cancelarAtualizar() {
+	public String cancelarAtualizar() {
+		this.professor.restaurar(this.professorAnterior);
 		this.professor = new Professor();
 		editado = false;
+		return "listarProfessor?faces-redirect=true";
 	}
 
 	/**
 	 * 
 	 */
-	public void buscarTodos() {
+	public String buscarTodos() {
 		this.professors = this.dao.findAll();
+		if(this.professors.isEmpty()){
+			warn("Nenhum Professor cadastrado");
+		}
+		return "listarProfessor?faces-redirect=true";
 	}
 
 	/**
@@ -345,7 +355,7 @@ public class ProfessorBean implements Serializable {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -361,7 +371,7 @@ public class ProfessorBean implements Serializable {
 	public void setProfessors(List<Professor> professors) {
 		this.professors = professors;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -449,6 +459,7 @@ public class ProfessorBean implements Serializable {
 	public String getProfessorTab() {
 		return professorTab;
 	}
+
 	/**
 	 * 
 	 * @param professorTab

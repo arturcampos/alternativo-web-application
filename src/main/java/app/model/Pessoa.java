@@ -29,12 +29,12 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date datanasc;
+	@Temporal(TemporalType.DATE)
+	private Date dataNasc;
 
 	private String email;
 
-	private String estadocivil;
+	private String estadoCivil;
 
 	private String etnia;
 
@@ -42,17 +42,17 @@ public class Pessoa implements Serializable {
 
 	private String naturalidade;
 
-	private String necessidadesespeciais;
+	private String necessidadesEspeciais;
 
 	private String nome;
 
-	private String nomemae;
+	private String nomeMae;
 
-	private String nomepai;
+	private String nomePai;
 
-	private String numerocelular;
+	private String numeroCelular;
 
-	private String responsavellegal;
+	private String responsavelLegal;
 
 	private String sexo;
 
@@ -77,18 +77,18 @@ public class Pessoa implements Serializable {
 
 	/**
 	 * @param id
-	 * @param datanasc
+	 * @param dataNasc
 	 * @param email
-	 * @param estadocivil
+	 * @param estadoCivil
 	 * @param etnia
 	 * @param nacionalidade
 	 * @param naturalidade
-	 * @param necessidadesespeciais
+	 * @param necessidadesEspeciais
 	 * @param nome
-	 * @param nomemae
-	 * @param nomepai
-	 * @param numerocelular
-	 * @param responsavellegal
+	 * @param nomeMae
+	 * @param nomePai
+	 * @param numeroCelular
+	 * @param responsavelLegal
 	 * @param sexo
 	 * @param uf
 	 * @param documentos
@@ -97,24 +97,24 @@ public class Pessoa implements Serializable {
 	 * @param plasticos
 	 * @param tipopessoa
 	 */
-	public Pessoa(Long id, Date datanasc, String email, String estadocivil, String etnia, String nacionalidade,
-			String naturalidade, String necessidadesespeciais, String nome, String nomemae, String nomepai,
-			String numerocelular, String responsavellegal, String sexo, String uf, List<Documento> documentos,
+	public Pessoa(Long id, Date dataNasc, String email, String estadoCivil, String etnia, String nacionalidade,
+			String naturalidade, String necessidadesEspeciais, String nome, String nomeMae, String nomePai,
+			String numeroCelular, String responsavelLegal, String sexo, String uf, List<Documento> documentos,
 			List<Endereco> enderecos, List<Plastico> plasticos, String tipopessoa) {
 		super();
 		this.id = id;
-		this.datanasc = datanasc;
+		this.dataNasc = dataNasc;
 		this.email = email;
-		this.estadocivil = estadocivil;
+		this.estadoCivil = estadoCivil;
 		this.etnia = etnia;
 		this.nacionalidade = nacionalidade;
 		this.naturalidade = naturalidade;
-		this.necessidadesespeciais = necessidadesespeciais;
+		this.necessidadesEspeciais = necessidadesEspeciais;
 		this.nome = nome;
-		this.nomemae = nomemae;
-		this.nomepai = nomepai;
-		this.numerocelular = numerocelular;
-		this.responsavellegal = responsavellegal;
+		this.nomeMae = nomeMae;
+		this.nomePai = nomePai;
+		this.numeroCelular = numeroCelular;
+		this.responsavelLegal = responsavelLegal;
 		this.sexo = sexo;
 		this.uf = uf;
 		this.documentos = documentos;
@@ -132,12 +132,12 @@ public class Pessoa implements Serializable {
 	}
 
 	public Date getDatanasc() {
-		return this.datanasc;
+		return this.dataNasc;
 
 	}
 
-	public void setDatanasc(Date datanasc) {
-		this.datanasc = datanasc;
+	public void setDatanasc(Date dataNasc) {
+		this.dataNasc = dataNasc;
 	}
 
 	public String getEmail() {
@@ -149,11 +149,11 @@ public class Pessoa implements Serializable {
 	}
 
 	public String getEstadocivil() {
-		return this.estadocivil;
+		return this.estadoCivil;
 	}
 
-	public void setEstadocivil(String estadocivil) {
-		this.estadocivil = estadocivil;
+	public void setEstadocivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
 	}
 
 	public String getEtnia() {
@@ -181,11 +181,11 @@ public class Pessoa implements Serializable {
 	}
 
 	public String getNecessidadesespeciais() {
-		return this.necessidadesespeciais;
+		return this.necessidadesEspeciais;
 	}
 
-	public void setNecessidadesespeciais(String necessidadesespeciais) {
-		this.necessidadesespeciais = necessidadesespeciais;
+	public void setNecessidadesespeciais(String necessidadesEspeciais) {
+		this.necessidadesEspeciais = necessidadesEspeciais;
 	}
 
 	public String getNome() {
@@ -197,35 +197,35 @@ public class Pessoa implements Serializable {
 	}
 
 	public String getNomemae() {
-		return this.nomemae;
+		return this.nomeMae;
 	}
 
-	public void setNomemae(String nomemae) {
-		this.nomemae = nomemae;
+	public void setNomemae(String nomeMae) {
+		this.nomeMae = nomeMae;
 	}
 
 	public String getNomepai() {
-		return this.nomepai;
+		return this.nomePai;
 	}
 
-	public void setNomepai(String nomepai) {
-		this.nomepai = nomepai;
+	public void setNomepai(String nomePai) {
+		this.nomePai = nomePai;
 	}
 
 	public String getNumerocelular() {
-		return this.numerocelular;
+		return this.numeroCelular;
 	}
 
-	public void setNumerocelular(String numerocelular) {
-		this.numerocelular = numerocelular;
+	public void setNumerocelular(String numeroCelular) {
+		this.numeroCelular = numeroCelular;
 	}
 
 	public String getResponsavellegal() {
-		return this.responsavellegal;
+		return this.responsavelLegal;
 	}
 
-	public void setResponsavellegal(String responsavellegal) {
-		this.responsavellegal = responsavellegal;
+	public void setResponsavellegal(String responsavelLegal) {
+		this.responsavelLegal = responsavelLegal;
 	}
 
 	public String getSexo() {
@@ -320,26 +320,26 @@ public class Pessoa implements Serializable {
 
 	@Override
 	public Pessoa clone() {
-		return new Pessoa(this.id, this.datanasc, this.email, this.estadocivil, this.etnia, this.nacionalidade,
-				this.naturalidade, this.necessidadesespeciais, this.nome, this.nomemae, this.nomepai,
-				this.numerocelular, this.responsavellegal, this.sexo, this.uf, this.documentos, this.enderecos,
+		return new Pessoa(this.id, this.dataNasc, this.email, this.estadoCivil, this.etnia, this.nacionalidade,
+				this.naturalidade, this.necessidadesEspeciais, this.nome, this.nomeMae, this.nomePai,
+				this.numeroCelular, this.responsavelLegal, this.sexo, this.uf, this.documentos, this.enderecos,
 				this.plasticos, this.tipopessoa);
 	}
 
 	public void restaurar(Pessoa pessoa) {
 		this.id = pessoa.getId();
-		this.datanasc = pessoa.getDatanasc();
+		this.dataNasc = pessoa.getDatanasc();
 		this.email = pessoa.getEmail();
-		this.estadocivil = pessoa.getEstadocivil();
+		this.estadoCivil = pessoa.getEstadocivil();
 		this.etnia = pessoa.getEtnia();
 		this.nacionalidade = pessoa.getNacionalidade();
 		this.naturalidade = pessoa.getNaturalidade();
-		this.necessidadesespeciais = pessoa.getNecessidadesespeciais();
+		this.necessidadesEspeciais = pessoa.getNecessidadesespeciais();
 		this.nome = pessoa.getNome();
-		this.nomemae = pessoa.getNomemae();
-		this.nomepai = pessoa.getNomepai();
-		this.numerocelular = pessoa.getNumerocelular();
-		this.responsavellegal = pessoa.getResponsavellegal();
+		this.nomeMae = pessoa.getNomemae();
+		this.nomePai = pessoa.getNomepai();
+		this.numeroCelular = pessoa.getNumerocelular();
+		this.responsavelLegal = pessoa.getResponsavellegal();
 		this.sexo = pessoa.getSexo();
 		this.uf = pessoa.getUf();
 		this.documentos = pessoa.getDocumentos();
@@ -349,12 +349,12 @@ public class Pessoa implements Serializable {
 	}
 
 	public String toString() {
-		return new String("id = " + this.id + "\n" + "datanasc = " + this.datanasc + "\n" + "email = " + this.email
-				+ "\n" + "estadocivil = " + this.estadocivil + "\n" + "etnia = " + this.etnia + "\n"
+		return new String("id = " + this.id + "\n" + "dataNasc = " + this.dataNasc + "\n" + "email = " + this.email
+				+ "\n" + "estadoCivil = " + this.estadoCivil + "\n" + "etnia = " + this.etnia + "\n"
 				+ "nacionalidade = " + this.nacionalidade + "\n" + "naturalidade = " + this.naturalidade + "\n"
-				+ "necessidadesespeciais = " + this.necessidadesespeciais + "\n" + "nome = " + this.nome + "\n"
-				+ "nomemae = " + this.nomemae + "\n" + "nomepai = " + this.nomepai + "\n" + "numerocelular = "
-				+ this.numerocelular + "\n" + "responsavellegal = " + this.responsavellegal + "\n" + "sexo = "
+				+ "necessidadesEspeciais = " + this.necessidadesEspeciais + "\n" + "nome = " + this.nome + "\n"
+				+ "nomeMae = " + this.nomeMae + "\n" + "nomePai = " + this.nomePai + "\n" + "numeroCelular = "
+				+ this.numeroCelular + "\n" + "responsavelLegal = " + this.responsavelLegal + "\n" + "sexo = "
 				+ this.sexo + "\n" + "uf = " + this.uf + "\n" + "documentos = " + this.documentos + "\n"
 				+ "enderecos = " + this.enderecos + "\n" + "plasticos = " + this.plasticos + "\n" + "tipopessoa = "
 				+ this.tipopessoa + "\n"

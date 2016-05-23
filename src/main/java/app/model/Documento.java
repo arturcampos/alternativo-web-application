@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,7 +20,11 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Documento", schema = "futurodb")
-@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")
+
+@NamedQueries({ 
+	@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d"),
+	@NamedQuery(name = "Documento.findByPersonId", query = "SELECT d FROM Documento d WHERE d.Pessoa_id = :personId")
+})
 public class Documento implements Serializable {
 	private static final long serialVersionUID = 1L;
 

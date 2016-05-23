@@ -24,8 +24,8 @@ public class AlunoDao extends DaoImpl<Aluno> {
 	 * 
 	 */
 	public Aluno findByRegistrationNumber(String registrationNumber) throws SQLException {
-		return (Aluno) entitymanager.createNamedQuery("Aluno.findLastRegistrationNumber", Aluno.class)
-				.setParameter("wantedNumber", registrationNumber);
+		return (Aluno) entitymanager.createNamedQuery("Aluno.findByRegistrationNumber", Aluno.class)
+				.setParameter("wantedNumber", registrationNumber).getSingleResult();
 	}
 
 	/**

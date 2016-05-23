@@ -31,7 +31,7 @@ public class Professor implements Serializable {
 
 	private String formacao;
 
-	private String nivelformacao;
+	private String nivelFormacao;
 
 	//bi-directional one-to-one association to Pessoa
 	@OneToOne(cascade=CascadeType.PERSIST)
@@ -53,17 +53,17 @@ public class Professor implements Serializable {
 	/**
 	 * @param id
 	 * @param formacao
-	 * @param nivelformacao
+	 * @param nivelFormacao
 	 * @param pessoa
 	 * @param disciplinas
 	 * @param turmas
 	 */
-	public Professor(Long id, String formacao, String nivelformacao, Pessoa pessoa, List<Disciplina> disciplinas,
+	public Professor(Long id, String formacao, String nivelFormacao, Pessoa pessoa, List<Disciplina> disciplinas,
 			List<Turma> turmas) {
 		super();
 		this.id = id;
 		this.formacao = formacao;
-		this.nivelformacao = nivelformacao;
+		this.nivelFormacao = nivelFormacao;
 		this.pessoa = pessoa;
 		this.disciplinas = disciplinas;
 		this.turmas = turmas;
@@ -88,11 +88,11 @@ public class Professor implements Serializable {
 	}
 
 	public String getNivelformacao() {
-		return this.nivelformacao;
+		return this.nivelFormacao;
 	}
 
-	public void setNivelformacao(String nivelformacao) {
-		this.nivelformacao = nivelformacao;
+	public void setNivelformacao(String nivelFormacao) {
+		this.nivelFormacao = nivelFormacao;
 	}
 
 	public Pessoa getPessoa() {
@@ -133,9 +133,19 @@ public class Professor implements Serializable {
 		return turma;
 	}
 	
+	public void restaurar(Professor professor) {
+		this.id = professor.getId();
+		this.disciplinas = professor.getDisciplinas();
+		this.formacao = professor.getFormacao();
+		this.nivelFormacao = professor.getNivelformacao();
+		this.pessoa = professor.getPessoa();
+		this.turmas = professor.getTurmas();
+		
+	}
+	
 	@Override
 	public Professor clone(){
-		return new Professor(this.id, this.formacao, this.nivelformacao, this.pessoa, this.disciplinas, this.turmas);
+		return new Professor(this.id, this.formacao, this.nivelFormacao, this.pessoa, this.disciplinas, this.turmas);
 	}
 
 }
