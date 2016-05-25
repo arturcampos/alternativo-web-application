@@ -38,7 +38,7 @@
 										required="true" styleClass="form-control" />
 									<p:watermark for="input-matricula" value="Número da matrícula"/> <p:commandButton
 										action="#{alunoBean.buscarPorMatricula(matricula)}" value="Buscar"
-										process="@this" styleClass="btn btn-info"/>
+										process="@this, matricula-form" styleClass="btn btn-info"/>
 								</h:panelGrid>
 
 							</h:form>
@@ -69,10 +69,10 @@
 											<td><ui:repeat var="documento"
 													value="#{alunoBean.aluno.pessoa.documentos}">
 													<h:outputLabel value="#{documento.numero}"
-														rendered="#{documento.tipo == CPF}">
+														rendered="#{documento.tipo == 'CPF'}">
 													</h:outputLabel>
 												</ui:repeat></td>
-											<td>#{aluno.pessoa.datanasc}</td>
+											<td>#{aluno.pessoa.dataNasc}</td>
 											<td><h:commandLink id="btn_edit"
 													action="#{alunoBean.atualizar(aluno)}"
 													class="glyphicon glyphicon-pencil" type="submit"

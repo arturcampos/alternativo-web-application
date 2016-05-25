@@ -72,11 +72,11 @@ public class AlunoBean implements Serializable {
 
 			this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-			// adicionando documentos à pessoa
+			// adicionando documentos ï¿½ pessoa
 			this.pessoa.setDocumentos(this.documentos);
 			vincularDocumento(this.pessoa, this.documentos);
 
-			// adicionando endereço pessoa
+			// adicionando endereï¿½o pessoa
 			this.pessoa.setEnderecos(this.enderecos);
 			vincularEndereco(this.pessoa, this.enderecos);
 
@@ -87,19 +87,19 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// adicionando pessoa à alunos
+			// adicionando pessoa ï¿½ alunos
 			this.aluno.setPessoa(this.pessoa);
 
 			// executando metod DAO para salvar aluno
 			this.dao.save(this.aluno);
 
 			this.alunos.add(this.aluno);
-			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
+			info("Informaï¿½ï¿½es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
 			return "salvarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
@@ -117,7 +117,7 @@ public class AlunoBean implements Serializable {
 				System.out.println("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno não encontrado!");
+				warn("Aluno nï¿½o encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
@@ -168,7 +168,7 @@ public class AlunoBean implements Serializable {
 			this.documentoTab = "active";
 			this.enderecoTab = "";
 		} catch (Exception e) {
-			error("Erro ao adicionar documento à lista");
+			error("Erro ao adicionar documento ï¿½ lista");
 		}
 	}
 
@@ -182,7 +182,7 @@ public class AlunoBean implements Serializable {
 			this.documentos.remove(documento);
 			info("Documento removido com sucesso!");
 		} else {
-			warn("Não existem documentos à serem removidos");
+			warn("Nï¿½o existem documentos ï¿½ serem removidos");
 		}
 	}
 
@@ -204,7 +204,7 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "active";
 
 		} catch (Exception e) {
-			error("Erro ao adicionar endereco à lista");
+			error("Erro ao adicionar endereco ï¿½ lista");
 		}
 	}
 
@@ -216,9 +216,9 @@ public class AlunoBean implements Serializable {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
-			info("Endereço removido com sucesso!");
+			info("Endereï¿½o removido com sucesso!");
 		} else {
-			warn("Não existem endereços à serem removidos");
+			warn("Nï¿½o existem endereï¿½os ï¿½ serem removidos");
 		}
 	}
 
@@ -256,7 +256,7 @@ public class AlunoBean implements Serializable {
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualização de dados do aluno");
+			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do aluno");
 			return "listarAluno?faces-redirect=true";
 		}
 	}
@@ -273,7 +273,7 @@ public class AlunoBean implements Serializable {
 			this.aluno = new Aluno();
 			return "Inicio";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informações!");
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizarAluno?faces-redirect=true";
 		}
 	}
@@ -307,7 +307,7 @@ public class AlunoBean implements Serializable {
 				this.alunos = this.dao.findByStatus(status);
 				retorno = "listarAluno?faces-redirect=true";
 			} else {
-				error("Status " + status + "inválido para consulta");
+				error("Status " + status + "invï¿½lido para consulta");
 			}
 
 		} catch (Exception e) {
@@ -333,7 +333,7 @@ public class AlunoBean implements Serializable {
 				this.alunos.add(aluno);
 				info("Consulta realizada com sucesso");
 			} else {
-				warn("Matricula não existe.");
+				warn("Matricula nï¿½o existe.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -578,7 +578,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!", message));
 	}
 
 	/**

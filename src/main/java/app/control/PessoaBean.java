@@ -40,10 +40,10 @@ public class PessoaBean implements Serializable {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
-			info("Informações salvas com sucesso");
+			info("Informaï¿½ï¿½es salvas com sucesso");
 			return "salvar";
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
 			return "salvar";
 		} 
 	}
@@ -92,18 +92,18 @@ public class PessoaBean implements Serializable {
 	public String limparPessoa() {
 		if (this.pessoa != null) {
 			this.pessoa.setId(null);
-			this.pessoa.setDatanasc(null);
+			this.pessoa.setDataNasc(null);
 			this.pessoa.setEmail("");
-			this.pessoa.setEstadocivil("");
+			this.pessoa.setEstadoCivil("");
 			this.pessoa.setEtnia("");
 			this.pessoa.setNacionalidade("");
 			this.pessoa.setNaturalidade("");
-			this.pessoa.setNecessidadesespeciais("");
+			this.pessoa.setNecessidadesEspeciais("");
 			this.pessoa.setNome("");
-			this.pessoa.setNomemae("");
-			this.pessoa.setNomepai("");
-			this.pessoa.setNumerocelular("");
-			this.pessoa.setResponsavellegal("");
+			this.pessoa.setNomeMae("");
+			this.pessoa.setNomePai("");
+			this.pessoa.setNumeroCelular("");
+			this.pessoa.setResponsavelLegal("");
 			this.pessoa.setSexo("");
 			this.pessoa.setUf("");
 			this.pessoa.setDocumentos(null);
@@ -180,5 +180,17 @@ public class PessoaBean implements Serializable {
 	public void fatal(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
+	}
+
+	public java.lang.String getMsg() {
+		return msg;
+	}
+
+	public java.util.List getPessoaLista() {
+		return pessoaLista;
+	}
+
+	public void setPessoaLista(java.util.List pessoaLista) {
+		this.pessoaLista = pessoaLista;
 	}
 }

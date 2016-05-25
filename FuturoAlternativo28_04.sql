@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `futurodb`.`Aluno` (
   `tipocotaingresso` INT NOT NULL,
   `dataingresso` DATETIME NOT NULL,
   `dataegresso` DATETIME NOT NULL,
-  `Turma_id` int(11) NOT NULL,
+  `Turma_id` int(11) default NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) not null,
   `Pessoa_id` int(11) NOT NULL,

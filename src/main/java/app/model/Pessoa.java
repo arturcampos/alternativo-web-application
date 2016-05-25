@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,15 +60,15 @@ public class Pessoa implements Serializable {
 	private String uf;
 
 	// bi-directional many-to-one association to Documento
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Documento> documentos;
 
 	// bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Endereco> enderecos;
 
 	// bi-directional many-to-one association to Plastico
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Plastico> plasticos;
 
 	private String tipopessoa;
@@ -131,12 +132,12 @@ public class Pessoa implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDatanasc() {
+	public Date getDataNasc() {
 		return this.dataNasc;
 
 	}
 
-	public void setDatanasc(Date dataNasc) {
+	public void setDataNasc(Date dataNasc) {
 		this.dataNasc = dataNasc;
 	}
 
@@ -148,11 +149,11 @@ public class Pessoa implements Serializable {
 		this.email = email;
 	}
 
-	public String getEstadocivil() {
+	public String getEstadoCivil() {
 		return this.estadoCivil;
 	}
 
-	public void setEstadocivil(String estadoCivil) {
+	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
@@ -180,11 +181,11 @@ public class Pessoa implements Serializable {
 		this.naturalidade = naturalidade;
 	}
 
-	public String getNecessidadesespeciais() {
+	public String getNecessidadesEspeciais() {
 		return this.necessidadesEspeciais;
 	}
 
-	public void setNecessidadesespeciais(String necessidadesEspeciais) {
+	public void setNecessidadesEspeciais(String necessidadesEspeciais) {
 		this.necessidadesEspeciais = necessidadesEspeciais;
 	}
 
@@ -196,35 +197,35 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getNomemae() {
+	public String getNomeMae() {
 		return this.nomeMae;
 	}
 
-	public void setNomemae(String nomeMae) {
+	public void setNomeMae(String nomeMae) {
 		this.nomeMae = nomeMae;
 	}
 
-	public String getNomepai() {
+	public String getNomePai() {
 		return this.nomePai;
 	}
 
-	public void setNomepai(String nomePai) {
+	public void setNomePai(String nomePai) {
 		this.nomePai = nomePai;
 	}
 
-	public String getNumerocelular() {
+	public String getNumeroCelular() {
 		return this.numeroCelular;
 	}
 
-	public void setNumerocelular(String numeroCelular) {
+	public void setNumeroCelular(String numeroCelular) {
 		this.numeroCelular = numeroCelular;
 	}
 
-	public String getResponsavellegal() {
+	public String getResponsavelLegal() {
 		return this.responsavelLegal;
 	}
 
-	public void setResponsavellegal(String responsavelLegal) {
+	public void setResponsavelLegal(String responsavelLegal) {
 		this.responsavelLegal = responsavelLegal;
 	}
 
@@ -328,18 +329,18 @@ public class Pessoa implements Serializable {
 
 	public void restaurar(Pessoa pessoa) {
 		this.id = pessoa.getId();
-		this.dataNasc = pessoa.getDatanasc();
+		this.dataNasc = pessoa.getDataNasc();
 		this.email = pessoa.getEmail();
-		this.estadoCivil = pessoa.getEstadocivil();
+		this.estadoCivil = pessoa.getEstadoCivil();
 		this.etnia = pessoa.getEtnia();
 		this.nacionalidade = pessoa.getNacionalidade();
 		this.naturalidade = pessoa.getNaturalidade();
-		this.necessidadesEspeciais = pessoa.getNecessidadesespeciais();
+		this.necessidadesEspeciais = pessoa.getNecessidadesEspeciais();
 		this.nome = pessoa.getNome();
-		this.nomeMae = pessoa.getNomemae();
-		this.nomePai = pessoa.getNomepai();
-		this.numeroCelular = pessoa.getNumerocelular();
-		this.responsavelLegal = pessoa.getResponsavellegal();
+		this.nomeMae = pessoa.getNomeMae();
+		this.nomePai = pessoa.getNomePai();
+		this.numeroCelular = pessoa.getNumeroCelular();
+		this.responsavelLegal = pessoa.getResponsavelLegal();
 		this.sexo = pessoa.getSexo();
 		this.uf = pessoa.getUf();
 		this.documentos = pessoa.getDocumentos();

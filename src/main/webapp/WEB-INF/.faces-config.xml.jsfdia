@@ -4,54 +4,90 @@
   SHAPE="512,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#Inicio.xhtml:0" NAME="item"
    PATH="/Inicio.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="listar::#listar.xhtml" NAME="output"
-    PATH="/listar.xhtml" TARGET="rules:#listar.xhtml" TITLE="listar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
+    NAME="output" PATH="/listarAluno.xhtml"
+    TARGET="rules:#listarAluno.xhtml"
+    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
   <PROCESS-ITEM ID="rules:#Inicio.xhtml:1" NAME="item1"
    PATH="/Inicio.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="atualizar::#atualizar.xhtml" NAME="output"
-    PATH="/atualizar.xhtml" TARGET="rules:#atualizar.xhtml"
-    TITLE="atualizar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="salvarAluno?faces-redirect=true::#salvarAluno.xhtml"
+    NAME="output" PATH="/salvarAluno.xhtml"
+    TARGET="rules:#salvarAluno.xhtml"
+    TITLE="salvarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
   <PROCESS-ITEM ID="rules:#Inicio.xhtml:2" NAME="item2"
    PATH="/Inicio.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="salvar::#salvar.xhtml" NAME="output"
-    PATH="/salvar.xhtml" TARGET="rules:#salvar.xhtml" TITLE="salvar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="salvarProfessor?faces-redirect=true::#salvarProfessor.xhtml"
+    NAME="output" PATH="/salvarProfessor.xhtml"
+    TARGET="rules:#salvarProfessor.xhtml"
+    TITLE="salvarProfessor?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#Inicio.xhtml:3" NAME="item3"
+   PATH="/Inicio.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarProfessor?faces-redirect=true::#listarProfessor.xhtml"
+    NAME="output" PATH="/listarProfessor.xhtml"
+    TARGET="rules:#listarProfessor.xhtml"
+    TITLE="listarProfessor?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#listar.xhtml" PATH="/listar.xhtml"
-  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#listar.xhtml:0" NAME="item"
-   PATH="/listar.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="atualizar::#atualizar.xhtml" NAME="output"
-    PATH="/atualizar.xhtml" TARGET="rules:#atualizar.xhtml"
-    TITLE="atualizar" model-entity="JSFProcessItemOutput"/>
+ <PROCESS-ITEM NAME="rules:#atualizarAluno.xhtml"
+  PATH="/atualizarAluno.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:0" NAME="item"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
+    NAME="output" PATH="/listarAluno.xhtml"
+    TARGET="rules:#listarAluno.xhtml"
+    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#listar.xhtml:1" NAME="item1"
-   PATH="/listar.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
-    PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml" TITLE="Inicio" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#listar.xhtml:2" NAME="item2"
-   PATH="/listar.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="salvar::#salvar.xhtml" NAME="output"
-    PATH="/salvar.xhtml" TARGET="rules:#salvar.xhtml" TITLE="salvar" model-entity="JSFProcessItemOutput"/>
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:1" NAME="item1"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
+    NAME="output" PATH="/listarAluno.xhtml"
+    TARGET="rules:#listarAluno.xhtml"
+    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#atualizar.xhtml" PATH="/atualizar.xhtml"
+ <PROCESS-ITEM NAME="rules:#listarAluno.xhtml" PATH="/listarAluno.xhtml"
   SHAPE="272,33,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#atualizar.xhtml:0" NAME="item"
-   PATH="/atualizar.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
-    PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml" TITLE="Inicio" model-entity="JSFProcessItemOutput"/>
+  <PROCESS-ITEM ID="rules:#listarAluno.xhtml:0" NAME="item"
+   PATH="/listarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="Inicio?faces-redirect=true::#Inicio.xhtml"
+    NAME="output" PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml"
+    TITLE="Inicio?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#salvar.xhtml" PATH="/salvar.xhtml"
-  SHAPE="752,33,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#salvar.xhtml:0" NAME="item"
-   PATH="/salvar.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="Inicio::#Inicio.xhtml" NAME="output"
-    PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml" TITLE="Inicio" model-entity="JSFProcessItemOutput"/>
+ <PROCESS-ITEM NAME="rules:#salvarAluno.xhtml" PATH="/salvarAluno.xhtml"
+  SHAPE="272,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#salvarAluno.xhtml:0" NAME="item"
+   PATH="/salvarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="Inicio?faces-redirect=true::#Inicio.xhtml"
+    NAME="output" PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml"
+    TITLE="Inicio?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#salvarProfessor.xhtml"
+  PATH="/salvarProfessor.xhtml" SHAPE="272,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#salvarProfessor.xhtml:0" NAME="item"
+   PATH="/salvarProfessor.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="Inicio?faces-redirect=true::#Inicio.xhtml"
+    NAME="output" PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml"
+    TITLE="Inicio?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#listarProfessor.xhtml"
+  PATH="/listarProfessor.xhtml" SHAPE="272,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#listarProfessor.xhtml:0" NAME="item"
+   PATH="/listarProfessor.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="Inicio?faces-redirect=true::#Inicio.xhtml"
+    NAME="output" PATH="/Inicio.xhtml" TARGET="rules:#Inicio.xhtml"
+    TITLE="Inicio?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
 </PROCESS>
