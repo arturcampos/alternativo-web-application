@@ -1,27 +1,28 @@
 package app.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import app.dao.DocumentoDao;
-import app.model.Aluno;
 import app.model.Documento;
-import app.model.Professor;
+import app.model.Pessoa;
 
 @ManagedBean(name = "documentoBean")
-@ViewScoped
-public class DocumentoBean {
+@SessionScoped
+public class DocumentoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private DocumentoDao dao;
 	private Documento documento;
 	private List<Documento> documentos;
-	private Aluno aluno;
-	private Professor professor;
+	private Pessoa pessoa;
 	private Documento documentoAnterior;
 	private boolean editado;
 
@@ -32,30 +33,33 @@ public class DocumentoBean {
 		}
 		this.documento = new Documento();
 		this.documentos = new ArrayList<Documento>();
-		this.setAluno(new Aluno());
-		this.setProfessor(new Professor());
+		this.pessoa = new Pessoa();
 	}
 
 	public String buscarPorId(Long id) {
 		this.documento = this.dao.findById(id);
-		if(this.documento != null){
+		if (this.documento != null) {
 			info("Sucesso");
-		}
-		else{
+		} else {
 			warn("Documetno não encotnrado");
 		}
-		return "listarDocumento?faces-redirect=true"; 
+		return "listarDocumento?faces-redirect=true";
 	}
 
 	public Documento remover(Long id) {
 		return this.dao.remove(id);
 	}
 
+	/**
+	 *
+	 * @param documento
+	 * @return
+	 */
 	public String atualizar(Documento documento) {
 		try {
 			this.documento = documento.clone();
-			this.documento = documento.clone();
-			this.setEditado(true);
+			this.documentoAnterior = documento.clone();
+			this.editado = true;
 			return "atualizarDocumento?faces-redirect=true";
 		} catch (Exception e) {
 			error("Erro ao direcioar para atualização de dados do documento");
@@ -63,6 +67,10 @@ public class DocumentoBean {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.documento);
@@ -82,17 +90,19 @@ public class DocumentoBean {
 		return this.dao.findAll();
 	}
 
-	public String listarDocumentos(Aluno aluno, Professor professor) {
-		if (this.aluno != null) {
-			this.aluno = aluno;
-			Long id = aluno.getPessoa().getId();
-			this.documentos = this.dao.findByPersonId(id);
-		} else if (professor != null) {
-			long id = professor.getPessoa().getId();
-			this.documentos = this.dao.findByPersonId(id);
-			this.professor = professor;
-		} else {
-			warn("Nenhum documento encontrado para os parametros enviados.");
+	/**
+	 *
+	 * @param pessoa
+	 * @return
+	 */
+	public String atualizarDocumentos(Pessoa pessoa) {
+		System.out.println("atualizar documentos\n");
+		System.out.println(pessoa.toString());
+		this.pessoa = pessoa;
+		this.documentos = dao.findByPersonId(pessoa.getId());
+
+		if (this.documentos.isEmpty() || this.documentos == null) {
+			warn("Nenhum documento encontrado para " + pessoa.getNome());
 		}
 		return "listarDocumentos?faces-redirect=true";
 	}
@@ -121,20 +131,12 @@ public class DocumentoBean {
 		this.documentos = documentos;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public Documento getDocumentoAnterior() {
@@ -154,7 +156,7 @@ public class DocumentoBean {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void info(String message) {
@@ -163,7 +165,7 @@ public class DocumentoBean {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void warn(String message) {
@@ -172,7 +174,7 @@ public class DocumentoBean {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void error(String message) {
@@ -181,7 +183,7 @@ public class DocumentoBean {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void fatal(String message) {

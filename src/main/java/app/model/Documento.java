@@ -16,14 +16,14 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the documento database table.
- * 
+ *
  */
 @Entity
 @Table(name = "Documento", schema = "futurodb")
 
-@NamedQueries({ 
+@NamedQueries({
 	@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d"),
-	@NamedQuery(name = "Documento.findByPersonId", query = "SELECT d FROM Documento d WHERE d.Pessoa_id = :personId")
+	@NamedQuery(name = "Documento.findByPersonId", query = "SELECT d FROM Documento d WHERE d.pessoa.id = :personId")
 })
 public class Documento implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,10 +37,10 @@ public class Documento implements Serializable {
 	private String tipo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataexpedicao;
+	private Date dataExpedicao;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date datavalidade;
+	private Date dataValidade;
 
 	private String orgaoemissor;
 
@@ -53,13 +53,13 @@ public class Documento implements Serializable {
 	public Documento() {
 	}
 
-	public Documento(Long id, String numero, String tipo, Date dataexpedicao, Date datavalidade, String orgaoemissor,
+	public Documento(Long id, String numero, String tipo, Date dataExpedicao, Date dataValidade, String orgaoemissor,
 			String uf, Pessoa pessoa) {
 		this.id = id;
 		this.numero = numero;
 		this.tipo = tipo;
-		this.dataexpedicao = dataexpedicao;
-		this.datavalidade = datavalidade;
+		this.dataExpedicao = dataExpedicao;
+		this.dataValidade = dataValidade;
 		this.orgaoemissor = orgaoemissor;
 		this.uf = uf;
 		this.pessoa = pessoa;
@@ -73,20 +73,20 @@ public class Documento implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataexpedicao() {
-		return this.dataexpedicao;
+	public Date getDataExpedicao() {
+		return this.dataExpedicao;
 	}
 
-	public void setDataexpedicao(Date dataexpedicao) {
-		this.dataexpedicao = dataexpedicao;
+	public void setDataExpedicao(Date dataExpedicao) {
+		this.dataExpedicao = dataExpedicao;
 	}
 
-	public Date getDatavalidade() {
-		return this.datavalidade;
+	public Date getDataValidade() {
+		return this.dataValidade;
 	}
 
-	public void setDatavalidade(Date datavalidade) {
-		this.datavalidade = datavalidade;
+	public void setDataValidade(Date dataValidade) {
+		this.dataValidade = dataValidade;
 	}
 
 	public String getOrgaoemissor() {
@@ -132,12 +132,12 @@ public class Documento implements Serializable {
 	@Override
 	public String toString() {
 		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoemissor + "\nData de Emissão:"
-				+ this.dataexpedicao + "\nData Validade:" + this.datavalidade);
+				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade);
 	}
 
 	@Override
 	public Documento clone() {
-		return new Documento(this.id, this.numero, this.tipo, this.dataexpedicao, this.datavalidade, this.orgaoemissor,
+		return new Documento(this.id, this.numero, this.tipo, this.dataExpedicao, this.dataValidade, this.orgaoemissor,
 				this.uf, this.pessoa);
 	}
 

@@ -28,14 +28,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Documentos de:
-						<h:outputLabel rendered="#{documentoBean.aluno != null}"
-							value="#{documentoBean.aluno.pessoa.nome}" />
-						<h:outputLabel rendered="#{documentoBean.professor != null}"
-							value="#{documentoBean.professor.pessoa.nome}"/>
+						<h:outputLabel rendered="#{documentoBean.pessoa != null}"
+							value="#{documentoBean.pessoa.nome}" />
 					</div>
+					<div class="panel-body">
 					<h:messages id="messages" showDetail="true" closable="true"
 						autoUpdate="true" />
-					<div class="panel-body">
 						<table data-toggle="table" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="toolbar1"

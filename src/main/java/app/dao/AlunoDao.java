@@ -3,12 +3,15 @@ package app.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
 import app.model.Aluno;
 
 public class AlunoDao extends DaoImpl<Aluno> {
 
 	/**
-	 * 
+	 *
 	 * @param clazz
 	 */
 	public AlunoDao(Class<Aluno> clazz) {
@@ -16,20 +19,26 @@ public class AlunoDao extends DaoImpl<Aluno> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param registrationNumber
 	 * @return
 	 * @throws SQLException
 	 * @author ARTUR
-	 * 
+	 *
 	 */
-	public Aluno findByRegistrationNumber(String registrationNumber) throws SQLException {
-		return (Aluno) entitymanager.createNamedQuery("Aluno.findByRegistrationNumber", Aluno.class)
-				.setParameter("wantedNumber", registrationNumber).getSingleResult();
+	public Aluno findByRegistrationNumber(String registrationNumber) {
+		Query query = entitymanager.createNamedQuery("Aluno.findByRegistrationNumber", Aluno.class)
+				.setParameter("wantedNumber", registrationNumber);
+		try {
+			return (Aluno) query.getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 * @throws SQLException
 	 * @author ARTUR
@@ -40,7 +49,7 @@ public class AlunoDao extends DaoImpl<Aluno> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param status
 	 * @return
 	 * @throws SQLException

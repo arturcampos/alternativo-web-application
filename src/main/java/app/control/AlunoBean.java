@@ -41,7 +41,7 @@ public class AlunoBean implements Serializable {
 	private String enderecoTab;
 
 	/**
-	 * 
+	 *
 	 */
 	@PostConstruct
 	public void init() {
@@ -64,7 +64,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String salvar() {
@@ -99,13 +99,13 @@ public class AlunoBean implements Serializable {
 			init();
 			return "salvarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
+			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -117,7 +117,7 @@ public class AlunoBean implements Serializable {
 				System.out.println("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno nï¿½o encontrado!");
+				warn("Aluno não encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
@@ -127,7 +127,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -151,10 +151,10 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param actionEvent
 	 */
-	public void adicionarDocumento(ActionEvent actionEvent) {
+	public String adicionarDocumento() {
 		try {
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
@@ -170,10 +170,11 @@ public class AlunoBean implements Serializable {
 		} catch (Exception e) {
 			error("Erro ao adicionar documento ï¿½ lista");
 		}
+		return "salvarAlunoretorno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documento
 	 */
 	public void removerDocumento(final Documento documento) {
@@ -187,7 +188,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param actionEvent
 	 */
 	public void adicionarEndereco(ActionEvent actionEvent) {
@@ -209,7 +210,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param endereco
 	 */
 	public void removerEndereco(final Endereco endereco) {
@@ -223,7 +224,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 * @param docs
 	 */
@@ -234,7 +235,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 * @param ends
 	 */
@@ -245,7 +246,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param aluno
 	 * @return
 	 */
@@ -262,16 +263,19 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.aluno);
+			this.alunos.remove(alunoAnterior);
+			this.alunos.add(aluno);
 			this.editado = false;
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			this.aluno = new Aluno();
-			return "Inicio";
+			this.alunoAnterior = new Aluno();
+			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
 			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizarAluno?faces-redirect=true";
@@ -279,7 +283,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public String cancelarAtualizar() {
 		this.aluno.restaurar(this.alunoAnterior);
@@ -289,35 +293,33 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void buscarTodos() {
 		this.alunos = this.dao.findAll();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param status
 	 * @return
 	 */
 	public String buscarTodosPorStatus(String status) {
-		String retorno = null;
 		try {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
 				this.alunos = this.dao.findByStatus(status);
-				retorno = "listarAluno?faces-redirect=true";
 			} else {
-				error("Status " + status + "invï¿½lido para consulta");
+				error("Status " + status + "inválido para consulta");
 			}
 
 		} catch (Exception e) {
-			error("Erro ao consultar dados: " + e.getMessage());
+			error("Erro ao consultar dados: " + e.getMessage());;
 		}
-		return retorno;
+		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param matricula
 	 * @return
 	 */
@@ -343,7 +345,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void limparAluno() {
 		this.aluno.setDataEgresso(null);
@@ -356,7 +358,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isEditado() {
@@ -364,7 +366,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param editado
 	 */
 	public void setEditado(boolean editado) {
@@ -372,7 +374,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Aluno getAlunoAnterior() {
@@ -380,7 +382,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alunoAnterior
 	 */
 	public void setAlunoAnterior(Aluno alunoAnterior) {
@@ -388,7 +390,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public AlunoDao getDao() {
@@ -396,7 +398,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dao
 	 */
 	public void setDao(AlunoDao dao) {
@@ -404,7 +406,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Aluno getAluno() {
@@ -412,7 +414,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param aluno
 	 */
 	public void setAluno(Aluno aluno) {
@@ -420,7 +422,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Aluno> getAlunos() {
@@ -428,7 +430,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alunos
 	 */
 	public void setAlunos(List<Aluno> alunos) {
@@ -436,7 +438,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Pessoa getPessoa() {
@@ -444,7 +446,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pessoa
 	 */
 	public void setPessoa(Pessoa pessoa) {
@@ -452,7 +454,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Documento> getDocumentos() {
@@ -460,7 +462,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documentos
 	 */
 	public void setDocumentos(List<Documento> documentos) {
@@ -468,7 +470,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Endereco> getEnderecos() {
@@ -476,7 +478,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param enderecos
 	 */
 	public void setEnderecos(List<Endereco> enderecos) {
@@ -484,7 +486,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Documento getDocumento() {
@@ -492,7 +494,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documento
 	 */
 	public void setDocumento(Documento documento) {
@@ -500,7 +502,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Endereco getEndereco() {
@@ -508,7 +510,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param endereco
 	 */
 	public void setEndereco(Endereco endereco) {
@@ -516,7 +518,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getAlunoTab() {
@@ -524,7 +526,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alunoTab
 	 */
 	public void setAlunoTab(String alunoTab) {
@@ -532,7 +534,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDocumentoTab() {
@@ -540,7 +542,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documentoTab
 	 */
 	public void setDocumentoTab(String documentoTab) {
@@ -548,7 +550,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getEnderecoTab() {
@@ -556,7 +558,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param enderecoTab
 	 */
 	public void setEnderecoTab(String enderecoTab) {
@@ -564,7 +566,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void info(String message) {
@@ -573,7 +575,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void warn(String message) {
@@ -582,7 +584,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void error(String message) {
@@ -591,7 +593,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void fatal(String message) {

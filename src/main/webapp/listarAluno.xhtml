@@ -32,6 +32,8 @@
 					<div class="panel-body">
 						<div class="col-lg-12" align="right">
 							<h:form id="matricula-form">
+							<h:messages id="messages" showDetail="true" closable="true"
+									autoUpdate="true" />
 								<h:panelGrid columns="3" cellpadding="5"
 									style="margin-bottom:10px">
 									<p:inputText id="input-matricula" value="#{matricula}"
@@ -52,10 +54,8 @@
 								<tr>
 									<th data-field="matricula" data-sortable="true">Matricula</th>
 									<th data-field="nome" data-sortable="true">Nome</th>
-									<th data-field="cpf" data-sortable="true">CPF</th>
 									<th data-field="datanasc" data-sortable="true">Data de
 										Nascimento</th>
-									<th data-field="editar" data-sortable="true">Editar</th>
 									<th data-field="deletar" data-sortable="true">Deletar</th>
 								</tr>
 							</thead>
@@ -65,19 +65,10 @@
 										varStatus="status">
 										<tr>
 											<td>#{aluno.matricula}</td>
-											<td>#{aluno.pessoa.nome}</td>
-											<td><ui:repeat var="documento"
-													value="#{alunoBean.aluno.pessoa.documentos}">
-													<h:outputLabel value="#{documento.numero}"
-														rendered="#{documento.tipo == 'CPF'}">
-													</h:outputLabel>
-												</ui:repeat></td>
-											<td>#{aluno.pessoa.dataNasc}</td>
 											<td><h:commandLink id="btn_edit"
-													action="#{alunoBean.atualizar(aluno)}"
-													class="glyphicon glyphicon-pencil" type="submit"
-													process="@form"> Editar</h:commandLink> <!-- span class="glyphicon glyphicon-pencil"></span-->
-											</td>
+													action="#{alunoBean.atualizar(aluno)}" type="submit"
+													process="@form" styleClass="form-group"> #{aluno.pessoa.nome}</h:commandLink></td>
+											<td>#{aluno.pessoa.dataNasc}</td>
 											<td><h:commandLink
 													action="#{alunoBean.remover(aluno.id)}" type="submit"
 													process="@form" class="glyphicon glyphicon-trash"

@@ -13,13 +13,13 @@ import javax.persistence.Table;
 
 /**
  * The persistent class for the endereco database table.
- * 
+ *
  */
 @Entity
 @Table(name = "Endereco", schema = "futurodb")
-@NamedQueries({ 
+@NamedQueries({
 	@NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
-	@NamedQuery(name = "Endereco.findByPersonId", query = "SELECT e FROM Endereco e WHERE e.Pessoa_id = :personId")
+	@NamedQuery(name = "Endereco.findByPersonId", query = "SELECT e FROM Endereco e WHERE e.pessoa.id = :personId")
 })
 
 public class Endereco implements Serializable {
@@ -84,7 +84,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Long getId() {
@@ -92,7 +92,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 */
 	public void setId(Long id) {
@@ -100,7 +100,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getBairro() {
@@ -108,7 +108,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bairro
 	 */
 	public void setBairro(String bairro) {
@@ -116,7 +116,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCep() {
@@ -124,7 +124,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param cep
 	 */
 	public void setCep(String cep) {
@@ -132,7 +132,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCidade() {
@@ -140,7 +140,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param cidade
 	 */
 	public void setCidade(String cidade) {
@@ -148,7 +148,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getEnderecocorrespondencia() {
@@ -156,7 +156,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param enderecocorrespondencia
 	 */
 	public void setEnderecocorrespondencia(String enderecocorrespondencia) {
@@ -164,7 +164,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getLogradouro() {
@@ -172,7 +172,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param logradouro
 	 */
 	public void setLogradouro(String logradouro) {
@@ -180,7 +180,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getNumero() {
@@ -188,7 +188,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param numero
 	 */
 	public void setNumero(int numero) {
@@ -196,7 +196,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getTelefone() {
@@ -204,7 +204,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param telefone
 	 */
 	public void setTelefone(String telefone) {
@@ -212,7 +212,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getTipo() {
@@ -220,7 +220,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tipo
 	 */
 	public void setTipo(String tipo) {
@@ -228,7 +228,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getUf() {
@@ -236,7 +236,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param uf
 	 */
 	public void setUf(String uf) {
@@ -244,7 +244,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Pessoa getPessoa() {
@@ -252,7 +252,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pessoa
 	 */
 	public void setPessoa(Pessoa pessoa) {
@@ -260,7 +260,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -272,7 +272,7 @@ public class Endereco implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	@Override

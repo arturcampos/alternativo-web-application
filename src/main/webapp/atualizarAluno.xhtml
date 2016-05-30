@@ -44,7 +44,7 @@
 									</div>
 									<div class="form-group">
 										<label>Data de nascimento :</label>
-										<p:calendar value="#{alunoBean.aluno.pessoa.datanasc}"
+										<p:calendar value="#{alunoBean.aluno.pessoa.dataNasc}"
 											pattern="dd/MM/yyyy" styleClass="form-date"
 											id="Data_Nascimento" />
 									</div>
@@ -55,7 +55,7 @@
 									</div>
 									<div class="form-group">
 										<label>Estado Civil:</label>
-										<h:selectOneMenu value="#{alunoBean.aluno.pessoa.estadocivil}"
+										<h:selectOneMenu value="#{alunoBean.aluno.pessoa.estadoCivil}"
 											styleClass="form-control" id="Estado_Civil">
 											<f:selectItem itemValue="" itemLabel="-"
 												noSelectionOption="true" />
@@ -92,41 +92,41 @@
 									<div class="form-group">
 										<label>Necessidades Especiais:</label>
 										<p:inputText
-											value="#{alunoBean.aluno.pessoa.necessidadesespeciais}"
+											value="#{alunoBean.aluno.pessoa.necessidadesEspeciais}"
 											styleClass="form-control" id="Necessidades_Especiais" />
 									</div>
 									<div class="form-group">
 										<label>Nome da Mãe:</label>
-										<p:inputText value="#{alunoBean.aluno.pessoa.nomemae}"
+										<p:inputText value="#{alunoBean.aluno.pessoa.nomeMae}"
 											styleClass="form-control" id="Nome_Mae" />
 									</div>
 									<div class="form-group">
 										<label>Nome do Pai:</label>
-										<p:inputText value="#{alunoBean.aluno.pessoa.nomepai}"
+										<p:inputText value="#{alunoBean.aluno.pessoa.nomePai}"
 											styleClass="form-control" id="Nome_Pai" />
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<p:commandButton styleClass="btn btn-default" value=" Atualziar Documentos"
-											action="#{documentoBean.listarDocumentos(alunoBean.aluno, null)}"
-											process="@this" id="link-atualizar-docs" />
+										<p:commandButton styleClass="btn btn-default" value="Atualziar Documentos"
+											action="#{documentoBean.atualizarDocumentos(alunoBean.aluno.pessoa)}"
+											process="@form" id="link-atualizar-docs" type="submit" />
 
 									</div>
 									<div class="form-group">
-										<p:commandButton styleClass="btn btn-default" value=" Atualizar Endereços"
-											action="#{enderecoBean.atualizarEnderecos(alunoBean.aluno.pessoa.enderecos)}"
-											process="@this" id="link-atualizar-end" />
+										<h:commandButton styleClass="btn btn-default" value=" Atualizar Endereços"
+											action="#{enderecoBean.atualizarEnderecos(alunoBean.aluno.pessoa)}"
+											process="@form" id="link-atualizar-end" type="submit"/>
 									</div>
 									<div class="form-group">
 										<label>Numero do Celular:</label>
 										<p:inputText
-											value="#{alunoBean.aluno.pessoa.responsavellegal}"
+											value="#{alunoBean.aluno.pessoa.responsavelLegal}"
 											styleClass="form-control" id="Numero_Celular" />
 									</div>
 									<div class="form-group">
 										<label>Responsavel Legal:</label>
-										<p:inputText value="#{alunoBean.aluno.pessoa.numerocelular}"
+										<p:inputText value="#{alunoBean.aluno.pessoa.numeroCelular}"
 											styleClass="form-control" id="Responsavel_Legal" />
 									</div>
 									<div class="form-group">
