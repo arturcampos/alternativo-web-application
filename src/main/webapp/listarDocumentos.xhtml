@@ -49,15 +49,15 @@
 									<th data-field="deletar" data-sortable="true">Deletar</th>
 								</tr>
 							</thead>
-							<h:form rendered="#{not empty documentoBean.documentos}" id="list-form">
+							<h:form id="list-form">
 								<tbody>
 									<ui:repeat var="documento" value="#{documentoBean.documentos}"
 										varStatus="status">
 										<tr>
 											<td>#{documento.tipo}</td>
 											<td>#{documento.numero}</td>
-											<td>#{documento.dataexpedicao}</td>
-											<td>#{documento.orgaoemissor}</td>
+											<td>#{documento.dataExpedicao}</td>
+											<td>#{documento.orgaoEmissor}</td>
 											<td><h:commandLink id="btn_edit"
 													action="#{documentoBean.atualizar(documento)}"
 													class="glyphicon glyphicon-pencil" type="submit"

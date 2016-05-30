@@ -42,7 +42,7 @@ public class Documento implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataValidade;
 
-	private String orgaoemissor;
+	private String orgaoEmissor;
 
 	private String uf;
 
@@ -53,14 +53,14 @@ public class Documento implements Serializable {
 	public Documento() {
 	}
 
-	public Documento(Long id, String numero, String tipo, Date dataExpedicao, Date dataValidade, String orgaoemissor,
+	public Documento(Long id, String numero, String tipo, Date dataExpedicao, Date dataValidade, String orgaoEmissor,
 			String uf, Pessoa pessoa) {
 		this.id = id;
 		this.numero = numero;
 		this.tipo = tipo;
 		this.dataExpedicao = dataExpedicao;
 		this.dataValidade = dataValidade;
-		this.orgaoemissor = orgaoemissor;
+		this.orgaoEmissor = orgaoEmissor;
 		this.uf = uf;
 		this.pessoa = pessoa;
 	}
@@ -89,12 +89,12 @@ public class Documento implements Serializable {
 		this.dataValidade = dataValidade;
 	}
 
-	public String getOrgaoemissor() {
-		return this.orgaoemissor;
+	public String getOrgaoEmissor() {
+		return this.orgaoEmissor;
 	}
 
-	public void setOrgaoemissor(String orgaoemissor) {
-		this.orgaoemissor = orgaoemissor;
+	public void setOrgaoEmissor(String orgaoemissor) {
+		this.orgaoEmissor = orgaoemissor;
 	}
 
 	public String getUf() {
@@ -131,13 +131,13 @@ public class Documento implements Serializable {
 
 	@Override
 	public String toString() {
-		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoemissor + "\nData de Emissão:"
+		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoEmissor + "\nData de Emissão:"
 				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade);
 	}
 
 	@Override
 	public Documento clone() {
-		return new Documento(this.id, this.numero, this.tipo, this.dataExpedicao, this.dataValidade, this.orgaoemissor,
+		return new Documento(this.id, this.numero, this.tipo, this.dataExpedicao, this.dataValidade, this.orgaoEmissor,
 				this.uf, this.pessoa);
 	}
 

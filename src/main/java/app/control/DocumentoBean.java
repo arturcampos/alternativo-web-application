@@ -99,7 +99,7 @@ public class DocumentoBean implements Serializable {
 		System.out.println("atualizar documentos\n");
 		System.out.println(pessoa.toString());
 		this.pessoa = pessoa;
-		this.documentos = dao.findByPersonId(pessoa.getId());
+		this.documentos = pessoa.getDocumentos();
 
 		if (this.documentos.isEmpty() || this.documentos == null) {
 			warn("Nenhum documento encontrado para " + pessoa.getNome());

@@ -108,15 +108,15 @@
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<p:commandButton styleClass="btn btn-default" value="Atualziar Documentos"
+										<h:commandButton styleClass="btn btn-default" value="Atualziar Documentos"
 											action="#{documentoBean.atualizarDocumentos(alunoBean.aluno.pessoa)}"
-											process="@form" id="link-atualizar-docs" type="submit" />
+											process="@form" id="btn-atualizar-documento" type="submit" />
 
 									</div>
 									<div class="form-group">
-										<h:commandButton styleClass="btn btn-default" value=" Atualizar Endereços"
+										<h:commandButton styleClass="btn btn-default" value="Atualizar Endereços"
 											action="#{enderecoBean.atualizarEnderecos(alunoBean.aluno.pessoa)}"
-											process="@form" id="link-atualizar-end" type="submit"/>
+											process="@form" id="btn-atualizar-endereco" type="submit"/>
 									</div>
 									<div class="form-group">
 										<label>Numero do Celular:</label>

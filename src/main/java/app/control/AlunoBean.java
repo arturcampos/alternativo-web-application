@@ -170,7 +170,7 @@ public class AlunoBean implements Serializable {
 		} catch (Exception e) {
 			error("Erro ao adicionar documento ï¿½ lista");
 		}
-		return "salvarAlunoretorno?faces-redirect=true";
+		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class AlunoBean implements Serializable {
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do aluno");
+			error("Erro ao direcioar para atualização de dados do aluno");
 			return "listarAluno?faces-redirect=true";
 		}
 	}
