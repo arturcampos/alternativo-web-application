@@ -141,4 +141,16 @@ public class Documento implements Serializable {
 				this.uf, this.pessoa);
 	}
 
+	public void restaurar(Documento documento) {
+		this.id = documento.getId();
+		this.dataExpedicao = documento.getDataExpedicao();
+		this.dataValidade = documento.getDataValidade();
+		this.uf = documento.getUf();
+		this.numero = documento.getNumero();
+		this.tipo = documento.getTipo();
+		this.orgaoEmissor = documento.getOrgaoEmissor();
+
+	}
+
+
 }

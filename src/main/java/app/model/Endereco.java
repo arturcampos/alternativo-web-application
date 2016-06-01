@@ -35,7 +35,7 @@ public class Endereco implements Serializable {
 
 	private String cidade;
 
-	private String enderecocorrespondencia;
+	private String enderecoCorrespondencia;
 
 	private String logradouro;
 
@@ -59,7 +59,7 @@ public class Endereco implements Serializable {
 	 * @param bairro
 	 * @param cep
 	 * @param cidade
-	 * @param enderecocorrespondencia
+	 * @param enderecoCorrespondencia
 	 * @param logradouro
 	 * @param numero
 	 * @param telefone
@@ -67,14 +67,14 @@ public class Endereco implements Serializable {
 	 * @param uf
 	 * @param pessoa
 	 */
-	public Endereco(Long id, String bairro, String cep, String cidade, String enderecocorrespondencia,
+	public Endereco(Long id, String bairro, String cep, String cidade, String enderecoCorrespondencia,
 			String logradouro, int numero, String telefone, String tipo, String uf, Pessoa pessoa) {
 		super();
 		this.id = id;
 		this.bairro = bairro;
 		this.cep = cep;
 		this.cidade = cidade;
-		this.enderecocorrespondencia = enderecocorrespondencia;
+		this.enderecoCorrespondencia = enderecoCorrespondencia;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.telefone = telefone;
@@ -151,16 +151,16 @@ public class Endereco implements Serializable {
 	 *
 	 * @return
 	 */
-	public String getEnderecocorrespondencia() {
-		return this.enderecocorrespondencia;
+	public String getEnderecoCorrespondencia() {
+		return this.enderecoCorrespondencia;
 	}
 
 	/**
 	 *
-	 * @param enderecocorrespondencia
+	 * @param enderecoCorrespondencia
 	 */
-	public void setEnderecocorrespondencia(String enderecocorrespondencia) {
-		this.enderecocorrespondencia = enderecocorrespondencia;
+	public void setEnderecoCorrespondencia(String enderecoCorrespondencia) {
+		this.enderecoCorrespondencia = enderecoCorrespondencia;
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class Endereco implements Serializable {
 	public String toString() {
 		return new String("Logradouro: " + this.logradouro + "\nNumero: " + this.numero + "\nBairro: " + this.bairro
 				+ "\nCidade: " + this.cidade + "\nCEP: " + this.cep + "\nUF: " + this.uf
-				+ "\n Endereço de Correspondência: " + this.enderecocorrespondencia + "\nTelefone:" + this.telefone
+				+ "\n Endereço de Correspondência: " + this.enderecoCorrespondencia + "\nTelefone:" + this.telefone
 				+ "\nTipo de endereço: " + this.tipo);
 	}
 
@@ -277,7 +277,20 @@ public class Endereco implements Serializable {
 	 */
 	@Override
 	public Endereco clone() {
-		return new Endereco(this.id, this.bairro, this.cep, this.cidade, this.enderecocorrespondencia, this.logradouro,
+		return new Endereco(this.id, this.bairro, this.cep, this.cidade, this.enderecoCorrespondencia, this.logradouro,
 				this.numero, this.telefone, this.tipo, this.uf, this.pessoa);
+	}
+
+
+	public void restaurar(Endereco endereco) {
+		this.id = endereco.getId();
+		this.cep = endereco.getCep();
+		this.cidade = endereco.getCidade();
+		this.bairro = endereco.getBairro();
+		this.enderecoCorrespondencia = endereco.getEnderecoCorrespondencia();
+		this.numero = endereco.getNumero();
+		this.tipo = endereco.getTipo();
+		this.pessoa = endereco.getPessoa();
+		this.uf = endereco.getUf();
 	}
 }

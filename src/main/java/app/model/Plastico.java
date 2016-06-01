@@ -8,34 +8,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the plastico database table.
- * 
+ *
  */
 @Entity
-@Table(name="Plastico", schema="futurodb")
-@NamedQuery(name="Plastico.findAll", query="SELECT p FROM Plastico p")
+@Table(name = "Plastico", schema = "futurodb")
+@NamedQueries({ @NamedQuery(name = "Plastico.findAll", query = "SELECT p FROM Plastico p"),
+		@NamedQuery(name = "Plastico.findByPersonId", query = "SELECT p FROM Plastico p WHERE p.pessoa.id = :wantedId") })
 public class Plastico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date datacadastro;
+	private Date dataCadastro;
 
-	private String linhadigitavel;
+	private String linhaDigitavel;
 
 	private String status;
 
-	//bi-directional many-to-one association to Pessoa
+	// bi-directional many-to-one association to Pessoa
 	@ManyToOne
 	private Pessoa pessoa;
 
@@ -50,20 +51,20 @@ public class Plastico implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDatacadastro() {
-		return this.datacadastro;
+	public Date getDataCadastro() {
+		return this.dataCadastro;
 	}
 
-	public void setDatacadastro(Date datacadastro) {
-		this.datacadastro = datacadastro;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public String getLinhadigitavel() {
-		return this.linhadigitavel;
+	public String getLinhaDigitavel() {
+		return this.linhaDigitavel;
 	}
 
-	public void setLinhadigitavel(String linhadigitavel) {
-		this.linhadigitavel = linhadigitavel;
+	public void setLinhaDigitavel(String linhaDigitavel) {
+		this.linhaDigitavel = linhaDigitavel;
 	}
 
 	public String getStatus() {

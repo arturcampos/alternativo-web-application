@@ -26,6 +26,7 @@ public class DocumentoBean implements Serializable {
 	private Documento documentoAnterior;
 	private boolean editado;
 
+
 	@PostConstruct
 	public void init() {
 		if (dao == null) {
@@ -36,6 +37,11 @@ public class DocumentoBean implements Serializable {
 		this.pessoa = new Pessoa();
 	}
 
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
 	public String buscarPorId(Long id) {
 		this.documento = this.dao.findById(id);
 		if (this.documento != null) {
@@ -46,8 +52,27 @@ public class DocumentoBean implements Serializable {
 		return "listarDocumento?faces-redirect=true";
 	}
 
-	public Documento remover(Long id) {
-		return this.dao.remove(id);
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String remover(Long id) {
+		if(this.documentos.size() == 1){
+			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um documento. Operação não permitida.");
+		}
+		else{
+			Documento doc = this.dao.remove(id);
+			if(!doc.equals(null)){
+				this.documentos.remove(doc);
+				info(doc.getTipo() + " removido com suecsso.");
+			}
+			else{
+				warn("documento não encontrado na base de dados, favor verificar novamente na lista.");
+			}
+		}
+
+		return "listarDocumento?faces-redirect=true";
 	}
 
 	/**
@@ -58,7 +83,7 @@ public class DocumentoBean implements Serializable {
 	public String atualizar(Documento documento) {
 		try {
 			this.documento = documento.clone();
-			this.documentoAnterior = documento.clone();
+			this.documentoAnterior = documento;
 			this.editado = true;
 			return "atualizarDocumento?faces-redirect=true";
 		} catch (Exception e) {
@@ -79,10 +104,10 @@ public class DocumentoBean implements Serializable {
 			info("Documento " + this.documento.getTipo() + " " + this.documento.getNumero() + " atualizados");
 			this.documento = new Documento();
 			this.documentoAnterior = new Documento();
-			return "listarDocumentos?faces-redirect=true";
+			return "listarDocumento?faces-redirect=true";
 		} catch (Exception e) {
 			error("Erro ao atualizar as informações!");
-			return "atualizarDocumentos?faces-redirect=true";
+			return "atualizarDocumento?faces-redirect=true";
 		}
 	}
 
@@ -96,15 +121,25 @@ public class DocumentoBean implements Serializable {
 	 * @return
 	 */
 	public String atualizarDocumentos(Pessoa pessoa) {
-		System.out.println("atualizar documentos\n");
-		System.out.println(pessoa.toString());
 		this.pessoa = pessoa;
 		this.documentos = pessoa.getDocumentos();
 
 		if (this.documentos.isEmpty() || this.documentos == null) {
 			warn("Nenhum documento encontrado para " + pessoa.getNome());
 		}
-		return "listarDocumentos?faces-redirect=true";
+		return "listarDocumento?faces-redirect=true";
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+
+	public String cancelarAtualizar() {
+		this.documento.restaurar(this.documentoAnterior);
+		this.documentoAnterior = new Documento();
+		editado = false;
+		return "listarDocumento?faces-redirect=true";
 	}
 
 	public DocumentoDao getDao() {
