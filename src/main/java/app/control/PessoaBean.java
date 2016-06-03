@@ -14,7 +14,7 @@ import app.model.Pessoa;
 public class PessoaBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private PessoaDao dao = null;
@@ -40,12 +40,12 @@ public class PessoaBean implements Serializable {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
-			info("Informaï¿½ï¿½es salvas com sucesso");
+			info("Informações salvas com sucesso");
 			return "salvar";
 		} catch (Exception e) {
-			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
+			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvar";
-		} 
+		}
 	}
 
 	public String buscarPorId(Long id) {
@@ -186,11 +186,11 @@ public class PessoaBean implements Serializable {
 		return msg;
 	}
 
-	public java.util.List getPessoaLista() {
+	public List<Pessoa> getPessoaLista() {
 		return pessoaLista;
 	}
 
-	public void setPessoaLista(java.util.List pessoaLista) {
+	public void setPessoaLista(List<Pessoa> pessoaLista) {
 		this.pessoaLista = pessoaLista;
 	}
 }

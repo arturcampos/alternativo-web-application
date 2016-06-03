@@ -9,19 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the professor database table.
- * 
+ *
  */
 @Entity
 @Table(name="Professor", schema="futurodb")
-@NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p")
+@NamedQueries({
+@NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p"),
+@NamedQuery(name="Professor.findByName", query="SELECT p FROM Professor p WEHRE p.nome LIKE '%:nome%'")})
+
 public class Professor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,8 +50,8 @@ public class Professor implements Serializable {
 
 	public Professor() {
 	}
-	
-	
+
+
 
 	/**
 	 * @param id
@@ -87,11 +90,11 @@ public class Professor implements Serializable {
 		this.formacao = formacao;
 	}
 
-	public String getNivelformacao() {
+	public String getNivelFormacao() {
 		return this.nivelFormacao;
 	}
 
-	public void setNivelformacao(String nivelFormacao) {
+	public void setNivelFormacao(String nivelFormacao) {
 		this.nivelFormacao = nivelFormacao;
 	}
 
@@ -132,17 +135,17 @@ public class Professor implements Serializable {
 
 		return turma;
 	}
-	
+
 	public void restaurar(Professor professor) {
 		this.id = professor.getId();
 		this.disciplinas = professor.getDisciplinas();
 		this.formacao = professor.getFormacao();
-		this.nivelFormacao = professor.getNivelformacao();
+		this.nivelFormacao = professor.getNivelFormacao();
 		this.pessoa = professor.getPessoa();
 		this.turmas = professor.getTurmas();
-		
+
 	}
-	
+
 	@Override
 	public Professor clone(){
 		return new Professor(this.id, this.formacao, this.nivelFormacao, this.pessoa, this.disciplinas, this.turmas);

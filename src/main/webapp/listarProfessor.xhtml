@@ -10,14 +10,14 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-				<li class="active">Listagem de pessoas</li>
+				<li class="active">Listagem de Professores</li>
 			</ol>
 		</div>
 		<!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Listagem de Alunos</h1>
+				<h2 class="page-header">Listagem de Professores</h2>
 			</div>
 		</div>
 		<!--/.row-->
@@ -26,8 +26,25 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Alunos cadastrados</div>
+					<div class="panel-heading">Professores cadastrados</div>
 					<div class="panel-body">
+					<div class="col-lg-12" align="right">
+							<h:form id="nome-form">
+							<h:messages id="messages" showDetail="true" closable="true"
+									autoUpdate="true" />
+								<h:panelGrid columns="3" cellpadding="5"
+									style="margin-bottom:10px">
+									<p:inputText id="input-nome" value="#{nome}"
+										required="true" styleClass="form-control">
+									<p:watermark for="input-nome" value="Nome para a consulta"/>
+									</p:inputText> 
+									<p:commandButton
+										action="#{professorBean.buscarPorNome(nome)}" value="Buscar"
+										process="@this, nome-form" styleClass="btn btn-info"/>
+								</h:panelGrid>
+
+							</h:form>
+						</div>
 						<table data-toggle="table" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="toolbar1"

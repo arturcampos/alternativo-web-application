@@ -17,8 +17,8 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Atualizar dados de
-					#{pessoaBean.pessoa.nome}</h1>
+				<h2 class="page-header">Atualizar dados de
+					#{pessoaBean.pessoa.nome}</h2>
 			</div>
 		</div>
 		<!--/.row-->
@@ -44,7 +44,7 @@
 									</div>
 									<div class="form-group">
 										<label>Data de nascimento :</label>
-										<p:calendar value="#{professorBean.professor.pessoa.datanasc}"
+										<p:calendar value="#{professorBean.professor.pessoa.dataNasc}"
 											pattern="dd/MM/yyyy" styleClass="form-date"
 											id="Data_Nascimento" />
 									</div>
@@ -55,7 +55,7 @@
 									</div>
 									<div class="form-group">
 										<label>Estado Civil:</label>
-										<h:selectOneMenu value="#{professorBean.professor.pessoa.estadocivil}"
+										<h:selectOneMenu value="#{professorBean.professor.pessoa.estadoCivil}"
 											styleClass="form-control" id="Estado_Civil">
 											<f:selectItem itemValue="" itemLabel="-"
 												noSelectionOption="true" />
@@ -92,47 +92,47 @@
 									<div class="form-group">
 										<label>Necessidades Especiais:</label>
 										<p:inputText
-											value="#{professorBean.professor.pessoa.necessidadesespeciais}"
+											value="#{professorBean.professor.pessoa.necessidadesEspeciais}"
 											styleClass="form-control" id="Necessidades_Especiais" />
 									</div>
 									<div class="form-group">
 										<label>Nome da Mãe:</label>
-										<p:inputText value="#{professorBean.professor.pessoa.nomemae}"
+										<p:inputText value="#{professorBean.professor.pessoa.nomeMae}"
 											styleClass="form-control" id="Nome_Mae" />
 									</div>
 									<div class="form-group">
 										<label>Nome do Pai:</label>
-										<p:inputText value="#{professorBean.professor.pessoa.nomepai}"
+										<p:inputText value="#{professorBean.professor.pessoa.nomePai}"
 											styleClass="form-control" id="Nome_Pai" />
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<p:commandButton styleClass="btn btn-default" value=" Atualziar Documentos"
-											action="#{documentoBean.atualizarDocumentos(professorBean.professor.pessoa.documentos)}"
-											process="@this" id="link-atualizar-docs" />
+										<h:commandButton styleClass="btn btn-default" value="Visualizar Documentos"
+											action="#{documentoBean.atualizarDocumentos(professorBean.professor.pessoa)}"
+											process="@form" id="btn-atualizar-documento" type="submit" />
 
 									</div>
 									<div class="form-group">
-										<p:commandButton styleClass="btn btn-default" value=" Atualizar Endereços"
-											action="#{enderecoBean.atualizarEnderecos(professorBean.professor.pessoa.enderecos)}"
-											process="@this" id="link-atualizar-end" />
+										<h:commandButton styleClass="btn btn-default" value="Visualizar Endereços"
+											action="#{enderecoBean.atualizarEnderecos(professorBean.professor.pessoa)}"
+											process="@form" id="btn-atualizar-endereco" type="submit"/>
 									</div>
 									<div class="form-group">
 										<label>Numero do Celular:</label>
 										<p:inputText
-											value="#{professorBean.professor.pessoa.responsavellegal}"
+											value="#{professorBean.professor.pessoa.responsavelLegal}"
 											styleClass="form-control" id="Numero_Celular" />
 									</div>
 									<div class="form-group">
 										<label>Responsavel Legal:</label>
-										<p:inputText value="#{professorBean.professor.pessoa.numerocelular}"
+										<p:inputText value="#{professorBean.professor.pessoa.numeroCelular}"
 											styleClass="form-control" id="Responsavel_Legal" />
 									</div>
 									<div class="form-group">
 												<label>Nível de formação:</label>
 												<h:selectOneMenu
-													value="#{professorBean.professor.nivelformacao}"
+													value="#{professorBean.professor.nivelFormacao}"
 													styleClass="form-control" id="nivel-formacao">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
@@ -155,9 +155,7 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Formação:</label><span style="color: red"
-													class="small">(Caso não se aplique, preencha com
-													N.A.)</span>
+												<label>Formação:</label>
 												<p:inputText required="true" styleClass="form-control"
 													id="formacao" value="#{professorBean.professor.formacao}"
 													locale="pt_BR" />

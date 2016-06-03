@@ -19,7 +19,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Cadastrar Professor</h1>
+				<h2 class="page-header">Cadastrar Professor</h2>
 			</div>
 		</div>
 		<!--/.row-->
@@ -35,7 +35,7 @@
 							<div class="panel-body tabs">
 								<ul class="nav nav-pills">
 									<li class="#{professorBean.professorTab}"><a
-										href="#tab-professor" data-toggle="tab">Professor</a></li>
+										href="#tab-professor" data-toggle="tab">Dados principais</a></li>
 									<li class="#{professorBean.documentoTab}"><a
 										href="#tab-documento" data-toggle="tab">Documento</a></li>
 									<li class="#{professorBean.enderecoTab}"><a
@@ -52,14 +52,20 @@
 											</div>
 											<div class="form-group">
 												<label>Sexo:</label>
-												<p:inputText value="#{professorBean.pessoa.sexo}"
-													styleClass="form-control" id="Sexo" />
+												<h:selectOneMenu value="#{professorBean.pessoa.sexo}"
+													styleClass="form-control" id="Sexo">
+													<f:selectItem itemValue="" itemLabel="-"
+														noSelectionOption="true" />
+													<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
+													<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
+													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
 												<label>Data de nascimento :</label>
-												<p:calendar value="#{professorBean.pessoa.datanasc}"
-													pattern="dd/MM/yyyy" required="true" id="Data-Nascimento"
-													locale="pt_BR" />
+												<p:calendar value="#{professorBean.pessoa.dataNasc}"
+													pattern="dd/MM/yyyy" required="true" styleClass="form-date"
+													id="Data-Nascimento" />
 											</div>
 											<div class="form-group">
 												<label>Email:</label>
@@ -68,8 +74,8 @@
 											</div>
 											<div class="form-group">
 												<label>Estado Civil:</label>
-												<h:selectOneMenu value="#{professorBean.pessoa.estadocivil}"
-													styleClass="form-control" id="Estado_Civil">
+												<h:selectOneMenu value="#{professorBean.pessoa.estadoCivil}"
+													styleClass="form-control" id="Estado-Civil">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
 													<f:selectItem itemValue="SOLTEIRO(A)"
@@ -101,45 +107,43 @@
 
 											<div class="form-group">
 												<label>UF:</label>
-												<p:inputText value="#{professorBean.pessoa.uf}"
-													required="true" styleClass="form-control" id="UF"
-													style="width: 70px" />
+												<p:inputText value="#{professorBean.pessoa.uf}" required="true"
+													styleClass="form-control" id="UF" style="width: 70px" />
 											</div>
 											<div class="form-group">
 												<label>Necessidades Especiais:</label>
 												<p:inputText
-													value="#{professorBean.pessoa.necessidadesespeciais}"
+													value="#{professorBean.pessoa.necessidadesEspeciais}"
 													required="true" styleClass="form-control"
 													id="Necessidades-Especiais" />
 											</div>
 											<div class="form-group">
 												<label>Nome da Mãe:</label>
-												<p:inputText value="#{professorBean.pessoa.nomemae}"
+												<p:inputText value="#{professorBean.pessoa.nomeMae}"
 													required="true" styleClass="form-control" id="Nome-Mae" />
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
 												<label>Nome do Pai:</label>
-												<p:inputText value="#{professorBean.pessoa.nomepai}"
+												<p:inputText value="#{professorBean.pessoa.nomePai}"
 													required="true" styleClass="form-control" id="Nome-Pai" />
 											</div>
 											<div class="form-group">
 												<label>Numero do Celular:</label>
-												<p:inputText
-													value="#{professorBean.pessoa.responsavellegal}"
+												<p:inputText value="#{professorBean.pessoa.responsavelLegal}"
 													required="true" styleClass="form-control"
 													id="Numero-Celular" />
 											</div>
 											<div class="form-group">
 												<label>Responsavel Legal:</label>
-												<p:inputText value="#{professorBean.pessoa.numerocelular}"
+												<p:inputText value="#{professorBean.pessoa.numeroCelular}"
 													styleClass="form-control" id="Responsavel-Legal" />
 											</div>
 											<div class="form-group">
 												<label>Nível de formação:</label>
 												<h:selectOneMenu
-													value="#{professorBean.professor.nivelformacao}"
+													value="#{professorBean.professor.nivelFormacao}"
 													styleClass="form-control" id="nivel-formacao">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
@@ -170,6 +174,21 @@
 													locale="pt_BR" />
 											</div>
 										</div>
+										<div class="col-lg-12">
+											<div class="form-group" align="left">
+												<p:commandButton value="Adicionar"
+													action="#{professorBean.adicionarProfessor}"
+													styleClass="btn btn-secondary"
+													process="@this, Nome, Sexo,
+													Data-Nascimento, Email,
+													Estado-Civil, Etnia, Nacionalidade,
+													Naturalidade, UF, Necessidades-Especiais,
+													Nome-Mae, Nome-Pai, Numero-Celular,
+													Responsavel-Legal, nivel-formacao, formacao"
+													id="btn-add-professor" />
+
+											</div>
+										</div>
 									</div>
 									<!-- INICIO TAB DOCUMENTO -->
 									<div class="tab-pane #{professorBean.documentoTab}"
@@ -197,13 +216,13 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label>Data de expedição:</label>
-												<p:calendar value="#{professorBean.documento.dataexpedicao}"
+												<p:calendar value="#{professorBean.documento.dataExpedicao}"
 													pattern="dd/MM/yyyy" styleClass="form-date"
 													id="data-emissao" locale="pt_BR" />
 											</div>
 											<div class="form-group">
 												<label>Data vencimento:</label>
-												<p:calendar value="#{professorBean.documento.datavalidade}"
+												<p:calendar value="#{professorBean.documento.dataValidade}"
 													pattern="dd/MM/yyyy" styleClass="form-date"
 													id="data-validade" locale="pt_BR" />
 											</div>
@@ -216,17 +235,17 @@
 											</div>
 											<div class="form-group">
 												<label>Orgão emissor:</label>
-												<p:inputText value="#{professorBean.documento.orgaoemissor}"
+												<p:inputText value="#{professorBean.documento.orgaoEmissor}"
 													styleClass="form-control" id="emissor-doc" />
 											</div>
 										</div>
 										<div class="col-lg-12">
 											<div class="form-group">
 												<p:commandButton value="Adicionar"
-													actionListener="#{professorBean.adicionarDocumento}"
+													action="#{professorBean.adicionarDocumento}"
 													styleClass="btn btn-secondary"
 													process="@this, tipo-doc, numero-doc, data-validade, data-emissao, uf-doc, emissor-doc"
-													update="@form" id="btn-add-doc" />
+													id="btn-add-doc" />
 											</div>
 										</div>
 										<div class="col-lg-12">
@@ -235,26 +254,30 @@
 													<thead>
 														<tr>
 															<th data-field="numero" data-sortable="true">Número</th>
-															<th data-field="tipo" data-sortable="true">Tipo de documento</th>
-															<th data-field="dataexpedicao" data-sortable="true">Data de Expedicao</th>
-															<th data-field="datavalidade" data-sortable="true">Data	de validade</th>
+															<th data-field="tipo" data-sortable="true">Tipo de
+																documento</th>
+															<th data-field="dataexpedicao" data-sortable="true">Data
+																de Expedicao</th>
+															<th data-field="datavalidade" data-sortable="true">Data
+																de validade</th>
 															<th data-field="uf" data-sortable="true">UF</th>
-															<th data-field="orgaoemissor" data-sortable="true">Orgão Emissor</th>
+															<th data-field="orgaoemissor" data-sortable="true">Orgão
+																Emissor</th>
 															<th data-field="remover" data-sortable="true">Remover</th>
 														</tr>
 													</thead>
 													<tbody id="docs-table-body">
-														<ui:repeat var="documento"
-															value="#{professorBean.documentos}" varStatus="status">
+														<ui:repeat var="documento" value="#{professorBean.documentos}"
+															varStatus="status">
 															<tr>
 																<td>#{documento.numero}</td>
 																<td>#{documento.tipo}</td>
-																<td>#{documento.dataexpedicao}</td>
-																<td>#{documento.datavalidade}</td>
+																<td>#{documento.dataExpedicao}</td>
+																<td>#{documento.dataValidade}</td>
 																<td>#{documento.uf}</td>
-																<td>#{documento.orgaoemissor}</td>
+																<td>#{documento.orgaoEmissor}</td>
 																<td><p:commandLink
-																		actionListener="#{professorBean.removerDocumento(documento)}"
+																		action="#{professorBean.removerDocumento(documento)}"
 																		process="@this" class="glyphicon glyphicon-trash"
 																		update="@form"> Remover</p:commandLink></td>
 															</tr>
@@ -269,7 +292,7 @@
 									<div class="tab-pane #{professorBean.enderecoTab}"
 										id="tab-endereco">
 
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<div class="form-group">
 												<label>CEP:</label>
 												<p:inputText value="#{professorBean.endereco.cep}"
@@ -286,7 +309,7 @@
 													styleClass="form-control" id="numero-end" />
 											</div>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<div class="form-group">
 												<label>Bairro:</label>
 												<p:inputText value="#{professorBean.endereco.bairro}"
@@ -303,15 +326,15 @@
 											<div class="form-group">
 												<label>UF:</label>
 												<p:inputText value="#{professorBean.endereco.uf}"
-													styleClass="form-control" id="uf-end" />
+													styleClass="form-control" id="uf-end" style="width: 70px" />
 											</div>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<div class="form-group">
 												<label>Endereço para correspondências:</label>
 
 												<h:selectOneMenu
-													value="#{professorBean.endereco.enderecocorrespondencia}"
+													value="#{professorBean.endereco.enderecoCorrespondencia}"
 													styleClass="form-control" id="correspondencia-end">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
@@ -341,10 +364,10 @@
 										<div class="col-lg-12">
 											<div class="form-group">
 												<p:commandButton value="Adicionar"
-													actionListener="#{professorBean.adicionarEndereco}"
+													action="#{professorBean.adicionarEndereco}"
 													styleClass="btn btn-secondary"
 													process="@this, tipo-end, cep-end, logradouro-end, numero-end, bairro-end, cidade-end, uf-end, correspondencia-end, telefone-end"
-													update="@form" id="btn-add-end" />
+													id="btn-add-end" />
 											</div>
 										</div>
 										<div class="col-lg-12">
@@ -357,15 +380,15 @@
 														<th data-field="bairro" data-sortable="true">Bairro</th>
 														<th data-field="cidade" data-sortable="true">Cidade</th>
 														<th data-field="uf" data-sortable="true">UF</th>
-														<th data-field="enderecocorrespondencia"
+														<th data-field="enderecoCorrespondencia"
 															data-sortable="true">Correspondência</th>
 														<th data-field="telefone" data-sortable="true">Telefone</th>
 														<th data-field="remover" data-sortable="true">Remover</th>
 													</tr>
 												</thead>
 												<tbody>
-													<ui:repeat var="endereco"
-														value="#{professorBean.enderecos}" varStatus="status">
+													<ui:repeat var="endereco" value="#{professorBean.enderecos}"
+														varStatus="status">
 														<tr>
 															<td>#{endereco.cep}</td>
 															<td>#{endereco.logradouro}</td>
@@ -373,10 +396,10 @@
 															<td>#{endereco.bairro}</td>
 															<td>#{endereco.cidade}</td>
 															<td>#{endereco.uf}</td>
-															<td>#{endereco.enderecocorrespondencia}</td>
+															<td>#{endereco.enderecoCorrespondencia}</td>
 															<td>#{endereco.telefone}</td>
 															<td><p:commandLink
-																	actionListener="#{professorBean.removerEndereco(endereco)}"
+																	action="#{professorBean.removerEndereco(endereco)}"
 																	process="@this" class="glyphicon glyphicon-trash"
 																	update="@form"> Remover</p:commandLink></td>
 														</tr>
@@ -394,7 +417,7 @@
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group" align="right">
-								<p:commandButton value="Salvar" process="salvar-form"
+								<p:commandButton value="Salvar" process="salvar-form" rendered="#{professorBean.enderecoTab == 'active'}"
 									type="submit" action="#{professorBean.salvar}"
 									styleClass="btn btn-primary" update="salvar-form" />
 							</div>

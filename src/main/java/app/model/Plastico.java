@@ -29,7 +29,7 @@ public class Plastico implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataCadastro;
 
 	private String linhaDigitavel;

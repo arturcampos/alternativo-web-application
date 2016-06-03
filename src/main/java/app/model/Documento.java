@@ -36,10 +36,10 @@ public class Documento implements Serializable {
 
 	private String tipo;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataExpedicao;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataValidade;
 
 	private String orgaoEmissor;

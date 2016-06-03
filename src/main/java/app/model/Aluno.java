@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the aluno database table.
- * 
+ *
  */
 @Entity
 @Table(name = "aluno", schema = "futurodb")
@@ -33,10 +33,10 @@ public class Aluno implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataEgresso;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataIngresso;
 
 	private String matricula;
