@@ -112,6 +112,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>alternativo-web-application</finalName>
 	</build>
 
 	<repositories>

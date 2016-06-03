@@ -25,6 +25,7 @@ public class DocumentoBean implements Serializable {
 	private Pessoa pessoa;
 	private Documento documentoAnterior;
 	private boolean editado;
+	private String tipoPessoa;
 
 
 	@PostConstruct
@@ -123,7 +124,7 @@ public class DocumentoBean implements Serializable {
 	public String atualizarDocumentos(Pessoa pessoa) {
 		this.pessoa = pessoa;
 		this.documentos = pessoa.getDocumentos();
-
+		this.setTipoPessoa(pessoa.getTipopessoa());
 		if (this.documentos.isEmpty() || this.documentos == null) {
 			warn("Nenhum documento encontrado para " + pessoa.getNome());
 		}
@@ -188,6 +189,14 @@ public class DocumentoBean implements Serializable {
 
 	public void setEditado(boolean editado) {
 		this.editado = editado;
+	}
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the pessoa database table.
- * 
+ *
  */
 @Entity
 @Table(name = "pessoa", schema = "futurodb")
@@ -298,7 +299,10 @@ public class Pessoa implements Serializable {
 	}
 
 	public Plastico addPlastico(Plastico plastico) {
-		getPlasticos().add(plastico);
+		if(this.plasticos == null){
+			this.plasticos = new ArrayList<Plastico>();
+		}
+		this.plasticos.add(plastico);
 		plastico.setPessoa(this);
 
 		return plastico;

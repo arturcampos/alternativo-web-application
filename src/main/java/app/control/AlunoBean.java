@@ -1,7 +1,10 @@
 package app.control;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -58,9 +61,9 @@ public class AlunoBean implements Serializable {
 		this.enderecos = new ArrayList<Endereco>();
 		this.endereco = new Endereco();
 		this.documento = new Documento();
-		this.alunoTab = "";
+		this.alunoTab = "active";
 		this.enderecoTab = "";
-		this.documentoTab = "active";
+		this.documentoTab = "";
 		this.plastico = new Plastico();
 	}
 
@@ -77,7 +80,7 @@ public class AlunoBean implements Serializable {
 				this.pessoa.setDocumentos(this.documentos);
 				vincularDocumento(this.pessoa, this.documentos);
 			} else {
-				//Se não houver documentos cadastrado retorna um aviso
+				// Se não houver documentos cadastrado retorna um aviso
 				warn("É necessário cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
@@ -87,7 +90,7 @@ public class AlunoBean implements Serializable {
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
 			} else {
-				//Se não houver endereços cadastrado retorna um aviso
+				// Se não houver endereços cadastrado retorna um aviso
 				warn("É necessário cadastrar pelo menos 1 (UM) endereço");
 				return "salvarAluno?faces-redirect=true";
 			}
@@ -97,6 +100,19 @@ public class AlunoBean implements Serializable {
 			// Gerando matricula e atribuindo ao aluno
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
+
+			//Converte data e cria plástico
+			Date dataCadastro;
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				dataCadastro = sdf.parse(new Date().toString());
+			} catch (ParseException e) {
+				dataCadastro = new Date();
+			}
+			criarPlastico(matricula, dataCadastro);
+
+			//adicionando plástico à pessoa
+			this.pessoa.addPlastico(plastico);
 
 			// adicionando pessoa ao aluno
 			this.aluno.setPessoa(this.pessoa);
@@ -115,6 +131,11 @@ public class AlunoBean implements Serializable {
 			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
+	}
+
+	public String cancelarSalvar(){
+		init();
+		return "Inicio?faces-redirect=true";
 	}
 
 	/**
@@ -179,8 +200,15 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "";
 		} catch (Exception e) {
 			error("Erro ao adicionar documento à lista");
-			return "salvarAluno?faces-redirect=true";
 		}
+		return "salvarAluno?faces-redirect=true";
+	}
+
+	public String adicionarAluno(){
+		this.alunoTab = "";
+		this.alunoTab = "";
+		this.documentoTab = "active";
+		this.enderecoTab = "";
 		return "salvarAluno?faces-redirect=true";
 	}
 
@@ -381,6 +409,17 @@ public class AlunoBean implements Serializable {
 		this.aluno.setTipoCotaIngresso(-1);
 		this.aluno.setTurma(null);
 		this.aluno.setId(null);
+	}
+
+	/**
+	 *
+	 * @param matricula
+	 * @param dataCadastro
+	 */
+	public void criarPlastico(String matricula, Date dataCadastro) {
+		this.plastico.setLinhaDigitavel(matricula);
+		this.plastico.setDataCadastro(dataCadastro);
+		this.plastico.setStatus(Status.ATIVO.toString());
 	}
 
 	public String voltar() {
