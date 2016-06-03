@@ -1,44 +1,145 @@
 package app.control;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import app.dao.EnderecoDao;
 import app.model.Endereco;
+import app.model.Pessoa;
 
 @ManagedBean
 @SessionScoped
-public class EnderecoBean {
-	EnderecoDao dao;
-	Endereco endereco;
-	List<Endereco> enderecos;
+public class EnderecoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private EnderecoDao dao;
+	private Endereco endereco;
+	private List<Endereco> enderecos;
+	private Pessoa pessoa;
+	private Endereco enderecoAnterior;
+	private boolean editado;
 
 	@PostConstruct
 	public void init() {
-		dao = new EnderecoDao(Endereco.class);
+		if (dao == null) {
+			dao = new EnderecoDao(Endereco.class);
+		}
+		this.endereco = new Endereco();
+		this.enderecos = new ArrayList<Endereco>();
+		this.pessoa = new Pessoa();
+		this.editado = false;
+		this.enderecoAnterior = new Endereco();
 	}
 
-	public void salvar(Endereco endereco) {
-		this.dao.save(endereco);
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String buscarPorId(Long id) {
+		this.endereco = this.dao.findById(id);
+		if (this.endereco != null) {
+			info("Sucesso");
+		} else {
+			warn("Documetno não encotnrado");
+		}
+		return "listarEndereco?faces-redirect=true";
 	}
 
-	public Endereco buscarPorId(Long id) {
-		return this.dao.findById(id);
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String remover(Long id) {
+		if (this.enderecos.size() == 1) {
+			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um endereco. Operação não permitida.");
+		} else {
+			Endereco doc = this.dao.remove(id);
+			if (!doc.equals(null)) {
+				this.enderecos.remove(doc);
+				info(doc.getTipo() + " removido com suecsso.");
+			} else {
+				warn("endereco não encontrado na base de dados, favor verificar novamente na lista.");
+			}
+		}
+
+		return "listarEndereco?faces-redirect=true";
 	}
 
-	public Endereco remover(Long id) {
-		return this.dao.remove(id);
+	/**
+	 *
+	 * @param endereco
+	 * @return
+	 */
+	public String atualizar(Endereco endereco) {
+		try {
+			this.endereco = endereco.clone();
+			this.enderecoAnterior = endereco;
+			this.editado = true;
+			return "atualizarEndereco?faces-redirect=true";
+		} catch (Exception e) {
+			error("Erro ao direcioar para atualização de dados do endereco");
+			return "listarEndereco?faces-redirect=true";
+		}
 	}
 
-	public void atualizar(Endereco endereco) {
-		this.dao.update(endereco);
+	/**
+	 *
+	 * @return
+	 */
+	public String salvarAtualizar() {
+		try {
+			this.dao.update(this.endereco);
+			System.out.println("Atual \n " + endereco);
+			System.out.println("Anterior \n " + this.enderecos.remove(enderecoAnterior));
+			this.editado = false;
+			info("Endereco " + this.endereco.getTipo() + " atualizados");
+			this.endereco = new Endereco();
+			this.enderecoAnterior = new Endereco();
+			return "listarEndereco?faces-redirect=true";
+		} catch (Exception e) {
+			error("Erro ao atualizar as informações!");
+			return "atualizarEndereco?faces-redirect=true";
+		}
 	}
 
 	public List<Endereco> buscarTodos() {
 		return this.dao.findAll();
+	}
+
+	/**
+	 *
+	 * @param pessoa
+	 * @return
+	 */
+	public String atualizarEnderecos(Pessoa pessoa) {
+		this.pessoa = pessoa;
+		this.enderecos = pessoa.getEnderecos();
+
+		if (this.enderecos.isEmpty() || this.enderecos == null) {
+			warn("Nenhum endereco encontrado para " + pessoa.getNome());
+		}
+		return "listarEndereco?faces-redirect=true";
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+
+	public String cancelarAtualizar() {
+		this.endereco.restaurar(this.enderecoAnterior);
+		this.enderecoAnterior = new Endereco();
+		setEditado(false);
+		return "listarEndereco?faces-redirect=true";
 	}
 
 	public EnderecoDao getDao() {
@@ -63,6 +164,58 @@ public class EnderecoBean {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void info(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, " Info", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void warn(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void error(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, " Erro!", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void fatal(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
 	}
 
 }

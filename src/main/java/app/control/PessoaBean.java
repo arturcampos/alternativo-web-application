@@ -14,7 +14,7 @@ import app.model.Pessoa;
 public class PessoaBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private PessoaDao dao = null;
@@ -45,7 +45,7 @@ public class PessoaBean implements Serializable {
 		} catch (Exception e) {
 			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvar";
-		} 
+		}
 	}
 
 	public String buscarPorId(Long id) {
@@ -92,18 +92,18 @@ public class PessoaBean implements Serializable {
 	public String limparPessoa() {
 		if (this.pessoa != null) {
 			this.pessoa.setId(null);
-			this.pessoa.setDatanasc(null);
+			this.pessoa.setDataNasc(null);
 			this.pessoa.setEmail("");
-			this.pessoa.setEstadocivil("");
+			this.pessoa.setEstadoCivil("");
 			this.pessoa.setEtnia("");
 			this.pessoa.setNacionalidade("");
 			this.pessoa.setNaturalidade("");
-			this.pessoa.setNecessidadesespeciais("");
+			this.pessoa.setNecessidadesEspeciais("");
 			this.pessoa.setNome("");
-			this.pessoa.setNomemae("");
-			this.pessoa.setNomepai("");
-			this.pessoa.setNumerocelular("");
-			this.pessoa.setResponsavellegal("");
+			this.pessoa.setNomeMae("");
+			this.pessoa.setNomePai("");
+			this.pessoa.setNumeroCelular("");
+			this.pessoa.setResponsavelLegal("");
 			this.pessoa.setSexo("");
 			this.pessoa.setUf("");
 			this.pessoa.setDocumentos(null);
@@ -180,5 +180,17 @@ public class PessoaBean implements Serializable {
 	public void fatal(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", message));
+	}
+
+	public java.lang.String getMsg() {
+		return msg;
+	}
+
+	public List<Pessoa> getPessoaLista() {
+		return pessoaLista;
+	}
+
+	public void setPessoaLista(List<Pessoa> pessoaLista) {
+		this.pessoaLista = pessoaLista;
 	}
 }

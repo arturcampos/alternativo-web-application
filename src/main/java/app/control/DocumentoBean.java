@@ -1,44 +1,146 @@
 package app.control;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import app.dao.DocumentoDao;
 import app.model.Documento;
+import app.model.Pessoa;
 
-@ManagedBean
+@ManagedBean(name = "documentoBean")
 @SessionScoped
-public class DocumentoBean {
-	DocumentoDao dao;
-	Documento documento;
-	List<Documento> documentos;
+public class DocumentoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private DocumentoDao dao;
+	private Documento documento;
+	private List<Documento> documentos;
+	private Pessoa pessoa;
+	private Documento documentoAnterior;
+	private boolean editado;
+	private String tipoPessoa;
+
 
 	@PostConstruct
 	public void init() {
-		dao = new DocumentoDao(Documento.class);
+		if (dao == null) {
+			dao = new DocumentoDao(Documento.class);
+		}
+		this.documento = new Documento();
+		this.documentos = new ArrayList<Documento>();
+		this.pessoa = new Pessoa();
 	}
 
-	public void salvar(Documento documento) {
-		this.dao.save(documento);
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String buscarPorId(Long id) {
+		this.documento = this.dao.findById(id);
+		if (this.documento != null) {
+			info("Sucesso");
+		} else {
+			warn("Documetno não encotnrado");
+		}
+		return "listarDocumento?faces-redirect=true";
 	}
 
-	public Documento buscarPorId(Long id) {
-		return this.dao.findById(id);
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String remover(Long id) {
+		if(this.documentos.size() == 1){
+			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um documento. Operação não permitida.");
+		}
+		else{
+			Documento doc = this.dao.remove(id);
+			if(!doc.equals(null)){
+				this.documentos.remove(doc);
+				info(doc.getTipo() + " removido com suecsso.");
+			}
+			else{
+				warn("documento não encontrado na base de dados, favor verificar novamente na lista.");
+			}
+		}
+
+		return "listarDocumento?faces-redirect=true";
 	}
 
-	public Documento remover(Long id) {
-		return this.dao.remove(id);
+	/**
+	 *
+	 * @param documento
+	 * @return
+	 */
+	public String atualizar(Documento documento) {
+		try {
+			this.documento = documento.clone();
+			this.documentoAnterior = documento;
+			this.editado = true;
+			return "atualizarDocumento?faces-redirect=true";
+		} catch (Exception e) {
+			error("Erro ao direcioar para atualização de dados do documento");
+			return "listarDocumento?faces-redirect=true";
+		}
 	}
 
-	public void atualizar(Documento documento) {
-		this.dao.update(documento);
+	/**
+	 *
+	 * @return
+	 */
+	public String salvarAtualizar() {
+		try {
+			this.dao.update(this.documento);
+			this.documentos.remove(documentoAnterior);
+			this.editado = false;
+			info("Documento " + this.documento.getTipo() + " " + this.documento.getNumero() + " atualizados");
+			this.documento = new Documento();
+			this.documentoAnterior = new Documento();
+			return "listarDocumento?faces-redirect=true";
+		} catch (Exception e) {
+			error("Erro ao atualizar as informações!");
+			return "atualizarDocumento?faces-redirect=true";
+		}
 	}
 
 	public List<Documento> buscarTodos() {
 		return this.dao.findAll();
+	}
+
+	/**
+	 *
+	 * @param pessoa
+	 * @return
+	 */
+	public String atualizarDocumentos(Pessoa pessoa) {
+		this.pessoa = pessoa;
+		this.documentos = pessoa.getDocumentos();
+		this.setTipoPessoa(pessoa.getTipopessoa());
+		if (this.documentos.isEmpty() || this.documentos == null) {
+			warn("Nenhum documento encontrado para " + pessoa.getNome());
+		}
+		return "listarDocumento?faces-redirect=true";
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+
+	public String cancelarAtualizar() {
+		this.documento.restaurar(this.documentoAnterior);
+		this.documentoAnterior = new Documento();
+		editado = false;
+		return "listarDocumento?faces-redirect=true";
 	}
 
 	public DocumentoDao getDao() {
@@ -63,6 +165,74 @@ public class DocumentoBean {
 
 	public void setDocumentos(List<Documento> documentos) {
 		this.documentos = documentos;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Documento getDocumentoAnterior() {
+		return documentoAnterior;
+	}
+
+	public void setDocumentoAnterior(Documento documentoAnterior) {
+		this.documentoAnterior = documentoAnterior;
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
+	}
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void info(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, " Info", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void warn(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void error(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, " Erro!", message));
+	}
+
+	/**
+	 *
+	 * @param message
+	 */
+	public void fatal(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
 	}
 
 }

@@ -9,19 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the professor database table.
- * 
+ *
  */
 @Entity
 @Table(name="Professor", schema="futurodb")
-@NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p")
+@NamedQueries({
+@NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p"),
+@NamedQuery(name="Professor.findByName", query="SELECT p FROM Professor p WEHRE p.nome LIKE '%:nome%'")})
+
 public class Professor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +34,7 @@ public class Professor implements Serializable {
 
 	private String formacao;
 
-	private String nivelformacao;
+	private String nivelFormacao;
 
 	//bi-directional one-to-one association to Pessoa
 	@OneToOne(cascade=CascadeType.PERSIST)
@@ -47,23 +50,23 @@ public class Professor implements Serializable {
 
 	public Professor() {
 	}
-	
-	
+
+
 
 	/**
 	 * @param id
 	 * @param formacao
-	 * @param nivelformacao
+	 * @param nivelFormacao
 	 * @param pessoa
 	 * @param disciplinas
 	 * @param turmas
 	 */
-	public Professor(Long id, String formacao, String nivelformacao, Pessoa pessoa, List<Disciplina> disciplinas,
+	public Professor(Long id, String formacao, String nivelFormacao, Pessoa pessoa, List<Disciplina> disciplinas,
 			List<Turma> turmas) {
 		super();
 		this.id = id;
 		this.formacao = formacao;
-		this.nivelformacao = nivelformacao;
+		this.nivelFormacao = nivelFormacao;
 		this.pessoa = pessoa;
 		this.disciplinas = disciplinas;
 		this.turmas = turmas;
@@ -87,12 +90,12 @@ public class Professor implements Serializable {
 		this.formacao = formacao;
 	}
 
-	public String getNivelformacao() {
-		return this.nivelformacao;
+	public String getNivelFormacao() {
+		return this.nivelFormacao;
 	}
 
-	public void setNivelformacao(String nivelformacao) {
-		this.nivelformacao = nivelformacao;
+	public void setNivelFormacao(String nivelFormacao) {
+		this.nivelFormacao = nivelFormacao;
 	}
 
 	public Pessoa getPessoa() {
@@ -132,10 +135,20 @@ public class Professor implements Serializable {
 
 		return turma;
 	}
-	
+
+	public void restaurar(Professor professor) {
+		this.id = professor.getId();
+		this.disciplinas = professor.getDisciplinas();
+		this.formacao = professor.getFormacao();
+		this.nivelFormacao = professor.getNivelFormacao();
+		this.pessoa = professor.getPessoa();
+		this.turmas = professor.getTurmas();
+
+	}
+
 	@Override
 	public Professor clone(){
-		return new Professor(this.id, this.formacao, this.nivelformacao, this.pessoa, this.disciplinas, this.turmas);
+		return new Professor(this.id, this.formacao, this.nivelFormacao, this.pessoa, this.disciplinas, this.turmas);
 	}
 
 }

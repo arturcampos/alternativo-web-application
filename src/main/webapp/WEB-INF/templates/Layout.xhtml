@@ -64,7 +64,7 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Buscar" />
+				<input type="text" class="form-control" disabled="disabled" placeholder="Buscar" />
 			</div>
 		</form>
 		<ul class="nav menu">
@@ -77,12 +77,12 @@
 				</a>
 				<ul class="children collapse" id="gerenciar-aluno">
 					<li>
-						<h:link class="" outcome="salvarAluno">
+						<h:link class="" outcome="salvarAluno?faces-redirect=true">
 							<span class="glyphicon glyphicon-chevron-right"/> Adicionar aluno
 						</h:link>
 					</li>
 					<li>
-						<h:link class="" outcome="listarAluno">
+						<h:link class="" outcome="listarAluno?faces-redirect=true">
 							<span class="glyphicon glyphicon-chevron-right"/> Buscar aluno
 						</h:link>
 					</li>
@@ -90,16 +90,16 @@
 			</li>
 			<li class="parent ">
 				<a href="#" >
-					<span data-toggle="collapse" href="#gerenciar-professor" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Professores 
+					<span data-toggle="collapse" href="#gerenciar-professor" class="glyphicon glyphicon-chevron-down"></span> Gerenciar Professores
 				</a>
 				<ul class="children collapse" id="gerenciar-professor">
 					<li>
-						<h:link class="" outcome="salvarProfessor">
+						<h:link class="" outcome="salvarProfessor?faces-redirect=true">
 							<span class="glyphicon glyphicon-chevron-right"/> Adicionar professor
 						</h:link>
 					</li>
 					<li>
-						<h:link class="" outcome="listarProfessor">
+						<h:link class="" outcome="listarProfessor?faces-redirect=true">
 							<span class="glyphicon glyphicon-chevron-right"/> Buscar professor
 						</h:link>
 					</li>

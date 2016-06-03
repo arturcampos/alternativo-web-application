@@ -1,7 +1,10 @@
 package app.control;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,13 +12,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
 import app.model.Documento;
 import app.model.Endereco;
 import app.model.Pessoa;
+import app.model.Plastico;
 import app.util.AlunoUtil;
 import app.util.Status;
 import app.util.TipoPessoa;
@@ -39,9 +42,10 @@ public class AlunoBean implements Serializable {
 	private String alunoTab;
 	private String documentoTab;
 	private String enderecoTab;
+	private Plastico plastico;
 
 	/**
-	 * 
+	 *
 	 */
 	@PostConstruct
 	public void init() {
@@ -54,33 +58,42 @@ public class AlunoBean implements Serializable {
 		this.aluno = new Aluno();
 		this.pessoa = new Pessoa();
 		this.documentos = new ArrayList<Documento>();
-		this.setDocumento(new Documento());
 		this.enderecos = new ArrayList<Endereco>();
 		this.endereco = new Endereco();
 		this.documento = new Documento();
-		this.setAlunoTab("active");
-		this.setEnderecoTab("");
-		this.setDocumentoTab("");
+		this.alunoTab = "active";
+		this.enderecoTab = "";
+		this.documentoTab = "";
+		this.plastico = new Plastico();
 	}
-	
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String salvar() {
 		try {
+			if (this.documentos.size() > 0) {
+				this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-			this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
+				// adicionando documentos à pessoa
+				this.pessoa.setDocumentos(this.documentos);
+				vincularDocumento(this.pessoa, this.documentos);
+			} else {
+				// Se não houver documentos cadastrado retorna um aviso
+				warn("É necessário cadastrar pelo menos 1 (UM) documento");
+				return "salvarAluno?faces-redirect=true";
+			}
 
-			// adicionando documentos à pessoa
-			this.pessoa.setDocumentos(this.documentos);
-			vincularDocumento(this.pessoa, this.documentos);
-
-			// adicionando endereço pessoa
-			this.pessoa.setEnderecos(this.enderecos);
-			vincularEndereco(this.pessoa, this.enderecos);
-
+			if (this.enderecos.size() > 0) {
+				// adicionando endereço pessoa
+				this.pessoa.setEnderecos(this.enderecos);
+				vincularEndereco(this.pessoa, this.enderecos);
+			} else {
+				// Se não houver endereços cadastrado retorna um aviso
+				warn("É necessário cadastrar pelo menos 1 (UM) endereço");
+				return "salvarAluno?faces-redirect=true";
+			}
 			// alterando status para ativo
 			this.aluno.setStatus(Status.ATIVO.toString());
 
@@ -88,25 +101,45 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// adicionando pessoa à alunos
+			//Converte data e cria plástico
+			Date dataCadastro;
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				dataCadastro = sdf.parse(new Date().toString());
+			} catch (ParseException e) {
+				dataCadastro = new Date();
+			}
+			criarPlastico(matricula, dataCadastro);
+
+			//adicionando plástico à pessoa
+			this.pessoa.addPlastico(plastico);
+
+			// adicionando pessoa ao aluno
 			this.aluno.setPessoa(this.pessoa);
 
 			// executando metod DAO para salvar aluno
 			this.dao.save(this.aluno);
+			Aluno novoAluno = this.aluno;
 
-			this.alunos.add(this.aluno);
 			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
-			return "salvarAluno?faces-redirect=true";
+			this.alunos.add(novoAluno);
+			return "listarAluno?faces-redirect=true";
+
 		} catch (Exception e) {
 			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
 
+	public String cancelarSalvar(){
+		init();
+		return "Inicio?faces-redirect=true";
+	}
+
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -127,7 +160,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -151,53 +184,66 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param actionEvent
+	 *
+	 * @return
 	 */
-	public void adicionarDocumento(ActionEvent actionEvent) {
+	public String adicionarDocumento() {
 		try {
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
 			}
 			Documento doc = this.documento.clone();
 			this.documentos.add(doc);
-			info("Documento " + documento.getTipo() + " " + documento.getNumero() + " adicionado!");
 			this.documento = new Documento();
-
 			this.alunoTab = "";
 			this.documentoTab = "active";
 			this.enderecoTab = "";
 		} catch (Exception e) {
 			error("Erro ao adicionar documento à lista");
 		}
+		return "salvarAluno?faces-redirect=true";
+	}
+
+	public String adicionarAluno(){
+		this.alunoTab = "";
+		this.alunoTab = "";
+		this.documentoTab = "active";
+		this.enderecoTab = "";
+		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documento
+	 * @return
 	 */
-	public void removerDocumento(final Documento documento) {
+	public String removerDocumento(final Documento documento) {
 
 		if ((this.documentos != null) && (!this.documentos.isEmpty())) {
 			this.documentos.remove(documento);
 			info("Documento removido com sucesso!");
+			this.alunoTab = "";
+			this.documentoTab = "active";
+			this.enderecoTab = "";
 		} else {
-			warn("Não existem documentos à serem removidos");
+
+			warn("Não existem documentos ï¿½ serem removidos");
 		}
+		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
-	 * @param actionEvent
+	 *
+	 * @return
 	 */
-	public void adicionarEndereco(ActionEvent actionEvent) {
+
+	public String adicionarEndereco() {
 		try {
 			if (this.enderecos == null) {
 				this.enderecos = new ArrayList<Endereco>();
 			}
 			Endereco end = this.endereco.clone();
 			this.enderecos.add(end);
-			info("Endereco adicionado!");
 			this.endereco = new Endereco();
 			this.alunoTab = "";
 			this.documentoTab = "";
@@ -205,14 +251,18 @@ public class AlunoBean implements Serializable {
 
 		} catch (Exception e) {
 			error("Erro ao adicionar endereco à lista");
+			return "salvarAluno?faces-redirect=true";
 		}
+
+		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param endereco
+	 * @return
 	 */
-	public void removerEndereco(final Endereco endereco) {
+	public String removerEndereco(final Endereco endereco) {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
@@ -220,10 +270,11 @@ public class AlunoBean implements Serializable {
 		} else {
 			warn("Não existem endereços à serem removidos");
 		}
+		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 * @param docs
 	 */
@@ -234,7 +285,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 * @param ends
 	 */
@@ -245,7 +296,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param aluno
 	 * @return
 	 */
@@ -262,86 +313,93 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.aluno);
+			this.alunos.remove(alunoAnterior);
+			this.alunos.add(aluno);
 			this.editado = false;
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			this.aluno = new Aluno();
-			return "Inicio";
+			this.alunoAnterior = new Aluno();
+			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informações!");
-			return "atualizar";
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
+			return "atualizarAluno?faces-redirect=true";
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 */
-	public void cancelarAtualizar() {
+	public String cancelarAtualizar() {
 		this.aluno.restaurar(this.alunoAnterior);
 		this.aluno = new Aluno();
 		editado = false;
+		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void buscarTodos() {
 		this.alunos = this.dao.findAll();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param status
 	 * @return
 	 */
 	public String buscarTodosPorStatus(String status) {
-		System.out.println(status);
-		String retorno = null;
 		try {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
 				this.alunos = this.dao.findByStatus(status);
-				retorno = "listarAluno?faces-redirect=true";
 			} else {
 				error("Status " + status + "inválido para consulta");
 			}
 
 		} catch (Exception e) {
 			error("Erro ao consultar dados: " + e.getMessage());
+			;
 		}
-		return retorno;
+		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param matricula
 	 * @return
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
-			System.out.println(matricula);
 			if (this.alunos == null) {
 				this.alunos = new ArrayList<Aluno>();
+			} else {
+				this.alunos.clear();
 			}
 			Aluno aluno = this.dao.findByRegistrationNumber(matricula);
-			if(aluno != null){
+			if (aluno != null) {
 				this.alunos.add(aluno);
-			}
-			else{
+				PlasticoBean pBean = new PlasticoBean();
+				pBean.init();
+				this.plastico = pBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
+				info("Consulta realizada com sucesso");
+			} else {
 				warn("Matricula não existe.");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			error("Erro ao consultar aluno - " + e.getMessage());
 		}
 		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void limparAluno() {
 		this.aluno.setDataEgresso(null);
@@ -354,7 +412,23 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
+	 * @param matricula
+	 * @param dataCadastro
+	 */
+	public void criarPlastico(String matricula, Date dataCadastro) {
+		this.plastico.setLinhaDigitavel(matricula);
+		this.plastico.setDataCadastro(dataCadastro);
+		this.plastico.setStatus(Status.ATIVO.toString());
+	}
+
+	public String voltar() {
+		init();
+		return "Inicio?faces-redirect=true";
+	}
+
+	/**
+	 *
 	 * @return
 	 */
 	public boolean isEditado() {
@@ -362,7 +436,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param editado
 	 */
 	public void setEditado(boolean editado) {
@@ -370,7 +444,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Aluno getAlunoAnterior() {
@@ -378,7 +452,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alunoAnterior
 	 */
 	public void setAlunoAnterior(Aluno alunoAnterior) {
@@ -386,7 +460,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public AlunoDao getDao() {
@@ -394,7 +468,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dao
 	 */
 	public void setDao(AlunoDao dao) {
@@ -402,7 +476,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Aluno getAluno() {
@@ -410,15 +484,15 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param aluno
 	 */
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Aluno> getAlunos() {
@@ -426,15 +500,15 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alunos
 	 */
 	public void setAlunos(List<Aluno> alunos) {
 		this.alunos = alunos;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Pessoa getPessoa() {
@@ -442,7 +516,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pessoa
 	 */
 	public void setPessoa(Pessoa pessoa) {
@@ -450,7 +524,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Documento> getDocumentos() {
@@ -458,7 +532,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documentos
 	 */
 	public void setDocumentos(List<Documento> documentos) {
@@ -466,7 +540,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Endereco> getEnderecos() {
@@ -474,7 +548,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param enderecos
 	 */
 	public void setEnderecos(List<Endereco> enderecos) {
@@ -482,7 +556,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Documento getDocumento() {
@@ -490,7 +564,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documento
 	 */
 	public void setDocumento(Documento documento) {
@@ -498,7 +572,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Endereco getEndereco() {
@@ -506,7 +580,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param endereco
 	 */
 	public void setEndereco(Endereco endereco) {
@@ -514,14 +588,15 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getAlunoTab() {
 		return alunoTab;
 	}
+
 	/**
-	 * 
+	 *
 	 * @param alunoTab
 	 */
 	public void setAlunoTab(String alunoTab) {
@@ -529,7 +604,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDocumentoTab() {
@@ -537,7 +612,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param documentoTab
 	 */
 	public void setDocumentoTab(String documentoTab) {
@@ -545,7 +620,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getEnderecoTab() {
@@ -553,15 +628,23 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param enderecoTab
 	 */
 	public void setEnderecoTab(String enderecoTab) {
 		this.enderecoTab = enderecoTab;
 	}
 
+	public Plastico getPlastico() {
+		return plastico;
+	}
+
+	public void setPlastico(Plastico plastico) {
+		this.plastico = plastico;
+	}
+
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void info(String message) {
@@ -570,16 +653,16 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!", message));
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void error(String message) {
@@ -588,7 +671,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 */
 	public void fatal(String message) {

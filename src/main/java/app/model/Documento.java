@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,11 +16,15 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the documento database table.
- * 
+ *
  */
 @Entity
 @Table(name = "Documento", schema = "futurodb")
-@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")
+
+@NamedQueries({
+	@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d"),
+	@NamedQuery(name = "Documento.findByPersonId", query = "SELECT d FROM Documento d WHERE d.pessoa.id = :personId")
+})
 public class Documento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,13 +36,13 @@ public class Documento implements Serializable {
 
 	private String tipo;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataexpedicao;
+	@Temporal(TemporalType.DATE)
+	private Date dataExpedicao;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date datavalidade;
+	@Temporal(TemporalType.DATE)
+	private Date dataValidade;
 
-	private String orgaoemissor;
+	private String orgaoEmissor;
 
 	private String uf;
 
@@ -48,14 +53,14 @@ public class Documento implements Serializable {
 	public Documento() {
 	}
 
-	public Documento(Long id, String numero, String tipo, Date dataexpedicao, Date datavalidade, String orgaoemissor,
+	public Documento(Long id, String numero, String tipo, Date dataExpedicao, Date dataValidade, String orgaoEmissor,
 			String uf, Pessoa pessoa) {
 		this.id = id;
 		this.numero = numero;
 		this.tipo = tipo;
-		this.dataexpedicao = dataexpedicao;
-		this.datavalidade = datavalidade;
-		this.orgaoemissor = orgaoemissor;
+		this.dataExpedicao = dataExpedicao;
+		this.dataValidade = dataValidade;
+		this.orgaoEmissor = orgaoEmissor;
 		this.uf = uf;
 		this.pessoa = pessoa;
 	}
@@ -68,28 +73,28 @@ public class Documento implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataexpedicao() {
-		return this.dataexpedicao;
+	public Date getDataExpedicao() {
+		return this.dataExpedicao;
 	}
 
-	public void setDataexpedicao(Date dataexpedicao) {
-		this.dataexpedicao = dataexpedicao;
+	public void setDataExpedicao(Date dataExpedicao) {
+		this.dataExpedicao = dataExpedicao;
 	}
 
-	public Date getDatavalidade() {
-		return this.datavalidade;
+	public Date getDataValidade() {
+		return this.dataValidade;
 	}
 
-	public void setDatavalidade(Date datavalidade) {
-		this.datavalidade = datavalidade;
+	public void setDataValidade(Date dataValidade) {
+		this.dataValidade = dataValidade;
 	}
 
-	public String getOrgaoemissor() {
-		return this.orgaoemissor;
+	public String getOrgaoEmissor() {
+		return this.orgaoEmissor;
 	}
 
-	public void setOrgaoemissor(String orgaoemissor) {
-		this.orgaoemissor = orgaoemissor;
+	public void setOrgaoEmissor(String orgaoemissor) {
+		this.orgaoEmissor = orgaoemissor;
 	}
 
 	public String getUf() {
@@ -126,14 +131,26 @@ public class Documento implements Serializable {
 
 	@Override
 	public String toString() {
-		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoemissor + "\nData de Emissão:"
-				+ this.dataexpedicao + "\nData Validade:" + this.datavalidade);
+		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoEmissor + "\nData de Emissão:"
+				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade);
 	}
 
 	@Override
 	public Documento clone() {
-		return new Documento(this.id, this.numero, this.tipo, this.dataexpedicao, this.datavalidade, this.orgaoemissor,
+		return new Documento(this.id, this.numero, this.tipo, this.dataExpedicao, this.dataValidade, this.orgaoEmissor,
 				this.uf, this.pessoa);
 	}
+
+	public void restaurar(Documento documento) {
+		this.id = documento.getId();
+		this.dataExpedicao = documento.getDataExpedicao();
+		this.dataValidade = documento.getDataValidade();
+		this.uf = documento.getUf();
+		this.numero = documento.getNumero();
+		this.tipo = documento.getTipo();
+		this.orgaoEmissor = documento.getOrgaoEmissor();
+
+	}
+
 
 }

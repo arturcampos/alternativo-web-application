@@ -6,22 +6,25 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-	
-	<div class="row">
-		<ol class="breadcrumb">
-			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-			<li class="active">Painel Inicial</li>
-		</ol>
-	</div><!--/.row-->
 
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Painel Inicial</h1>
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Painel Inicial</li>
+			</ol>
 		</div>
-	</div><!--/.row-->
-	
-	
-	<div class="row">
+		<!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Painel Inicial</h1>
+			</div>
+		</div>
+		<!--/.row-->
+
+
+		<div class="row">
+			<p:messages id="messages" autoUpdate="true" showDetail="true" />
 			<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-blue panel-widget ">
 					<div class="row no-padding">
@@ -31,9 +34,10 @@
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<!-- div class="large">15</div-->
 							<div class="text-muted">
-							<h:form>
-							<a href="#{request.contextPath}/listarProfessor.xhtml">Professores</a>
-							</h:form>
+								<h:form id="link-form-professor">
+									<p:commandLink action="#{professorBean.buscarTodos}"
+										process="@this">Professores</p:commandLink>
+								</h:form>
 							</div>
 						</div>
 					</div>
@@ -47,7 +51,13 @@
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<!--  div class="large">120</div-->
-							<div class="text-muted"><h:form id="link-form-aluno"><p:commandLink action="#{alunoBean.buscarTodosPorStatus('ATIVO')}" process="link-form-aluno">Alunos</p:commandLink></h:form></div>
+							<div class="text-muted">
+								<h:form id="link-form-aluno">
+									<p:commandLink
+										action="#{alunoBean.buscarTodosPorStatus('ATIVO')}"
+										process="@this">Alunos</p:commandLink>
+								</h:form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -60,7 +70,9 @@
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<!-- div class="large">24</div -->
-							<div class="text-muted"><a href="">Visualizar relatórios</a></div>
+							<div class="text-muted">
+								<a href="">Visualizar relatórios</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -73,18 +85,27 @@
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<!-- div class="large">25.2k</div-->
-							<div class="text-muted"><a href="">Visualizar arquivos</a></div>
+							<div class="text-muted">
+								<a href="">Visualizar arquivos</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div><!--/.row-->
-		
-		
-	
-	<p:message id="messages" autoUpdate="true" rendered="pessoaBean.msg != null">
-		#{pessoaBean.msg}
-	</p:message>
+		</div>
+		<!--/.row-->
+		<!-- div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">TTest</div>
+					<div class="panel-body">
+						<div class="canvas-wrapper">
+							<canvas class="main-chart" id="line-chart" height="177" width="533" style="width: 533px; height: 177px;"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div-->
 
 	</ui:define>
 
