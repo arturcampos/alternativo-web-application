@@ -14,7 +14,7 @@ public class ProfessorDao extends DaoImpl<Professor> {
 
 	public List<Professor> findByName(String name){
 		Query query = entitymanager.createNamedQuery("Professor.findByName", Professor.class)
-				.setParameter("nome", name);
+				.setParameter("nome", "%" + name + "%");
 			return (List<Professor>) query.getResultList();
 	}
 

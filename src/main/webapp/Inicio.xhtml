@@ -5,6 +5,43 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/Layout.xhtml">
 
+	<!-- ui:define name="scripts">
+		<script type="text/javascript">
+var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
+var array = new Array();
+<ui:repeat var="dia" value="#{relatorioBean.semana}"
+	varStatus="status">
+	array[#{status.index}] := #{dia};
+</ui:repeat>
+var lineChartData = {
+		labels : [array[0].data ,array[1].data, array[2].data, array[3].data, array[4].data, array[5].data],
+		datasets : [
+			{
+				label: "Presentes",
+				fillColor : "rgba(220,220,220,0.2)",
+				strokeColor : "rgba(220,220,220,1)",
+				pointColor : "rgba(220,220,220,1)",
+				pointStrokeColor : "#fff",
+				pointHighlightFill : "#fff",
+				pointHighlightStroke : "rgba(220,220,220,1)",
+				data : [array[0].quantidade,array[1].quantidade,array[2].quantidade,array[3].quantidade,array[4].quantidade,array[5].quantidade]
+			},
+			{
+				label: "My Second dataset",
+				fillColor : "rgba(48, 164, 255, 0.2)",
+				strokeColor : "rgba(48, 164, 255, 1)",
+				pointColor : "rgba(48, 164, 255, 1)",
+				pointStrokeColor : "#fff",
+				pointHighlightFill : "#fff",
+				pointHighlightStroke : "rgba(48, 164, 255, 1)",
+				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+			}
+		]
+
+	}
+
+</script>
+	</ui:define-->
 	<ui:define name="content">
 
 		<div class="row">
@@ -94,13 +131,14 @@
 			</div>
 		</div>
 		<!--/.row-->
-		<!-- div class="row">
+		<!--div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">TTest</div>
 					<div class="panel-body">
 						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="177" width="533" style="width: 533px; height: 177px;"></canvas>
+							<canvas class="main-chart" id="line-chart" height="177"
+								width="533" style="width: 533px; height: 177px;"></canvas>
 						</div>
 					</div>
 				</div>
