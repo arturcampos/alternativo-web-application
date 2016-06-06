@@ -24,25 +24,29 @@
 
 
 		<div class="row">
-			<p:messages id="messages" autoUpdate="true" showDetail="true" />
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-blue panel-widget ">
-					<div class="row no-padding">
-							<div class="col-sm-9 col-lg-7">
-							<h:form id="link-form-relatorio-aluno-simples">
-								<!-- div class="large">15</div-->
-								<div class="text-muted">
-									<h:commandLink
-										action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio)}"
-										process="@form" target="_blank">Relatorio Alunos Simples</h:commandLink>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<p:messages id="messages" autoUpdate="true" showDetail="true" />
+					<div class="col-xs-12 col-md-6 col-lg-3">
+						<div class="">
+							<div class="row no-padding">
+								<div class="col-sm-12 col-lg-12 widget-right">
+									<h:form id="link-form-professor">
+										<div class="form-group">
+											<p:inputText placeholder="Nome do Relatório"
+												value="#{nomeRelatorio}" class="form-control" />
+											<h:commandButton
+												action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio)}"
+												process="@form" styleClass="btn btn-primary form-control"
+												value="Relatório Simples Alunos" />
+										</div>
+									</h:form>
 								</div>
-								<p:inputText value="#{nomeRelatorio}" styleClass="form-control" />
-						</h:form>
 							</div>
-							
+						</div>
 					</div>
-				</div>
-			</div>
+
+					<!--
 			<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-orange panel-widget">
 					<div class="row no-padding">
@@ -50,7 +54,7 @@
 							<span class="glyphicon glyphicon glyphicon-book fa-4x"></span>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<!--  div class="large">120</div-->
+							<div class="large">120</div>
 							<div class="text-muted">
 								<h:form id="link-form-aluno">
 									<p:commandLink
@@ -69,7 +73,7 @@
 							<span class="glyphicon glyphicon-eye-open fa-4x"></span>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<!-- div class="large">24</div -->
+							<div class="large">24</div>
 							<div class="text-muted">
 								<a href="">Visualizar relatórios</a>
 							</div>
@@ -84,7 +88,7 @@
 							<span class="glyphicon glyphicon-folder-open fa-4x"></span>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<!-- div class="large">25.2k</div-->
+							<div class="large">25.2k</div>
 							<div class="text-muted">
 								<a href="">Visualizar arquivos</a>
 							</div>
@@ -93,8 +97,8 @@
 				</div>
 			</div>
 		</div>
-		<!--/.row-->
-		<!--div class="row">
+		</.row>
+		div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">TTest</div>
@@ -105,8 +109,10 @@
 						</div>
 					</div>
 				</div>
+			</div-->
+				</div>
 			</div>
-		</div-->
+		</div>
 
 	</ui:define>
 

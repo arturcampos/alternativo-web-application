@@ -436,6 +436,11 @@ public class AlunoBean implements Serializable {
 		init();
 		return "Inicio?faces-redirect=true";
 	}
+	
+	public String listar(){
+		init();
+		return "listarAluno?faces-redirect=true";
+	}
 
 	/**
 	 *

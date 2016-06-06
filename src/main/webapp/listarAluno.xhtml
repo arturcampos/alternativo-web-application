@@ -69,7 +69,9 @@
 											<td><h:commandLink id="btn_edit"
 													action="#{alunoBean.atualizar(aluno)}" type="submit"
 													process="@form" styleClass="form-group"> #{aluno.pessoa.nome}</h:commandLink></td>
-											<td>#{aluno.pessoa.dataNasc}</td>
+											<td><h:outputText value="#{aluno.pessoa.dataNasc}">
+												<f:convertDateTime pattern="dd/MM/yyyy"/>
+											</h:outputText> </td>
 											<td><h:commandLink
 													action="#{alunoBean.remover(aluno.id)}" type="submit"
 													process="@form" class="glyphicon glyphicon-trash"

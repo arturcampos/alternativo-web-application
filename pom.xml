@@ -136,7 +136,8 @@
 						<Import-Package>
 							javax.persistence,
 							org.hibernate.proxy,
-							javassist.util.proxy
+							javassist.util.proxy,
+							*
 						</Import-Package>
 					</instructions>
 				</configuration>

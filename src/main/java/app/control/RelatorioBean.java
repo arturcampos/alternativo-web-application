@@ -74,7 +74,7 @@ public class RelatorioBean implements Serializable {
 	}
 
 	public void relatorioAlunoSimples(String nomeRelatorio) {
-		System.out.println("Entrou no relatírio simples");
+		System.out.println("Entrou no relatï¿½rio simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
@@ -102,8 +102,9 @@ public class RelatorioBean implements Serializable {
 					// add columns
 					.columns(
 							// title, field name data type
-							col.column("Matricula", "matricula", type.stringType()),
 							col.column("Nome", "nome", type.stringType()),
+							col.column("CPF", "cpf", type.stringType()),
+							col.column("Matricula", "matricula", type.stringType()),
 							col.column("Data Nascimento", "datanasc", type.dateType()),
 							col.column("Assinatura", "item1", type.stringType())).setColumnStyle(columnStyle)
 					// shows report title
@@ -125,22 +126,22 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Código abaixo gerar o relatório e disponibiliza diretamente na
-			// página
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
+			// pï¿½gina
 			res.setHeader("Content-disposition", "inline;filename="+nomeRelatorio +".pdf");
-			// Código abaixo gerar o relatório e disponibiliza para o cliente
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível criar o relatório");
+				error("Nï¿½o foi possï¿½vel criar o relatï¿½rio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatório simples");
+			System.out.println("Saiu do relatï¿½rio simples");
 		} catch (DRException e) {
 			error(e.getMessage());
 		}
@@ -158,10 +159,13 @@ public class RelatorioBean implements Serializable {
 					cpf = d;
 					break;
 				}
+			
 			}
 			dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(),
-					aluno.getPessoa().getDataNasc(), null);
+							aluno.getPessoa().getDataNasc(), null);
+			
 		}
+		this.alunoBean.getAlunos().clear();
 		return dataSource;
 	}
 
