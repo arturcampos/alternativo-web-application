@@ -6,7 +6,6 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-
 		<div class="row">
 			<h:form id="breadcrumb-form">
 			<ol class="breadcrumb">
@@ -19,7 +18,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Listagem de Alunos</h1>
+				<h3 class="page-header">Listagem de Alunos</h3>
 			</div>
 		</div>
 		<!--/.row-->
@@ -80,6 +79,14 @@
 								</tbody>
 							</h:form>
 						</table>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+						<h:form rendered="#{not empty alunoBean.alunos}">
+							<h:commandLink action="#{alunoBean.relatorioSimples}" type="submit"
+							process="@this"> Relatório</h:commandLink>
+						</h:form>
+						</div>
 					</div>
 				</div>
 			</div>

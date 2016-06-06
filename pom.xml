@@ -45,12 +45,8 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.1.0.Final</version>
-			<scope>provided</scope>
-		</dependency>
+		<!-- dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId>
+			<version>5.1.0.Final</version> <scope>compile</scope> </dependency -->
 
 		<!-- for JPA, use hibernate-entitymanager instead of hibernate-core -->
 		<dependency>
@@ -59,6 +55,21 @@
 			<version>5.1.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/org.javassist/javassist -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
+		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/dom4j/dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
 
 		<!-- optional -->
 
@@ -100,6 +111,29 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.37</version>
 		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/net.sourceforge.dynamicreports/dynamicreports-core -->
+		<dependency>
+			<groupId>net.sourceforge.dynamicreports</groupId>
+			<artifactId>dynamicreports-core</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -111,6 +145,23 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Import-Package>
+							javax.persistence,
+							org.hibernate.proxy,
+							javassist.util.proxy
+						</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+
 		</plugins>
 		<finalName>alternativo-web-application</finalName>
 	</build>

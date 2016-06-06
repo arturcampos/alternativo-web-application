@@ -10,8 +10,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultStreamedContent;
 
 import app.dao.AlunoDao;
 import app.model.Aluno;
@@ -43,6 +46,13 @@ public class AlunoBean implements Serializable {
 	private String documentoTab;
 	private String enderecoTab;
 	private Plastico plastico;
+	private DefaultStreamedContent reportStream;
+
+	@ManagedProperty(value = "#{documentoBean}")
+	private DocumentoBean documentoBean;
+
+	@ManagedProperty(value = "#{plasticoBean}")
+	private PlasticoBean plasticoBean;
 
 	/**
 	 *
@@ -101,7 +111,7 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			//Converte data e cria plástico
+			// Converte data e cria plástico
 			Date dataCadastro;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -111,7 +121,7 @@ public class AlunoBean implements Serializable {
 			}
 			criarPlastico(matricula, dataCadastro);
 
-			//adicionando plástico à pessoa
+			// adicionando plástico à pessoa
 			this.pessoa.addPlastico(plastico);
 
 			// adicionando pessoa ao aluno
@@ -133,7 +143,7 @@ public class AlunoBean implements Serializable {
 		}
 	}
 
-	public String cancelarSalvar(){
+	public String cancelarSalvar() {
 		init();
 		return "Inicio?faces-redirect=true";
 	}
@@ -204,7 +214,7 @@ public class AlunoBean implements Serializable {
 		return "salvarAluno?faces-redirect=true";
 	}
 
-	public String adicionarAluno(){
+	public String adicionarAluno() {
 		this.alunoTab = "";
 		this.alunoTab = "";
 		this.documentoTab = "active";
@@ -383,10 +393,9 @@ public class AlunoBean implements Serializable {
 			}
 			Aluno aluno = this.dao.findByRegistrationNumber(matricula);
 			if (aluno != null) {
-				this.alunos.add(aluno);
-				PlasticoBean pBean = new PlasticoBean();
-				pBean.init();
-				this.plastico = pBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
+				this.aluno = aluno.clone();
+				this.alunos.add(this.aluno);
+				this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
 				info("Consulta realizada com sucesso");
 			} else {
 				warn("Matricula não existe.");
@@ -644,6 +653,51 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
+	 * @return the documentoBean
+	 */
+	public DocumentoBean getDocumentoBean() {
+		return documentoBean;
+	}
+
+	/**
+	 * @param documentoBean
+	 *            the documentoBean to set
+	 */
+	public void setDocumentoBean(DocumentoBean documentoBean) {
+		this.documentoBean = documentoBean;
+	}
+
+	/**
+	 * @return the plasticoBean
+	 */
+	public PlasticoBean getPlasticoBean() {
+		return plasticoBean;
+	}
+
+	/**
+	 * @param plasticoBean
+	 *            the plasticoBean to set
+	 */
+	public void setPlasticoBean(PlasticoBean plasticoBean) {
+		this.plasticoBean = plasticoBean;
+	}
+
+	/**
+	 * @return the reportStream
+	 */
+	public DefaultStreamedContent getReportStream() {
+		return reportStream;
+	}
+
+	/**
+	 * @param reportStream
+	 *            the reportStream to set
+	 */
+	public void setReportStream(DefaultStreamedContent reportStream) {
+		this.reportStream = reportStream;
+	}
+
+	/**
 	 *
 	 * @param message
 	 */
@@ -678,5 +732,4 @@ public class AlunoBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
 	}
-
 }

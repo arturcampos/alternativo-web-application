@@ -131,6 +131,9 @@ public class DocumentoBean implements Serializable {
 		return "listarDocumento?faces-redirect=true";
 	}
 
+	public void buscarPorPessoa(Pessoa pessoa){
+		this.documentos = this.dao.findByPersonId(pessoa.getId());
+	}
 	/**
 	 *
 	 * @return
