@@ -86,22 +86,22 @@ public class AlunoBean implements Serializable {
 			if (this.documentos.size() > 0) {
 				this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-				// adicionando documentos à pessoa
+				// adicionando documentos ï¿½ pessoa
 				this.pessoa.setDocumentos(this.documentos);
 				vincularDocumento(this.pessoa, this.documentos);
 			} else {
-				// Se não houver documentos cadastrado retorna um aviso
-				warn("É necessário cadastrar pelo menos 1 (UM) documento");
+				// Se nï¿½o houver documentos cadastrado retorna um aviso
+				warn("ï¿½ necessï¿½rio cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
 
 			if (this.enderecos.size() > 0) {
-				// adicionando endereço pessoa
+				// adicionando endereï¿½o pessoa
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
 			} else {
-				// Se não houver endereços cadastrado retorna um aviso
-				warn("É necessário cadastrar pelo menos 1 (UM) endereço");
+				// Se nï¿½o houver endereï¿½os cadastrado retorna um aviso
+				warn("ï¿½ necessï¿½rio cadastrar pelo menos 1 (UM) endereï¿½o");
 				return "salvarAluno?faces-redirect=true";
 			}
 			// alterando status para ativo
@@ -111,17 +111,18 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// Converte data e cria plástico
+			// Converte data e cria plï¿½stico
 			Date dataCadastro;
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-				dataCadastro = sdf.parse(new Date().toString());
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				String formatado = sdf.format(new Date());
+				dataCadastro = sdf.parse(formatado);
 			} catch (ParseException e) {
 				dataCadastro = new Date();
 			}
 			criarPlastico(matricula, dataCadastro);
 
-			// adicionando plástico à pessoa
+			// adicionando plï¿½stico ï¿½ pessoa
 			this.pessoa.addPlastico(plastico);
 
 			// adicionando pessoa ao aluno
@@ -131,14 +132,14 @@ public class AlunoBean implements Serializable {
 			this.dao.save(this.aluno);
 			Aluno novoAluno = this.aluno;
 
-			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
+			info("Informaï¿½ï¿½es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
 			this.alunos.add(novoAluno);
 			return "listarAluno?faces-redirect=true";
 
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
@@ -160,7 +161,7 @@ public class AlunoBean implements Serializable {
 			if (this.aluno != null) {
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno não encontrado!");
+				warn("Aluno nï¿½o encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
@@ -209,7 +210,7 @@ public class AlunoBean implements Serializable {
 			this.documentoTab = "active";
 			this.enderecoTab = "";
 		} catch (Exception e) {
-			error("Erro ao adicionar documento à lista");
+			error("Erro ao adicionar documento ï¿½ lista");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -237,7 +238,7 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "";
 		} else {
 
-			warn("Não existem documentos ï¿½ serem removidos");
+			warn("Nï¿½o existem documentos ï¿½ serem removidos");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -260,7 +261,7 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "active";
 
 		} catch (Exception e) {
-			error("Erro ao adicionar endereco à lista");
+			error("Erro ao adicionar endereco ï¿½ lista");
 			return "salvarAluno?faces-redirect=true";
 		}
 
@@ -276,9 +277,9 @@ public class AlunoBean implements Serializable {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
-			info("Endereço removido com sucesso!");
+			info("Endereï¿½o removido com sucesso!");
 		} else {
-			warn("Não existem endereços à serem removidos");
+			warn("Nï¿½o existem endereï¿½os ï¿½ serem removidos");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -317,7 +318,7 @@ public class AlunoBean implements Serializable {
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualização de dados do aluno");
+			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do aluno");
 			return "listarAluno?faces-redirect=true";
 		}
 	}
@@ -369,7 +370,7 @@ public class AlunoBean implements Serializable {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
 				this.alunos = this.dao.findByStatus(status);
 			} else {
-				error("Status " + status + "inválido para consulta");
+				error("Status " + status + "invï¿½lido para consulta");
 			}
 
 		} catch (Exception e) {
@@ -398,7 +399,7 @@ public class AlunoBean implements Serializable {
 				this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
 				info("Consulta realizada com sucesso");
 			} else {
-				warn("Matricula não existe.");
+				warn("Matricula nï¿½o existe.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
