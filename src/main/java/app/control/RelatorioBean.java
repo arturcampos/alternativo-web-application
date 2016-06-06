@@ -23,6 +23,7 @@ import app.util.Status;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -79,9 +80,15 @@ public class RelatorioBean implements Serializable {
 				.getResponse();
 
 		try {
+
+
 			StyleBuilder boldStyle = DynamicReports.stl.style().bold();
 			StyleBuilder boldCenteredStyle = DynamicReports.stl.style(boldStyle)
 					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+			StyleBuilder titleStyle = DynamicReports.stl.style(boldCenteredStyle)
+                    .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                    .setFontSize(15);
 
 			StyleBuilder columnTitleStyle = DynamicReports.stl.style(boldCenteredStyle)
 					.setBorder(DynamicReports.stl.pen1Point()).setBackgroundColor(Color.LIGHT_GRAY);
@@ -101,7 +108,14 @@ public class RelatorioBean implements Serializable {
 							col.column("Assinatura", "item1", type.stringType())).setColumnStyle(columnStyle)
 					// shows report title
 					// .highlightDetailEvenRows()
-					.title(cmp.text(nomeRelatorio).setStyle(boldCenteredStyle))
+					.title(//shows report title
+						     cmp.horizontalList()
+						  .add(
+						    cmp.text(nomeRelatorio).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
+						    cmp.text("Futuro-Alternativo").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+						  .newRow()
+						  .add(cmp.filler().setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point())).setFixedHeight(10)))
+
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
