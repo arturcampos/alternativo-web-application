@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,16 +17,19 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the evento database table.
- * 
+ *
  */
 @Entity
 @Table(name="Evento", schema="futurodb")
-@NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e")
+@NamedQueries({
+@NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e"),
+@NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status")
+})
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -34,11 +38,20 @@ public class Evento implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datahorasaida;
 
-	//bi-directional many-to-one association to Pessoa
+	// bi-directional many-to-one association to Pessoa
 	@ManyToOne
 	private Pessoa pessoa;
 
+	private String status;
+
 	public Evento() {
+	}
+
+	public Evento(Date entrada, Date saida, String status, Pessoa pessoa) {
+		this.datahoraentrada = entrada;
+		this.datahorasaida = saida;
+		this.status = status;
+		this.pessoa = pessoa;
 	}
 
 	public Long getId() {
@@ -71,6 +84,14 @@ public class Evento implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

@@ -91,7 +91,7 @@ public class AlunoBean implements Serializable {
 				vincularDocumento(this.pessoa, this.documentos);
 			} else {
 				// Se nï¿½o houver documentos cadastrado retorna um aviso
-				warn("ï¿½ necessï¿½rio cadastrar pelo menos 1 (UM) documento");
+				warn("ï¿½ necessário cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
 
@@ -101,7 +101,7 @@ public class AlunoBean implements Serializable {
 				vincularEndereco(this.pessoa, this.enderecos);
 			} else {
 				// Se nï¿½o houver endereï¿½os cadastrado retorna um aviso
-				warn("ï¿½ necessï¿½rio cadastrar pelo menos 1 (UM) endereï¿½o");
+				warn("ï¿½ necessário cadastrar pelo menos 1 (UM) endereço");
 				return "salvarAluno?faces-redirect=true";
 			}
 			// alterando status para ativo
@@ -132,14 +132,14 @@ public class AlunoBean implements Serializable {
 			this.dao.save(this.aluno);
 			Aluno novoAluno = this.aluno;
 
-			info("Informaï¿½ï¿½es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
+			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
 			this.alunos.add(novoAluno);
 			return "listarAluno?faces-redirect=true";
 
 		} catch (Exception e) {
-			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
+			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
@@ -436,7 +436,7 @@ public class AlunoBean implements Serializable {
 		init();
 		return "Inicio?faces-redirect=true";
 	}
-	
+
 	public String listar(){
 		init();
 		return "listarAluno?faces-redirect=true";

@@ -37,8 +37,7 @@
 								<h:panelGrid columns="3" cellpadding="5"
 									style="margin-bottom:10px">
 									<p:inputText id="input-nome" value="#{nome}"
-										required="true" styleClass="form-control">
-									<p:watermark for="input-nome" value="Nome para a consulta"/>
+										required="true" styleClass="form-control" placeholder="Nome para a consulta">
 									</p:inputText> 
 									<p:commandButton
 										action="#{professorBean.buscarPorNome(nome)}" value="Buscar"

@@ -10,7 +10,7 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-				<li class="active">Painel Inicial</li>
+				<li class="active">Relatorios</li>
 			</ol>
 		</div>
 		<!--/.row-->
@@ -31,11 +31,11 @@
 						<div class="">
 							<div class="row no-padding">
 								<div class="col-sm-12 col-lg-12 widget-right">
-									<h:form id="link-form-professor">
+									<h:form id="link-form-simples-aluno" target="_blank">
 										<div class="form-group">
 											<p:inputText placeholder="Nome do Relatório"
 												value="#{nomeRelatorio}" class="form-control" />
-											<h:commandButton
+												<h:commandButton
 												action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio)}"
 												process="@form" styleClass="btn btn-primary form-control"
 												value="Relatório Simples Alunos" />
@@ -46,6 +46,23 @@
 						</div>
 					</div>
 
+					<div class="col-xs-12 col-md-6 col-lg-3">
+						<div class="">
+							<div class="row no-padding">
+								<div class="col-sm-12 col-lg-12 widget-right">
+									<h:form id="link-form-faltas-horario" target="_blank" >
+										<div class="form-group">
+										<br/>
+											<h:commandButton
+												action="#{relatorioBean.relatorioFaltaHorarios}"
+												process="@form" styleClass="btn btn-primary form-control"
+												value="Relatório Faltas por Horário"/>
+										</div>
+									</h:form>
+								</div>
+							</div>
+						</div>
+					</div>
 					<!--
 			<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-orange panel-widget">

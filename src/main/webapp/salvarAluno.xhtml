@@ -64,7 +64,7 @@
 											<div class="form-group">
 												<label>Data de nascimento :</label>
 												<p:calendar value="#{alunoBean.pessoa.dataNasc}"
-													pattern="dd/MM/yyyy" required="true" styleClass="form-date"
+													pattern="MM/dd/yyyy" required="true" styleClass="form-date"
 													id="Data_Nascimento" />
 											</div>
 											<div class="form-group">
@@ -142,7 +142,7 @@
 											</div>
 											<div class="form-group">
 												<label> Data de ingresso:</label>
-												<p:calendar pattern="dd/MM/yyyy" required="true"
+												<p:calendar pattern="MM/dd/yyyy" required="true"
 													styleClass="form-date" id="data-ingresso"
 													value="#{alunoBean.aluno.dataIngresso}" locale="pt_BR" />
 											</div>
@@ -198,14 +198,14 @@
 											<div class="form-group">
 												<label>Data de expedição:</label>
 												<p:calendar value="#{alunoBean.documento.dataExpedicao}"
-													pattern="dd/MM/yyyy" styleClass="form-date"
-													id="data-emissao" locale="pt_BR" />
+													pattern="MM/dd/yyyy" styleClass="form-date"
+													id="data-emissao" locale="pt_BR" placeholder="MM/dd/yyyy"/>
 											</div>
 											<div class="form-group">
 												<label>Data vencimento:</label>
 												<p:calendar value="#{alunoBean.documento.dataValidade}"
-													pattern="dd/MM/yyyy" styleClass="form-date"
-													id="data-validade" locale="pt_BR" />
+													pattern="MM/dd/yyyy" styleClass="form-date"
+													id="data-validade" locale="pt_BR" placeholder="MM/dd/yyyy"/>
 											</div>
 										</div>
 										<div class="col-md-4">

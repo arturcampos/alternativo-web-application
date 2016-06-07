@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -43,6 +44,9 @@ public class RelatorioBean implements Serializable {
 	@ManagedProperty(value = "#{documentoBean}")
 	private DocumentoBean documentoBean;
 
+	@ManagedProperty(value = "#{eventoBean}")
+	private EventoBean eventoBean;
+
 	/**
 	 * @return the alunoBean
 	 */
@@ -73,8 +77,26 @@ public class RelatorioBean implements Serializable {
 		this.documentoBean = documentoBean;
 	}
 
+	/**
+	 * @return the eventoBean
+	 */
+	public EventoBean getEventoBean() {
+		return eventoBean;
+	}
+
+	/**
+	 * @param eventoBean the eventoBean to set
+	 */
+	public void setEventoBean(EventoBean eventoBean) {
+		this.eventoBean = eventoBean;
+	}
+
+	/**
+	 *
+	 * @param nomeRelatorio
+	 */
 	public void relatorioAlunoSimples(String nomeRelatorio) {
-		System.out.println("Entrou no relatï¿½rio simples");
+		System.out.println("Entrou no relatório simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
@@ -126,28 +148,32 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
-			// pï¿½gina
+			// Código abaixo gerar o relatório e disponibiliza diretamente na
+			// página
 			res.setHeader("Content-disposition", "inline;filename="+nomeRelatorio +".pdf");
-			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
+			// Código abaixo gerar o relatório e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Nï¿½o foi possï¿½vel criar o relatï¿½rio");
+				error("Não foi possível criar o relatório");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatï¿½rio simples");
+			System.out.println("Saiu do relatório simples");
 		} catch (DRException e) {
 			error(e.getMessage());
 		}
 
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private JRDataSource criaDataSourceRelatorioAlunoSimples() {
 		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "datanasc", "item1");
 		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
@@ -159,13 +185,114 @@ public class RelatorioBean implements Serializable {
 					cpf = d;
 					break;
 				}
-			
+
 			}
 			dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(),
 							aluno.getPessoa().getDataNasc(), null);
-			
+
 		}
 		this.alunoBean.getAlunos().clear();
+		return dataSource;
+	}
+
+
+	/**
+	 * Relatório de faltas cometidas por entrar no segundo horário ou sair antes do horário final
+	 */
+	public void relatorioFaltaHorarios(){
+		System.out.println("Entrou no relatório simples");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+
+		try {
+
+
+			StyleBuilder boldStyle = DynamicReports.stl.style().bold();
+			StyleBuilder boldCenteredStyle = DynamicReports.stl.style(boldStyle)
+					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+			StyleBuilder titleStyle = DynamicReports.stl.style(boldCenteredStyle)
+                    .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                    .setFontSize(15);
+
+			StyleBuilder columnTitleStyle = DynamicReports.stl.style(boldCenteredStyle)
+					.setBorder(DynamicReports.stl.pen1Point()).setBackgroundColor(Color.LIGHT_GRAY);
+
+			  StyleBuilder columnStyle = DynamicReports.stl.style()
+			  .setHorizontalAlignment(HorizontalAlignment.CENTER)
+			  .setBorder(DynamicReports.stl.pen1Point());
+
+
+			report().setColumnTitleStyle(columnTitleStyle)
+					// add columns
+					.columns(
+							// title, field name data type
+							col.column("Nome", "nome", type.stringType()),
+							col.column("Matricula", "matricula", type.stringType()),
+							col.column("Qtd Faltas/Horario", "qtd", type.integerType())).setColumnStyle(columnStyle)
+					// shows report title
+					// .highlightDetailEvenRows()
+					.title(//shows report title
+						     cmp.horizontalList()
+						  .add(
+						    cmp.text("Faltas cometidas em relação aos Horários Entrada/Saída").setStyle(titleStyle)
+						    .setHorizontalAlignment(HorizontalAlignment.LEFT),
+						    cmp.text("Futuro-Alternativo").setStyle(titleStyle)
+						    .setHorizontalAlignment(HorizontalAlignment.RIGHT))
+						  .newRow(2)
+						  .add(cmp.filler().setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point())).setFixedHeight(10)))
+
+					// shows number of page at page footer
+					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
+					// set datasource
+					.setDataSource(criaDataSourceFaltaHorarios())
+					// create and show report
+					.toPdf(baos);
+
+			baos.toByteArray();
+			res.setContentType("application/pdf");
+			// Código abaixo gerar o relatório e disponibiliza diretamente na
+			// página
+			res.setHeader("Content-disposition", "inline;filename=faltas_x_horarios.pdf");
+			// Código abaixo gerar o relatório e disponibiliza para o cliente
+			// baixar ou salvar
+			// res.setHeader("Content-disposition",
+			// "attachment;filename=arquivo.pdf");
+			try {
+				res.getOutputStream().write(baos.toByteArray());
+			} catch (IOException e) {
+				error("Não foi possível criar o relatório");
+			}
+			res.getCharacterEncoding();
+			FacesContext.getCurrentInstance().responseComplete();
+
+			System.out.println("Saiu do relatório simples");
+		} catch (DRException e) {
+			error(e.getMessage());
+		}
+
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	private JRDataSource criaDataSourceFaltaHorarios() {
+		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
+
+		DRDataSource dataSource = new DRDataSource("nome", "matricula", "qtd");
+		for(Aluno aluno : this.alunoBean.getAlunos()){
+			int qtd = this.eventoBean.buscarFaltasHorariosPorPessoa(aluno.getPessoa());
+
+			dataSource.add(aluno.getPessoa().getNome(), aluno.getMatricula(),
+							qtd);
+
+		}
+		this.alunoBean.getAlunos().clear();
+		this.alunoBean.limparAluno();
+		this.eventoBean.getEventos().clear();
+		System.out.println("Fim relatorio faltas horario");
 		return dataSource;
 	}
 

@@ -1,25 +1,31 @@
 package app.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import app.dao.EventoDao;
 import app.model.Evento;
+import app.model.Pessoa;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class EventoBean {
 
-	EventoDao dao;
-	Evento evento;
-	List<Evento> eventos;
+	private EventoDao dao;
+	private Evento evento;
+	private List<Evento> eventos;
 
 	@PostConstruct
 	public void init() {
-		dao = new EventoDao(Evento.class);
+		if(dao == null){
+			dao = new EventoDao(Evento.class);
+		}
+		evento = new Evento();
+		eventos = new ArrayList<Evento>();
 	}
 
 	public void salvar(Evento evento) {
@@ -64,5 +70,20 @@ public class EventoBean {
 
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
+	}
+
+	public int buscarFaltasHorariosPorPessoa(Pessoa pessoa) {
+		int qtd = 0;
+		this.eventos = this.dao.findEventsByPersonIdAndStatus(pessoa.getId(), "NOK");
+		if(this.eventos == null){
+			qtd = 0;
+		}else if(this.eventos.isEmpty()){
+			qtd = 0;
+		}else{
+			qtd = this.eventos.size();
+		}
+
+		return qtd;
+
 	}
 }
