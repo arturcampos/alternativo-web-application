@@ -1,11 +1,13 @@
 package app.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import app.model.Evento;
+import app.model.Pessoa;
 
 public class EventoDao extends DaoImpl<Evento> {
 
@@ -17,6 +19,18 @@ public class EventoDao extends DaoImpl<Evento> {
 		Query query = entitymanager.createNamedQuery("Evento.findEventsByPersonIdAndStatus", Evento.class)
 				.setParameter("personId", personId)
 				.setParameter("status", status);
+		try {
+			return (List<Evento>)query.getResultList();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<Evento> findEventsByPersonIdAndDate(Long personId, Date data) {
+		Query query = entitymanager.createNamedQuery("Evento.findEventsByPersonIdAndDate", Evento.class)
+						.setParameter("personId", personId)
+						.setParameter("date", data);
 		try {
 			return (List<Evento>)query.getResultList();
 		} catch (NoResultException e) {

@@ -1,6 +1,9 @@
 package app.control;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -85,5 +88,18 @@ public class EventoBean {
 
 		return qtd;
 
+	}
+
+	public List<Evento> buscarPorPessoaEData(Pessoa pessoa, Date data) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String formatado = sdf.format(data);
+			data = sdf.parse(formatado);
+		} catch (ParseException e) {
+			System.out.println("Não foi possível converter a data: " + e.getMessage());
+		}
+		List<Evento> evs = new ArrayList<Evento>();
+		evs = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), data);
+		return evs;
 	}
 }

@@ -9,7 +9,8 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,9 +19,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
-import app.model.Aluno;
-import app.model.Documento;
-import app.util.Status;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
@@ -28,7 +26,15 @@ import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
+import app.model.Aluno;
+import app.model.Documento;
+import app.model.Evento;
+import app.util.Status;
 
+/**
+ * @author arturc
+ *
+ */
 @ManagedBean(name = "relatorioBean")
 @SessionScoped
 public class RelatorioBean implements Serializable {
@@ -85,7 +91,8 @@ public class RelatorioBean implements Serializable {
 	}
 
 	/**
-	 * @param eventoBean the eventoBean to set
+	 * @param eventoBean
+	 *            the eventoBean to set
 	 */
 	public void setEventoBean(EventoBean eventoBean) {
 		this.eventoBean = eventoBean;
@@ -96,48 +103,48 @@ public class RelatorioBean implements Serializable {
 	 * @param nomeRelatorio
 	 */
 	public void relatorioAlunoSimples(String nomeRelatorio) {
-		System.out.println("Entrou no relatório simples");
+		System.out.println("Entrou no relatÃ³rio simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-				.getResponse();
+																	.getResponse();
 
 		try {
 
-
 			StyleBuilder boldStyle = DynamicReports.stl.style().bold();
 			StyleBuilder boldCenteredStyle = DynamicReports.stl.style(boldStyle)
-					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+																.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
 			StyleBuilder titleStyle = DynamicReports.stl.style(boldCenteredStyle)
-                    .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                    .setFontSize(15);
+														.setVerticalAlignment(VerticalAlignment.MIDDLE).setFontSize(15);
 
 			StyleBuilder columnTitleStyle = DynamicReports.stl.style(boldCenteredStyle)
-					.setBorder(DynamicReports.stl.pen1Point()).setBackgroundColor(Color.LIGHT_GRAY);
+																.setBorder(DynamicReports.stl.pen1Point())
+																.setBackgroundColor(Color.LIGHT_GRAY);
 
-			  StyleBuilder columnStyle = DynamicReports.stl.style()
-			  .setHorizontalAlignment(HorizontalAlignment.CENTER)
-			  .setBorder(DynamicReports.stl.pen1Point());
-
+			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
+															.setBorder(DynamicReports.stl.pen1Point());
 
 			report().setColumnTitleStyle(columnTitleStyle)
 					// add columns
 					.columns(
-							// title, field name data type
-							col.column("Nome", "nome", type.stringType()),
-							col.column("CPF", "cpf", type.stringType()),
-							col.column("Matricula", "matricula", type.stringType()),
-							col.column("Data Nascimento", "datanasc", type.dateType()),
-							col.column("Assinatura", "item1", type.stringType())).setColumnStyle(columnStyle)
+								// title, field name data type
+								col.column("Nome", "nome", type.stringType()),
+								col.column("CPF", "cpf", type.stringType()),
+								col.column("Matricula", "matricula", type.stringType()),
+								col.column("Data Nascimento", "datanasc", type.dateType()),
+								col.column("Assinatura", "item1", type.stringType())).setColumnStyle(columnStyle)
 					// shows report title
 					// .highlightDetailEvenRows()
-					.title(//shows report title
-						     cmp.horizontalList()
-						  .add(
-						    cmp.text(nomeRelatorio).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
-						    cmp.text("Futuro-Alternativo").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
-						  .newRow()
-						  .add(cmp.filler().setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point())).setFixedHeight(10)))
+					.title(// shows report title
+					cmp.horizontalList()
+						.add(	cmp.text(nomeRelatorio).setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.LEFT),
+								cmp.text("Futuro-Alternativo").setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.RIGHT))
+						.newRow()
+						.add(	cmp.filler()
+									.setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point()))
+									.setFixedHeight(10)))
 
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
@@ -148,22 +155,22 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Código abaixo gerar o relatório e disponibiliza diretamente na
-			// página
-			res.setHeader("Content-disposition", "inline;filename="+nomeRelatorio +".pdf");
-			// Código abaixo gerar o relatório e disponibiliza para o cliente
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
+			// pï¿½gina
+			res.setHeader("Content-disposition", "inline;filename=" + nomeRelatorio + ".pdf");
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível criar o relatório");
+				error("NÃ£o foi possÃ­vel criar o relatÃ³rio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatório simples");
+			System.out.println("Saiu do relatï¿½rio simples");
 		} catch (DRException e) {
 			error(e.getMessage());
 		}
@@ -187,61 +194,61 @@ public class RelatorioBean implements Serializable {
 				}
 
 			}
-			dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(),
-							aluno.getPessoa().getDataNasc(), null);
+			dataSource.add(	aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(), aluno.getPessoa()
+																										.getDataNasc(),
+							null);
 
 		}
 		this.alunoBean.getAlunos().clear();
 		return dataSource;
 	}
 
-
 	/**
-	 * Relatório de faltas cometidas por entrar no segundo horário ou sair antes do horário final
+	 * Relatï¿½rio de faltas cometidas por entrar no segundo horï¿½rio ou sair antes
+	 * do horï¿½rio final
 	 */
-	public void relatorioFaltaHorarios(){
-		System.out.println("Entrou no relatório simples");
+	public void relatorioFaltaHorarios() {
+		System.out.println("Entrou no relatï¿½rio simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-				.getResponse();
+																	.getResponse();
 
 		try {
 
-
 			StyleBuilder boldStyle = DynamicReports.stl.style().bold();
 			StyleBuilder boldCenteredStyle = DynamicReports.stl.style(boldStyle)
-					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+																.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
 			StyleBuilder titleStyle = DynamicReports.stl.style(boldCenteredStyle)
-                    .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                    .setFontSize(15);
+														.setVerticalAlignment(VerticalAlignment.MIDDLE).setFontSize(15);
 
 			StyleBuilder columnTitleStyle = DynamicReports.stl.style(boldCenteredStyle)
-					.setBorder(DynamicReports.stl.pen1Point()).setBackgroundColor(Color.LIGHT_GRAY);
+																.setBorder(DynamicReports.stl.pen1Point())
+																.setBackgroundColor(Color.LIGHT_GRAY);
 
-			  StyleBuilder columnStyle = DynamicReports.stl.style()
-			  .setHorizontalAlignment(HorizontalAlignment.CENTER)
-			  .setBorder(DynamicReports.stl.pen1Point());
-
+			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
+															.setBorder(DynamicReports.stl.pen1Point());
 
 			report().setColumnTitleStyle(columnTitleStyle)
 					// add columns
 					.columns(
-							// title, field name data type
-							col.column("Nome", "nome", type.stringType()),
-							col.column("Matricula", "matricula", type.stringType()),
-							col.column("Qtd Faltas/Horario", "qtd", type.integerType())).setColumnStyle(columnStyle)
+								// title, field name data type
+								col.column("Nome", "nome", type.stringType()),
+								col.column("Matricula", "matricula", type.stringType()),
+								col.column("Qtd Faltas/Horario", "qtd", type.integerType()))
+					.setColumnStyle(columnStyle)
 					// shows report title
 					// .highlightDetailEvenRows()
-					.title(//shows report title
-						     cmp.horizontalList()
-						  .add(
-						    cmp.text("Faltas cometidas em relação aos Horários Entrada/Saída").setStyle(titleStyle)
-						    .setHorizontalAlignment(HorizontalAlignment.LEFT),
-						    cmp.text("Futuro-Alternativo").setStyle(titleStyle)
-						    .setHorizontalAlignment(HorizontalAlignment.RIGHT))
-						  .newRow(2)
-						  .add(cmp.filler().setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point())).setFixedHeight(10)))
+					.title(// shows report title
+					cmp.horizontalList()
+						.add(	cmp.text("Faltas cometidas em relaï¿½ï¿½o aos Horï¿½rios Entrada/Saï¿½da").setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.LEFT),
+								cmp.text("Futuro-Alternativo").setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.RIGHT))
+						.newRow(2)
+						.add(	cmp.filler()
+									.setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point()))
+									.setFixedHeight(10)))
 
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
@@ -252,22 +259,22 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Código abaixo gerar o relatório e disponibiliza diretamente na
-			// página
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
+			// pï¿½gina
 			res.setHeader("Content-disposition", "inline;filename=faltas_x_horarios.pdf");
-			// Código abaixo gerar o relatório e disponibiliza para o cliente
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível criar o relatório");
+				error("NÃ£o foi possÃ­vel cirar o relatÃ³rio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatório simples");
+			System.out.println("Saiu do relatÃ³rio simples");
 		} catch (DRException e) {
 			error(e.getMessage());
 		}
@@ -282,11 +289,10 @@ public class RelatorioBean implements Serializable {
 		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
 
 		DRDataSource dataSource = new DRDataSource("nome", "matricula", "qtd");
-		for(Aluno aluno : this.alunoBean.getAlunos()){
+		for (Aluno aluno : this.alunoBean.getAlunos()) {
 			int qtd = this.eventoBean.buscarFaltasHorariosPorPessoa(aluno.getPessoa());
 
-			dataSource.add(aluno.getPessoa().getNome(), aluno.getMatricula(),
-							qtd);
+			dataSource.add(aluno.getPessoa().getNome(), aluno.getMatricula(), qtd);
 
 		}
 		this.alunoBean.getAlunos().clear();
@@ -297,12 +303,123 @@ public class RelatorioBean implements Serializable {
 	}
 
 	/**
+	 * @param data
+	 *            - the date to have search present list
+	 */
+	public void relatorioPresencaPorData(Date data) {
+		System.out.println("Entrou no relatÃ³rio presenÃ§a");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+																	.getResponse();
+
+		try {
+
+			StyleBuilder boldStyle = DynamicReports.stl.style().bold();
+			StyleBuilder boldCenteredStyle = DynamicReports.stl.style(boldStyle)
+																.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+			StyleBuilder titleStyle = DynamicReports.stl.style(boldCenteredStyle)
+														.setVerticalAlignment(VerticalAlignment.MIDDLE).setFontSize(15);
+
+			StyleBuilder columnTitleStyle = DynamicReports.stl.style(boldCenteredStyle)
+																.setBorder(DynamicReports.stl.pen1Point())
+																.setBackgroundColor(Color.LIGHT_GRAY);
+
+			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
+															.setBorder(DynamicReports.stl.pen1Point());
+
+			report().setColumnTitleStyle(columnTitleStyle)
+					// add columns
+					.columns(
+								// title, field name data type
+								col.column("Nome", "nome", type.stringType()),
+								col.column("CPF", "cpf", type.stringType()),
+								col.column("Matricula", "matricula", type.stringType()),
+								col.column("Status", "status", type.stringType())).setColumnStyle(columnStyle)
+					// shows report title
+					// .highlightDetailEvenRows()
+					.title(// shows report title
+					cmp.horizontalList()
+						.add(	cmp.text("Lista de presenÃ§a " + data).setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.LEFT),
+								cmp.text("Futuro-Alternativo").setStyle(titleStyle)
+									.setHorizontalAlignment(HorizontalAlignment.RIGHT))
+						.newRow()
+						.add(	cmp.filler()
+									.setStyle(DynamicReports.stl.style().setTopBorder(DynamicReports.stl.pen2Point()))
+									.setFixedHeight(10)))
+
+					// shows number of page at page footer
+					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
+					// set datasource
+					.setDataSource(criaDataSourceRelatorioPresenca(data))
+					// create and show report
+					.toPdf(baos);
+
+			baos.toByteArray();
+			res.setContentType("application/pdf");
+			// Cï¿½digo abaixo gerar o relatÃ³rio e disponibiliza diretamente na
+			// pï¿½gina
+			res.setHeader("Content-disposition", "inline;filename=Lista de presenÃ§a.pdf");
+			// CÃ³digo abaixo gerar o relatÃ³rio e disponibiliza para o cliente
+			// baixar ou salvar
+			// res.setHeader("Content-disposition",
+			// "attachment;filename=arquivo.pdf");
+			try {
+				res.getOutputStream().write(baos.toByteArray());
+			} catch (IOException e) {
+				error("NÃ£o foi possÃ­vel criar o relatÃ³rio: " + e.getMessage());
+			}
+			res.getCharacterEncoding();
+			FacesContext.getCurrentInstance().responseComplete();
+
+			System.out.println("Saiu do relatÃ³rio presenÃ§a");
+		} catch (DRException e) {
+			error("NÃ£o foi possÃ­vel criar o relatÃ³rio: " + e.getMessage());
+		}
+
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	private JRDataSource criaDataSourceRelatorioPresenca(Date data) {
+		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "status");
+		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
+		for (Aluno aluno : this.alunoBean.getAlunos()) {
+
+			// preenchendo documento
+			Documento cpf = null;
+			this.documentoBean.buscarPorPessoa(aluno.getPessoa());
+			for (Documento d : this.documentoBean.getDocumentos()) {
+				if (d.getTipo().equals("CPF")) {
+					cpf = d;
+					break;
+				}
+			}
+
+			// Definindo presenÃ§a ou falta
+			String presenca = null;
+			List<Evento> evs = this.eventoBean.buscarPorPessoaEData(this.alunoBean.getAluno().getPessoa(), data);
+			if (evs.isEmpty() || evs == null) {
+				presenca = "FALTOU";
+			} else {
+				presenca = "PRESENTE";
+			}
+			dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(), presenca);
+		}
+		this.alunoBean.getAlunos().clear();
+		return dataSource;
+	}
+
+	/**
 	 *
 	 * @param message
 	 */
 	public void info(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, " Info", message));
+														new FacesMessage(FacesMessage.SEVERITY_INFO, " Info", message));
 	}
 
 	/**
@@ -310,8 +427,9 @@ public class RelatorioBean implements Serializable {
 	 * @param message
 	 */
 	public void warn(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!", message));
+		FacesContext.getCurrentInstance().addMessage(	null,
+														new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!",
+																			message));
 	}
 
 	/**
@@ -319,8 +437,8 @@ public class RelatorioBean implements Serializable {
 	 * @param message
 	 */
 	public void error(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, " Erro!", message));
+		FacesContext.getCurrentInstance()
+					.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " Erro!", message));
 	}
 
 	/**
@@ -328,7 +446,8 @@ public class RelatorioBean implements Serializable {
 	 * @param message
 	 */
 	public void fatal(String message) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
+		FacesContext.getCurrentInstance().addMessage(	null,
+														new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!",
+																			message));
 	}
 }

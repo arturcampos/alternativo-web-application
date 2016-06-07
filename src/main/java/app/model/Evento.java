@@ -23,8 +23,8 @@ import javax.persistence.TemporalType;
 @Table(name="Evento", schema="futurodb")
 @NamedQueries({
 @NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e"),
-@NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status")
-})
+@NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status"),
+@NamedQuery(name="Evento.findEventsByPersonIdAndDate", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND date_format('dd/MM/yyyy', e.dataHoraEntrada) = :date")})
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,10 +33,10 @@ public class Evento implements Serializable {
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date datahoraentrada;
+	private Date dataHoraEntrada;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date datahorasaida;
+	private Date dataHoraSaida;
 
 	// bi-directional many-to-one association to Pessoa
 	@ManyToOne
@@ -48,8 +48,8 @@ public class Evento implements Serializable {
 	}
 
 	public Evento(Date entrada, Date saida, String status, Pessoa pessoa) {
-		this.datahoraentrada = entrada;
-		this.datahorasaida = saida;
+		this.dataHoraEntrada = entrada;
+		this.dataHoraSaida = saida;
 		this.status = status;
 		this.pessoa = pessoa;
 	}
@@ -62,20 +62,20 @@ public class Evento implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDatahoraentrada() {
-		return this.datahoraentrada;
+	public Date getDataHoraEntrada() {
+		return this.dataHoraEntrada;
 	}
 
-	public void setDatahoraentrada(Date datahoraentrada) {
-		this.datahoraentrada = datahoraentrada;
+	public void setDataHoraEntrada(Date dataHoraEntrada) {
+		this.dataHoraEntrada = dataHoraEntrada;
 	}
 
-	public Date getDatahorasaida() {
-		return this.datahorasaida;
+	public Date getDataHoraSaida() {
+		return this.dataHoraSaida;
 	}
 
-	public void setDatahorasaida(Date datahorasaida) {
-		this.datahorasaida = datahorasaida;
+	public void setDataHoraSaida(Date dataHoraSaida) {
+		this.dataHoraSaida = dataHoraSaida;
 	}
 
 	public Pessoa getPessoa() {

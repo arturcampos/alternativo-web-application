@@ -79,29 +79,29 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @return
+	 * @return the action to go to save student after create in data base
 	 */
 	public String salvar() {
 		try {
 			if (this.documentos.size() > 0) {
 				this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-				// adicionando documentos � pessoa
+				// adicionando documentos à pessoa
 				this.pessoa.setDocumentos(this.documentos);
 				vincularDocumento(this.pessoa, this.documentos);
 			} else {
 				// Se n�o houver documentos cadastrado retorna um aviso
-				warn("� necess�rio cadastrar pelo menos 1 (UM) documento");
+				warn("É necessário cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
 
 			if (this.enderecos.size() > 0) {
-				// adicionando endere�o pessoa
+				// adicionando endereço pessoa
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
 			} else {
-				// Se n�o houver endere�os cadastrado retorna um aviso
-				warn("� necess�rio cadastrar pelo menos 1 (UM) endere�o");
+				// Se n�o houver endereços cadastrado retorna um aviso
+				warn("É necessário cadastrar pelo menos 1 (UM) endereço");
 				return "salvarAluno?faces-redirect=true";
 			}
 			// alterando status para ativo
@@ -111,7 +111,7 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// Converte data e cria pl�stico
+			// Converte data e cria plástico
 			Date dataCadastro;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -122,7 +122,7 @@ public class AlunoBean implements Serializable {
 			}
 			criarPlastico(matricula, dataCadastro);
 
-			// adicionando pl�stico � pessoa
+			// adicionando plástico à pessoa
 			this.pessoa.addPlastico(plastico);
 
 			// adicionando pessoa ao aluno
@@ -132,14 +132,14 @@ public class AlunoBean implements Serializable {
 			this.dao.save(this.aluno);
 			Aluno novoAluno = this.aluno;
 
-			info("Informa��es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
+			info("Informa��es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
 			this.alunos.add(novoAluno);
 			return "listarAluno?faces-redirect=true";
 
 		} catch (Exception e) {
-			error("Erro ao Salvar informa��es: " + e.getMessage());
+			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
@@ -196,7 +196,7 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @return
+	 * @return the action to go to save student
 	 */
 	public String adicionarDocumento() {
 		try {
@@ -215,6 +215,10 @@ public class AlunoBean implements Serializable {
 		return "salvarAluno?faces-redirect=true";
 	}
 
+	/**
+	 * 
+	 * @return the action to go to save the student
+	 */
 	public String adicionarAluno() {
 		this.alunoTab = "";
 		this.alunoTab = "";
@@ -225,8 +229,8 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param documento
-	 * @return
+	 * @param documento - to do removed
+	 * @return the action to go to save the student
 	 */
 	public String removerDocumento(final Documento documento) {
 
@@ -238,14 +242,14 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "";
 		} else {
 
-			warn("N�o existem documentos � serem removidos");
+			warn("Não existe endereço à ser removido");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
 	 *
-	 * @return
+	 * @return the action to go to save student after add endereço
 	 */
 
 	public String adicionarEndereco() {
@@ -261,7 +265,7 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "active";
 
 		} catch (Exception e) {
-			error("Erro ao adicionar endereco � lista");
+			error("Erro ao adicionar endereco à lista");
 			return "salvarAluno?faces-redirect=true";
 		}
 
@@ -270,16 +274,16 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param endereco
-	 * @return
+	 * @param endereco - element de entrada
+	 * @return the action to page to save the student
 	 */
 	public String removerEndereco(final Endereco endereco) {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
-			info("Endere�o removido com sucesso!");
+			info("Endereço removido com sucesso!");
 		} else {
-			warn("N�o existem endere�os � serem removidos");
+			warn("Não existem endereços à serem removidos");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -308,8 +312,8 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param aluno
-	 * @return
+	 * @param aluno - the student in
+	 * @return the action to go to save ou list student
 	 */
 	public String atualizar(Aluno aluno) {
 		try {
@@ -325,7 +329,7 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @return
+	 * @return the action to go to save ou list student
 	 */
 	public String salvarAtualizar() {
 		try {
@@ -344,7 +348,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 *
+	 *@return the action to go to list the student
 	 */
 	public String cancelarAtualizar() {
 		this.aluno.restaurar(this.alunoAnterior);
@@ -362,8 +366,8 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param status
-	 * @return
+	 * @param status - student's status
+	 * @return the action to go to list students
 	 */
 	public String buscarTodosPorStatus(String status) {
 		try {
@@ -382,8 +386,8 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param matricula
-	 * @return
+	 * @param matricula - student's registration number
+	 * @return the action to go to list student
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
@@ -423,8 +427,8 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param matricula
-	 * @param dataCadastro
+	 * @param matricula - the student's registration number
+	 * @param dataCadastro - the studant's data of plastic creation
 	 */
 	public void criarPlastico(String matricula, Date dataCadastro) {
 		this.plastico.setLinhaDigitavel(matricula);
@@ -432,11 +436,19 @@ public class AlunoBean implements Serializable {
 		this.plastico.setStatus(Status.ATIVO.toString());
 	}
 
+	/**
+	 * 
+	 * @return the action to go to Home
+	 */
 	public String voltar() {
 		init();
 		return "Inicio?faces-redirect=true";
 	}
 
+	/**
+	 * 
+	 * @return the action to go to list
+	 */
 	public String listar(){
 		init();
 		return "listarAluno?faces-redirect=true";
@@ -444,7 +456,7 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @return
+	 * @return the value of editado variable
 	 */
 	public boolean isEditado() {
 		return editado;
@@ -452,7 +464,7 @@ public class AlunoBean implements Serializable {
 
 	/**
 	 *
-	 * @param editado
+	 * @param editado - value to add to editado variable
 	 */
 	public void setEditado(boolean editado) {
 		this.editado = editado;

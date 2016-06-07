@@ -63,6 +63,26 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="col-xs-12 col-md-6 col-lg-3">
+						<div class="">
+							<div class="row no-padding">
+								<div class="col-sm-12 col-lg-12 widget-right">
+									<h:form id="link-form-presenca" target="_blank" >
+										<div class="form-group">
+										<br/>
+										<p:calendar placeholder="Data para consulta"
+												value="#{data}" class="form-control" pattern="MM/dd/yyyy"/>
+											<h:commandButton
+												action="#{relatorioBean.relatorioPresencaPorData(data)}"
+												process="@form" styleClass="btn btn-primary form-control"
+												value="Relatório de presença"/>
+										</div>
+									</h:form>
+								</div>
+							</div>
+						</div>
+					</div>
 					<!--
 			<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-orange panel-widget">
