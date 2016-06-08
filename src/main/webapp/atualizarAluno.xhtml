@@ -47,7 +47,7 @@
 									<div class="form-group">
 										<label>Data de nascimento :</label>
 										<p:calendar value="#{alunoBean.aluno.pessoa.dataNasc}"
-											pattern="MM/dd/yyyy" styleClass="form-date"
+											pattern="dd/MM/yyyy" locale="pt_BR"
 											id="Data_Nascimento" />
 									</div>
 									<div class="form-group">
@@ -133,9 +133,9 @@
 									</div>
 									<div class="form-group">
 										<label> Data de ingresso:</label>
-										<p:calendar pattern="dd/MM/yyyy" styleClass="form-date"
+										<p:calendar pattern="dd/MM/yyyy" locale="pt_BR"
 											id="data-ingresso" value="#{alunoBean.aluno.dataIngresso}"
-											locale="pt_BR" />
+										/>
 									</div>
 									<div class="form-group">
 										<label>Tipo de Cota:</label>

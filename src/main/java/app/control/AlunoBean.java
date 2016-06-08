@@ -90,18 +90,18 @@ public class AlunoBean implements Serializable {
 				this.pessoa.setDocumentos(this.documentos);
 				vincularDocumento(this.pessoa, this.documentos);
 			} else {
-				// Se nï¿½o houver documentos cadastrado retorna um aviso
-				warn("Ã‰ necessÃ¡rio cadastrar pelo menos 1 (UM) documento");
+				// Se não houver documentos cadastrado retorna um aviso
+				warn("Ã‰ necessário cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
 
 			if (this.enderecos.size() > 0) {
-				// adicionando endereÃ§o pessoa
+				// adicionando endereço pessoa
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
 			} else {
-				// Se nï¿½o houver endereÃ§os cadastrado retorna um aviso
-				warn("Ã‰ necessÃ¡rio cadastrar pelo menos 1 (UM) endereÃ§o");
+				// Se não houver endereços cadastrado retorna um aviso
+				warn("É‰ necessário cadastrar pelo menos 1 (UM) endereço");
 				return "salvarAluno?faces-redirect=true";
 			}
 			// alterando status para ativo
@@ -111,7 +111,7 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// Converte data e cria plÃ¡stico
+			// Converte data e cria plástico
 			Date dataCadastro;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -122,7 +122,7 @@ public class AlunoBean implements Serializable {
 			}
 			criarPlastico(matricula, dataCadastro);
 
-			// adicionando plÃ¡stico Ã  pessoa
+			// adicionando plástico à  pessoa
 			this.pessoa.addPlastico(plastico);
 
 			// adicionando pessoa ao aluno
@@ -132,14 +132,14 @@ public class AlunoBean implements Serializable {
 			this.dao.save(this.aluno);
 			Aluno novoAluno = this.aluno;
 
-			info("Informaï¿½ï¿½es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
+			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
 			this.alunos.add(novoAluno);
 			return "listarAluno?faces-redirect=true";
 
 		} catch (Exception e) {
-			error("Erro ao Salvar informaÃ§Ãµes: " + e.getMessage());
+			error("Erro ao Salvar informações: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
 	}
@@ -161,7 +161,7 @@ public class AlunoBean implements Serializable {
 			if (this.aluno != null) {
 				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
 			} else {
-				warn("Aluno nï¿½o encontrado!");
+				warn("Aluno não encontrado!");
 			}
 			return "atualizar";
 		} catch (Exception e) {
@@ -216,7 +216,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the action to go to save the student
 	 */
 	public String adicionarAluno() {
@@ -242,14 +242,14 @@ public class AlunoBean implements Serializable {
 			this.enderecoTab = "";
 		} else {
 
-			warn("NÃ£o existe endereÃ§o Ã  ser removido");
+			warn("Não existe endereço Ã  ser removido");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
 
 	/**
 	 *
-	 * @return the action to go to save student after add endereÃ§o
+	 * @return the action to go to save student after add endereço
 	 */
 
 	public String adicionarEndereco() {
@@ -283,7 +283,7 @@ public class AlunoBean implements Serializable {
 			this.enderecos.remove(endereco);
 			info("EndereÃ§o removido com sucesso!");
 		} else {
-			warn("NÃ£o existem endereÃ§os Ã  serem removidos");
+			warn("Não existem endereços à  serem removidos");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -403,7 +403,7 @@ public class AlunoBean implements Serializable {
 				this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
 				info("Consulta realizada com sucesso");
 			} else {
-				warn("Matricula nï¿½o existe.");
+				warn("Matricula não existe.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -437,7 +437,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the action to go to Home
 	 */
 	public String voltar() {
@@ -446,7 +446,7 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the action to go to list
 	 */
 	public String listar(){

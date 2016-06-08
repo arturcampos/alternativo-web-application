@@ -64,7 +64,7 @@
 											<div class="form-group">
 												<label>Data de nascimento :</label>
 												<p:calendar value="#{alunoBean.pessoa.dataNasc}"
-													pattern="MM/dd/yyyy" required="true" styleClass="form-date"
+													pattern="dd/MM/yyyy" locale="pt_BR" required="true" styleClass="form-date"
 													id="Data_Nascimento" />
 											</div>
 											<div class="form-group">
@@ -142,7 +142,7 @@
 											</div>
 											<div class="form-group">
 												<label> Data de ingresso:</label>
-												<p:calendar pattern="MM/dd/yyyy" required="true"
+												<p:calendar pattern="dd/MM/yyyy" required="true"
 													styleClass="form-date" id="data-ingresso"
 													value="#{alunoBean.aluno.dataIngresso}" locale="pt_BR" />
 											</div>
@@ -198,14 +198,14 @@
 											<div class="form-group">
 												<label>Data de expedição:</label>
 												<p:calendar value="#{alunoBean.documento.dataExpedicao}"
-													pattern="MM/dd/yyyy" styleClass="form-date"
-													id="data-emissao" locale="pt_BR" placeholder="MM/dd/yyyy"/>
+													pattern="dd/MM/yyyy" locale="pt_BR" styleClass="form-date"
+													id="data-emissao" />
 											</div>
 											<div class="form-group">
 												<label>Data vencimento:</label>
 												<p:calendar value="#{alunoBean.documento.dataValidade}"
-													pattern="MM/dd/yyyy" styleClass="form-date"
-													id="data-validade" locale="pt_BR" placeholder="MM/dd/yyyy"/>
+													pattern="dd/MM/yyyy" styleClass="form-date"
+													id="data-validade" locale="pt_BR" />
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -253,8 +253,14 @@
 															<tr>
 																<td>#{documento.numero}</td>
 																<td>#{documento.tipo}</td>
-																<td>#{documento.dataExpedicao}</td>
-																<td>#{documento.dataValidade}</td>
+																<td>
+																	<h:outputText value="#{documento.dataExpedicao}">
+																		<f:convertDateTime pattern="dd/MM/yyyy"/>
+																	</h:outputText></td>
+																<td>
+																<h:outputText value="#{documento.dataValidade}">
+																		<f:convertDateTime pattern="dd/MM/yyyy"/>
+																	</h:outputText></td>
 																<td>#{documento.uf}</td>
 																<td>#{documento.orgaoEmissor}</td>
 																<td><p:commandLink

@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
 @NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e"),
 @NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status"),
-@NamedQuery(name="Evento.findEventsByPersonIdAndDate", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND date_format('dd/MM/yyyy', e.dataHoraEntrada) = :date")})
+@NamedQuery(name="Evento.findEventsByPersonIdAndDate", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND date_format(e.dataHoraEntrada, 'yyyy-MM-dd') = date_format(:date, 'yyyy-MM-dd')")})
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
 

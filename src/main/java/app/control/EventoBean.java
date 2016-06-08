@@ -24,7 +24,7 @@ public class EventoBean {
 
 	@PostConstruct
 	public void init() {
-		if(dao == null){
+		if (dao == null) {
 			dao = new EventoDao(Evento.class);
 		}
 		evento = new Evento();
@@ -78,11 +78,11 @@ public class EventoBean {
 	public int buscarFaltasHorariosPorPessoa(Pessoa pessoa) {
 		int qtd = 0;
 		this.eventos = this.dao.findEventsByPersonIdAndStatus(pessoa.getId(), "NOK");
-		if(this.eventos == null){
+		if (this.eventos == null) {
 			qtd = 0;
-		}else if(this.eventos.isEmpty()){
+		} else if (this.eventos.isEmpty()) {
 			qtd = 0;
-		}else{
+		} else {
 			qtd = this.eventos.size();
 		}
 
@@ -90,16 +90,17 @@ public class EventoBean {
 
 	}
 
-	public List<Evento> buscarPorPessoaEData(Pessoa pessoa, Date data) {
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			String formatado = sdf.format(data);
-			data = sdf.parse(formatado);
-		} catch (ParseException e) {
-			System.out.println("Não foi possível converter a data: " + e.getMessage());
+	public String buscarPorPessoaEData(Pessoa pessoa, Date data) {
+		String dataTmp = null;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		dataTmp = sdf.format(data);
+		this.eventos = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), dataTmp);
+
+		for (Evento e : this.eventos) {
+			System.out.println(e.getId());
+			System.out.println(e.getDataHoraEntrada());
 		}
-		List<Evento> evs = new ArrayList<Evento>();
-		evs = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), data);
-		return evs;
+		return "listarEvento?faces-redirect=true";
 	}
 }

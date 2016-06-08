@@ -73,7 +73,7 @@ var lineChartData = {
 							<div class="text-muted">
 								<h:form id="link-form-professor">
 									<p:commandLink action="#{professorBean.buscarTodos}"
-										process="@this">Professores</p:commandLink>
+										process="link-form-professor">Professores</p:commandLink>
 								</h:form>
 							</div>
 						</div>
@@ -92,7 +92,7 @@ var lineChartData = {
 								<h:form id="link-form-aluno">
 									<p:commandLink
 										action="#{alunoBean.buscarTodosPorStatus('ATIVO')}"
-										process="@this">Alunos</p:commandLink>
+										process="link-form-aluno">Alunos</p:commandLink>
 								</h:form>
 							</div>
 						</div>
@@ -111,7 +111,7 @@ var lineChartData = {
 								<h:form id="link-form-relatorio">
 									<p:commandLink
 										action="relatorios?faces-redirect=true"
-										process="@this">Relatorios</p:commandLink>
+										process="link-form-relatorio">Relatorios</p:commandLink>
 								</h:form>
 							</div>
 						</div>

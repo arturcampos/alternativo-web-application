@@ -27,10 +27,10 @@ public class EventoDao extends DaoImpl<Evento> {
 		}
 	}
 
-	public List<Evento> findEventsByPersonIdAndDate(Long personId, Date data) {
+	public List<Evento> findEventsByPersonIdAndDate(Long personId, String data) {
 		Query query = entitymanager.createNamedQuery("Evento.findEventsByPersonIdAndDate", Evento.class)
 						.setParameter("personId", personId)
-						.setParameter("date", data);
+						.setParameter("date" , data);
 		try {
 			return (List<Evento>)query.getResultList();
 		} catch (NoResultException e) {
