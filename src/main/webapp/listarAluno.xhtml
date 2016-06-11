@@ -6,7 +6,6 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-
 		<div class="row">
 			<h:form id="breadcrumb-form">
 			<ol class="breadcrumb">
@@ -19,7 +18,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Listagem de Alunos</h1>
+				<h3 class="page-header">Listagem de Alunos</h3>
 			</div>
 		</div>
 		<!--/.row-->
@@ -39,8 +38,7 @@
 								<h:panelGrid columns="3" cellpadding="5"
 									style="margin-bottom:10px">
 									<p:inputText id="input-matricula" value="#{matricula}"
-										required="true" styleClass="form-control" />
-									<p:watermark for="input-matricula" value="Número da matrícula"/> <p:commandButton
+										required="true" styleClass="form-control" placeholder="Número da matrícula"/><p:commandButton
 										action="#{alunoBean.buscarPorMatricula(matricula)}" value="Buscar"
 										process="@this, matricula-form" styleClass="btn btn-info"/>
 								</h:panelGrid>
@@ -70,7 +68,9 @@
 											<td><h:commandLink id="btn_edit"
 													action="#{alunoBean.atualizar(aluno)}" type="submit"
 													process="@form" styleClass="form-group"> #{aluno.pessoa.nome}</h:commandLink></td>
-											<td>#{aluno.pessoa.dataNasc}</td>
+											<td><h:outputText value="#{aluno.pessoa.dataNasc}">
+												<f:convertDateTime pattern="dd/MM/yyyy"/>
+											</h:outputText> </td>
 											<td><h:commandLink
 													action="#{alunoBean.remover(aluno.id)}" type="submit"
 													process="@form" class="glyphicon glyphicon-trash"

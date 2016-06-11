@@ -1,5 +1,11 @@
 package app.model;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
+
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +21,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import app.dao.AlunoDao;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * The persistent class for the aluno database table.
@@ -155,4 +169,6 @@ public class Aluno implements Serializable {
 				+ "\nMatricula: " + this.matricula + "\n Tipo de Cota: " + this.tipoCotaIngresso + "\nStatus:"
 				+ this.status);
 	}
+
+
 }
