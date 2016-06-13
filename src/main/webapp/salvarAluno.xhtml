@@ -263,10 +263,10 @@
 																	</h:outputText></td>
 																<td>#{documento.uf}</td>
 																<td>#{documento.orgaoEmissor}</td>
-																<td><p:commandLink
+																<td><h:commandLink
 																		actionListener="#{alunoBean.removerDocumento(documento)}"
 																		process="@this" class="glyphicon glyphicon-trash"
-																		update="@form"> Remover</p:commandLink></td>
+																		update="@form"> Remover</h:commandLink></td>
 															</tr>
 														</ui:repeat>
 													</tbody>
@@ -354,7 +354,7 @@
 													actionListener="#{alunoBean.adicionarEndereco}"
 													styleClass="btn btn-secondary"
 													process="@this, tipo-end, cep-end, logradouro-end, numero-end, bairro-end, cidade-end, uf-end, correspondencia-end, telefone-end"
-													id="btn-add-end" />
+													id="btn-add-end" update="@all"/>
 											</div>
 										</div>
 										<div class="col-lg-12">
@@ -385,10 +385,10 @@
 															<td>#{endereco.uf}</td>
 															<td>#{endereco.enderecoCorrespondencia}</td>
 															<td>#{endereco.telefone}</td>
-															<td><p:commandLink
+															<td><h:commandLink
 																	actionListener="#{alunoBean.removerEndereco(endereco)}"
 																	process="@this" class="glyphicon glyphicon-trash"
-																	update="@form"> Remover</p:commandLink></td>
+																	update="@form"> Remover</h:commandLink></td>
 														</tr>
 													</ui:repeat>
 												</tbody>

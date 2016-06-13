@@ -166,7 +166,7 @@ public class AlunoBean implements Serializable {
 			return "atualizar";
 		} catch (Exception e) {
 			error("Erro ao consultar dados do aluno!");
-			return "atualizarAluno";
+			return "atualizarAluno?faces-redirect=true";
 		}
 	}
 
@@ -187,11 +187,10 @@ public class AlunoBean implements Serializable {
 			} else {
 				warn("Houve um problema para remover o aluno, verifique na listagem");
 			}
-			return "listarAluno";
 		} catch (Exception e) {
 			error("Houve um problema para remover o aluno, verifique na listagem");
 		}
-		return "listar";
+		return "listarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -200,6 +199,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String adicionarDocumento() {
 		try {
+			System.out.println("Adicioando documento.");
 			if (this.documentos == null) {
 				this.documentos = new ArrayList<Documento>();
 			}
@@ -209,8 +209,10 @@ public class AlunoBean implements Serializable {
 			this.alunoTab = "";
 			this.documentoTab = "active";
 			this.enderecoTab = "";
+			System.out.println("Documento adicionado");
 		} catch (Exception e) {
-			error("Erro ao adicionar documento ï¿½ lista");
+			error("Erro ao adicionar documento À lista");
+			System.out.println("Erro: " + e.getMessage());
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -253,6 +255,7 @@ public class AlunoBean implements Serializable {
 	 */
 
 	public String adicionarEndereco() {
+		System.out.println("Adicionando Endereço...");
 		try {
 			if (this.enderecos == null) {
 				this.enderecos = new ArrayList<Endereco>();
@@ -263,9 +266,9 @@ public class AlunoBean implements Serializable {
 			this.alunoTab = "";
 			this.documentoTab = "";
 			this.enderecoTab = "active";
-
+			System.out.println("Adicionando endereço finalizado...");
 		} catch (Exception e) {
-			error("Erro ao adicionar endereco Ã  lista");
+			error("Erro ao adicionar endereco à  lista");
 			return "salvarAluno?faces-redirect=true";
 		}
 
@@ -281,7 +284,7 @@ public class AlunoBean implements Serializable {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
-			info("EndereÃ§o removido com sucesso!");
+			info("Endereço removido com sucesso!");
 		} else {
 			warn("Não existem endereços à  serem removidos");
 		}
@@ -318,11 +321,11 @@ public class AlunoBean implements Serializable {
 	public String atualizar(Aluno aluno) {
 		try {
 			this.aluno = aluno.clone();
-			this.alunoAnterior = aluno.clone();
+			this.alunoAnterior = aluno;
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do aluno");
+			error("Erro ao direcioar para atualização de dados do aluno");
 			return "listarAluno?faces-redirect=true";
 		}
 	}
@@ -334,15 +337,15 @@ public class AlunoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.aluno);
-			this.alunos.remove(alunoAnterior);
-			this.alunos.add(aluno);
+			this.alunos.remove(this.alunoAnterior);
+			this.alunos.add(this.aluno);
 			this.editado = false;
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			this.aluno = new Aluno();
 			this.alunoAnterior = new Aluno();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informaï¿½ï¿½es!");
+			error("Erro ao atualizar as informações!");
 			return "atualizarAluno?faces-redirect=true";
 		}
 	}
@@ -352,7 +355,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String cancelarAtualizar() {
 		this.aluno.restaurar(this.alunoAnterior);
-		this.aluno = new Aluno();
+		this.alunoAnterior = new Aluno();
 		editado = false;
 		return "listarAluno?faces-redirect=true";
 	}
@@ -374,7 +377,7 @@ public class AlunoBean implements Serializable {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
 				this.alunos = this.dao.findByStatus(status);
 			} else {
-				error("Status " + status + "invï¿½lido para consulta");
+				error("Status " + status + "inválido para consulta");
 			}
 
 		} catch (Exception e) {
@@ -396,7 +399,9 @@ public class AlunoBean implements Serializable {
 			} else {
 				this.alunos.clear();
 			}
-			Aluno aluno = this.dao.findByRegistrationNumber(matricula);
+			Long matriculaL = Long.parseLong(matricula);
+			String matriculaS = String.format("%09d",matriculaL);
+			Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
 			if (aluno != null) {
 				this.aluno = aluno.clone();
 				this.alunos.add(this.aluno);

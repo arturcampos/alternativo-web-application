@@ -276,10 +276,10 @@
 																<td>#{documento.dataValidade}</td>
 																<td>#{documento.uf}</td>
 																<td>#{documento.orgaoEmissor}</td>
-																<td><p:commandLink
+																<td><h:commandLink
 																		action="#{professorBean.removerDocumento(documento)}"
 																		process="@this" class="glyphicon glyphicon-trash"
-																		update="@form"> Remover</p:commandLink></td>
+																		update="@form"> Remover</h:commandLink></td>
 															</tr>
 														</ui:repeat>
 													</tbody>
@@ -398,10 +398,10 @@
 															<td>#{endereco.uf}</td>
 															<td>#{endereco.enderecoCorrespondencia}</td>
 															<td>#{endereco.telefone}</td>
-															<td><p:commandLink
+															<td><h:commandLink
 																	action="#{professorBean.removerEndereco(endereco)}"
 																	process="@this" class="glyphicon glyphicon-trash"
-																	update="@form"> Remover</p:commandLink></td>
+																	update="@form"> Remover</h:commandLink></td>
 														</tr>
 													</ui:repeat>
 												</tbody>

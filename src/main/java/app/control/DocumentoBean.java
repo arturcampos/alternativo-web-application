@@ -100,7 +100,8 @@ public class DocumentoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.documento);
-			this.documentos.remove(documentoAnterior);
+			this.documentos.remove(this.documentoAnterior);
+			this.documentos.add(this.documento);
 			this.editado = false;
 			info("Documento " + this.documento.getTipo() + " " + this.documento.getNumero() + " atualizados");
 			this.documento = new Documento();

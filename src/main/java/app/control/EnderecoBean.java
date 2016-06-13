@@ -98,8 +98,8 @@ public class EnderecoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.endereco);
-			System.out.println("Atual \n " + endereco);
-			System.out.println("Anterior \n " + this.enderecos.remove(enderecoAnterior));
+			this.enderecos.remove(enderecoAnterior);
+			this.enderecos.add(this.endereco);
 			this.editado = false;
 			info("Endereco " + this.endereco.getTipo() + " atualizados");
 			this.endereco = new Endereco();
