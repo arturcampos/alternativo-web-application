@@ -11,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import app.dao.ProfessorDao;
+import app.model.Aluno;
 import app.model.Documento;
 import app.model.Endereco;
 import app.model.Pessoa;
@@ -261,7 +262,7 @@ public class ProfessorBean implements Serializable {
 	public String atualizar(Professor professor) {
 		try {
 			this.professor = professor.clone();
-			this.professorAnterior = professor.clone();
+			this.professorAnterior = professor;
 			this.editado = true;
 			return "atualizarProfessor?faces-redirect=true";
 		} catch (Exception e) {
@@ -277,8 +278,8 @@ public class ProfessorBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			this.dao.update(this.professor);
-			this.professors.remove(professorAnterior);
-			this.professors.add(professor);
+			this.professors.remove(this.professorAnterior);
+			this.professors.add(this.professor);
 			this.editado = false;
 			info("Dados de " + this.professor.getPessoa().getNome() + " atualizados");
 			this.professor = new Professor();
@@ -295,7 +296,7 @@ public class ProfessorBean implements Serializable {
 	 */
 	public String cancelarAtualizar() {
 		this.professor.restaurar(this.professorAnterior);
-		this.professor = new Professor();
+		this.professorAnterior = new Professor();
 		editado = false;
 		return "listarProfessor?faces-redirect=true";
 	}

@@ -1,18 +1,22 @@
 package app.util;
 
+import java.util.Properties;
+
 import app.dao.AlunoDao;
 import app.model.Aluno;
 
 public abstract class AlunoUtil {
 
-	public static String GerarMatricula() throws Exception {
+	private static Properties prop = AbstractPropertyReader.propertyReader();
 
+	public static String GerarMatricula() throws Exception {
+		String matricula = prop.getProperty("matricula.inicial");
 		AlunoDao dao = new AlunoDao(Aluno.class);
 		String ultimaMatricula = dao.findLastRegistrationNumber();
-		String matricula = "1010";
+
 		if (ultimaMatricula != null && !ultimaMatricula.equals("")) {
 			long lMatricula = Long.parseUnsignedLong(ultimaMatricula);
-			matricula = String.valueOf(lMatricula + 1l);
+			matricula = String.format("%09d", (lMatricula + 1l));
 		}
 		return matricula;
 
