@@ -3,6 +3,7 @@
 	<persistence-unit name="alternativowebPU">
 	 <description>br.com.futuro.alternativo-web-application Mapeamento JPA</description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>app.model.Usuario</class>
         <class>app.model.Aluno</class>
         <class>app.model.Disciplina</class>
         <class>app.model.Documento</class>
