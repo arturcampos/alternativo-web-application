@@ -29,7 +29,7 @@ public class UsuarioDAO {
 			}
 
 		} catch (NoResultException e) {
-			System.out.println("Login error -->" + e.getMessage());  
+			System.out.println("Login error -->" + e.getMessage());
 			return false;
 		}
 		return false;

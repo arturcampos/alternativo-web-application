@@ -29,7 +29,7 @@ import javax.faces.application.FacesMessage.Severity;
 @FacesRenderer(componentFamily="javax.faces.Messages", rendererType="javax.faces.Messages")
 public class BootstrapMessagesRenderer extends MessagesRenderer {
 
-    private static final Attribute[] ATTRIBUTES = 
+    private static final Attribute[] ATTRIBUTES =
             AttributeManager.getAttributes(AttributeManager.Key.MESSAGESMESSAGES);
 
     @Override
@@ -103,7 +103,7 @@ public class BootstrapMessagesRenderer extends MessagesRenderer {
         }
     }
 
-    private void encodeSeverityMessages(FacesContext facesContext, UIMessages uiMessages, 
+    private void encodeSeverityMessages(FacesContext facesContext, UIMessages uiMessages,
                                         Severity severity, List<FacesMessage> messages) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String alertSeverityClass = "";
@@ -147,7 +147,7 @@ public class BootstrapMessagesRenderer extends MessagesRenderer {
             writer.endElement("div");*/
             if (uiMessages.isShowSummary()) {
                 writer.startElement("strong", uiMessages);
-                writer.writeText(summary, uiMessages, null);
+                writer.writeText(" "+summary, uiMessages, null);
                 writer.endElement("strong");
             }
 
