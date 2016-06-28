@@ -17,10 +17,10 @@ import javax.persistence.Table;
 
 /**
  * The persistent class for the disciplina database table.
- * 
+ *
  */
 @Entity
-@Table(name="Disciplina", schema="futurodb")
+@Table(name="disciplina", schema="futurodb")
 @NamedQuery(name="Disciplina.findAll", query="SELECT d FROM Disciplina d")
 public class Disciplina implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -16,10 +16,10 @@ import javax.persistence.Table;
 
 /**
  * The persistent class for the turma database table.
- * 
+ *
  */
 @Entity
-@Table(name="Turma", schema="futurodb")
+@Table(name="turma", schema="futurodb")
 @NamedQuery(name="Turma.findAll", query="SELECT t FROM Turma t")
 public class Turma implements Serializable {
 	private static final long serialVersionUID = 1L;

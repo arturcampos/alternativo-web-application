@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name = "Plastico", schema = "futurodb")
+@Table(name = "plastico", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Plastico.findAll", query = "SELECT p FROM Plastico p"),
 		@NamedQuery(name = "Plastico.findByPersonId", query = "SELECT p FROM Plastico p WHERE p.pessoa.id = :wantedId") })
 public class Plastico implements Serializable {

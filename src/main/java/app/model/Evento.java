@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name="Evento", schema="futurodb")
+@Table(name="evento", schema="futurodb")
 @NamedQueries({
 @NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e"),
 @NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status"),

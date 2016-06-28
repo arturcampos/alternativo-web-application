@@ -38,7 +38,7 @@
 								<h:panelGrid columns="3" cellpadding="5"
 									style="margin-bottom:10px">
 									<p:inputText id="input-matricula" value="#{matricula}"
-										required="true" styleClass="form-control" placeholder="Número da matrícula"/><p:commandButton
+										required="true" styleClass="form-control" placeholder="Número da matrícula"/><h:commandButton
 										action="#{alunoBean.buscarPorMatricula(matricula)}" value="Buscar"
 										process="@this, matricula-form" styleClass="btn btn-info"/>
 								</h:panelGrid>
@@ -72,8 +72,8 @@
 												<f:convertDateTime pattern="dd/MM/yyyy"/>
 											</h:outputText> </td>
 											<td><h:commandLink
-													action="#{alunoBean.remover(aluno.id)}" type="submit"
-													process="@form" class="glyphicon glyphicon-trash"
+													action="#{alunoBean.remover(aluno)}" type="submit"
+													process="@this @form" class="glyphicon glyphicon-trash"
 													immediate="true"> Deletar</h:commandLink></td>
 										</tr>
 									</ui:repeat>

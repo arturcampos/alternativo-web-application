@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 
 import app.dao.AlunoDao;
@@ -47,7 +48,7 @@ public class AlunoBean implements Serializable {
 	private String enderecoTab;
 	private Plastico plastico;
 	private DefaultStreamedContent reportStream;
-
+	private static Logger logger = Logger.getLogger(AlunoBean.class);
 	@ManagedProperty(value = "#{documentoBean}")
 	private DocumentoBean documentoBean;
 
@@ -59,7 +60,7 @@ public class AlunoBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		System.out.println("init");
+		logger.info("Inicializando AlunoBean");
 		if (this.dao == null) {
 			this.dao = new AlunoDao(Aluno.class);
 		}
@@ -82,25 +83,32 @@ public class AlunoBean implements Serializable {
 	 * @return the action to go to save student after create in data base
 	 */
 	public String salvar() {
+		logger.info("Gravando informações do aluno");
 		try {
 			if (this.documentos.size() > 0) {
 				this.pessoa.setTipopessoa(TipoPessoa.ALUNO.toString());
 
-				// adicionando documentos Ã  pessoa
+				logger.info("Vinculando documentos a pessoa");
+				// adicionando documentos a  pessoa
 				this.pessoa.setDocumentos(this.documentos);
 				vincularDocumento(this.pessoa, this.documentos);
+				logger.info("Documentos vinculados");
 			} else {
 				// Se não houver documentos cadastrado retorna um aviso
-				warn("Ã‰ necessário cadastrar pelo menos 1 (UM) documento");
+				logger.warn("Lista de documentos vazia: É‰ necessário cadastrar pelo menos 1 (UM) documento");
+				warn("É‰ necessário cadastrar pelo menos 1 (UM) documento");
 				return "salvarAluno?faces-redirect=true";
 			}
 
 			if (this.enderecos.size() > 0) {
 				// adicionando endereço pessoa
+				logger.info("Vinculando Endereços a pessoa");
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
+				logger.info("Endereços vinculados");
 			} else {
 				// Se não houver endereços cadastrado retorna um aviso
+				logger.warn("Lista de endereços vazia: É‰ necessário cadastrar pelo menos 1 (UM) endereço");
 				warn("É‰ necessário cadastrar pelo menos 1 (UM) endereço");
 				return "salvarAluno?faces-redirect=true";
 			}
@@ -175,10 +183,11 @@ public class AlunoBean implements Serializable {
 	 * @param id
 	 * @return
 	 */
-	public String remover(Long id) {
+	public String remover(Aluno aluno) {
 		try {
-			this.aluno = this.dao.findById(id);
+
 			if (this.alunos != null && !this.alunos.isEmpty()) {
+				this.aluno = aluno;
 				this.aluno.setStatus(Status.INATIVO.toString());
 				this.dao.update(this.aluno);
 				this.alunos.remove(this.aluno);

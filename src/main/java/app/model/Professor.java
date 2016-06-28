@@ -20,7 +20,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="Professor", schema="futurodb")
+@Table(name="professor", schema="futurodb")
 @NamedQueries({
 @NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p"),
 @NamedQuery(name="Professor.findByName", query="SELECT p FROM Professor p WHERE p.pessoa.nome LIKE :nome")})

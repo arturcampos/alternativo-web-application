@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Usuario", schema="futurodb")
+@Table(name="usuario", schema="futurodb")
 public class Usuario {
 
       @Id
