@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name = "Documento", schema = "futurodb")
+@Table(name = "documento", schema = "futurodb")
 
 @NamedQueries({
 	@NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d"),
