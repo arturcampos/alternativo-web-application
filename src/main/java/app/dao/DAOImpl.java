@@ -16,7 +16,7 @@ import app.util.JpaUtil;
  * @author artur.rodrigues
  *
  */
-public class DaoImpl<T> implements Dao<T> {
+public class DAOImpl<T> implements IDAO<T> {
 
 	protected EntityManager entitymanager;
 	protected Class<T> classe;
@@ -25,10 +25,10 @@ public class DaoImpl<T> implements Dao<T> {
 	 * 
 	 * @param clazz
 	 */
-	public DaoImpl(Class<T> clazz) {
+	public DAOImpl(Class<T> clazz) {
 		this.classe = clazz;
 
-		synchronized (DaoImpl.class) {
+		synchronized (DAOImpl.class) {
 			if (entitymanager == null) {
 				entitymanager = JpaUtil.getEntityManager();
 			}
@@ -36,7 +36,7 @@ public class DaoImpl<T> implements Dao<T> {
 	}
 
 	/**
-	 * @param obj - Objeto do tipo genérico
+	 * @param obj - Objeto do tipo genï¿½rico
 	 */
 	public void save(T obj) {
 		EntityTransaction tx = entitymanager.getTransaction();
@@ -87,7 +87,7 @@ public class DaoImpl<T> implements Dao<T> {
 	}
 	
 	/**
-	 * @param obj - objeto tipo genérico
+	 * @param obj - objeto tipo genï¿½rico
 	 */
 	
 	public void update(T obj) {

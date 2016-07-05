@@ -45,13 +45,15 @@
 				<ul class="user-menu">
 					<li class="dropdown pull-right"><a href="#"
 						class="dropdown-toggle" data-toggle="dropdown"><span
-							class="glyphicon glyphicon-user"></span> Admin <span
+							class="glyphicon glyphicon-user"></span> <h:outputText value=" #{LoginBean.usuario.nomeUsuario}" /> <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#"><i class="glyphicon glyphicon-user"></i>
 									Perfil</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-wrench"></i>
 									Configurações</a></li>
+							<li><h:commandLink action="/salvarUsuario?faces-redirect=true" type="submit"><i class="glyphicon glyphicon-tower"></i>
+									Usuarios</h:commandLink></li>
 							<li><h:commandLink action="#{LoginBean.logout()}" ><i class="glyphicon glyphicon-log-out"></i>
 									Sair</h:commandLink></li>
 						</ul></li>

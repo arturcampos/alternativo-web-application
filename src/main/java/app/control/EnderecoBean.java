@@ -10,26 +10,27 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import app.dao.EnderecoDao;
+import app.dao.EnderecoDAO;
 import app.model.Endereco;
 import app.model.Pessoa;
 
-@ManagedBean
+@ManagedBean(name="enderecoBean")
 @SessionScoped
 public class EnderecoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private EnderecoDao dao;
+	private EnderecoDAO dao;
 	private Endereco endereco;
 	private List<Endereco> enderecos;
 	private Pessoa pessoa;
 	private Endereco enderecoAnterior;
 	private boolean editado;
+	private String tipoPessoa;
 
 	@PostConstruct
 	public void init() {
 		if (dao == null) {
-			dao = new EnderecoDao(Endereco.class);
+			dao = new EnderecoDAO(Endereco.class);
 		}
 		this.endereco = new Endereco();
 		this.enderecos = new ArrayList<Endereco>();
@@ -48,7 +49,7 @@ public class EnderecoBean implements Serializable {
 		if (this.endereco != null) {
 			info("Sucesso");
 		} else {
-			warn("Documetno não encotnrado");
+			warn("Documetno nï¿½o encotnrado");
 		}
 		return "listarEndereco?faces-redirect=true";
 	}
@@ -60,14 +61,14 @@ public class EnderecoBean implements Serializable {
 	 */
 	public String remover(Long id) {
 		if (this.enderecos.size() == 1) {
-			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um endereco. Operação não permitida.");
+			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um endereco. Operaï¿½ï¿½o nï¿½o permitida.");
 		} else {
 			Endereco doc = this.dao.remove(id);
 			if (!doc.equals(null)) {
 				this.enderecos.remove(doc);
 				info(doc.getTipo() + " removido com suecsso.");
 			} else {
-				warn("endereco não encontrado na base de dados, favor verificar novamente na lista.");
+				warn("endereco nï¿½o encontrado na base de dados, favor verificar novamente na lista.");
 			}
 		}
 
@@ -86,7 +87,7 @@ public class EnderecoBean implements Serializable {
 			this.editado = true;
 			return "atualizarEndereco?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualização de dados do endereco");
+			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do endereco");
 			return "listarEndereco?faces-redirect=true";
 		}
 	}
@@ -106,7 +107,7 @@ public class EnderecoBean implements Serializable {
 			this.enderecoAnterior = new Endereco();
 			return "listarEndereco?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informações!");
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizarEndereco?faces-redirect=true";
 		}
 	}
@@ -123,7 +124,7 @@ public class EnderecoBean implements Serializable {
 	public String atualizarEnderecos(Pessoa pessoa) {
 		this.pessoa = pessoa;
 		this.enderecos = pessoa.getEnderecos();
-
+		this.setTipoPessoa(pessoa.getTipopessoa());
 		if (this.enderecos.isEmpty() || this.enderecos == null) {
 			warn("Nenhum endereco encontrado para " + pessoa.getNome());
 		}
@@ -142,11 +143,11 @@ public class EnderecoBean implements Serializable {
 		return "listarEndereco?faces-redirect=true";
 	}
 
-	public EnderecoDao getDao() {
+	public EnderecoDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(EnderecoDao dao) {
+	public void setDao(EnderecoDAO dao) {
 		this.dao = dao;
 	}
 
@@ -182,6 +183,15 @@ public class EnderecoBean implements Serializable {
 		this.editado = editado;
 	}
 
+	public String getTipoPessoa(){
+		return this.tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+
 	/**
 	 *
 	 * @param message
@@ -197,7 +207,7 @@ public class EnderecoBean implements Serializable {
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!", message));
 	}
 
 	/**

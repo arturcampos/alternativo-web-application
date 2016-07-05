@@ -4,9 +4,9 @@ import java.util.List;
 
 import app.model.Documento;
 
-public class DocumentoDao extends DaoImpl<Documento> {
+public class DocumentoDAO extends DAOImpl<Documento> {
 
-	public DocumentoDao(Class<Documento> clazz) {
+	public DocumentoDAO(Class<Documento> clazz) {
 		super(clazz);
 	}
 

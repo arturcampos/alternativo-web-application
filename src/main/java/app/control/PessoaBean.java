@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import app.dao.PessoaDao;
+import app.dao.PessoaDAO;
 import app.model.Pessoa;
 
 public class PessoaBean implements Serializable {
@@ -17,7 +17,7 @@ public class PessoaBean implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private PessoaDao dao = null;
+	private PessoaDAO dao = null;
 	private Pessoa pessoa;
 	private Pessoa pessoaAnterior = null;
 	private List<Pessoa> pessoaLista;
@@ -27,7 +27,7 @@ public class PessoaBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		if (this.dao == null) {
-			this.dao = new PessoaDao(Pessoa.class);
+			this.dao = new PessoaDAO(Pessoa.class);
 		}
 		this.pessoaLista = new ArrayList<Pessoa>();
 		this.pessoa = new Pessoa();
@@ -40,10 +40,10 @@ public class PessoaBean implements Serializable {
 			this.dao.save(this.pessoa);
 			this.pessoaLista.add(this.pessoa);
 			pessoa = new Pessoa();
-			info("Informações salvas com sucesso");
+			info("Informaï¿½ï¿½es salvas com sucesso");
 			return "salvar";
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
 			return "salvar";
 		}
 	}
@@ -130,11 +130,11 @@ public class PessoaBean implements Serializable {
 		this.pessoaAnterior = pessoaAnterior;
 	}
 
-	public PessoaDao getDao() {
+	public PessoaDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(PessoaDao dao) {
+	public void setDao(PessoaDAO dao) {
 		this.dao = dao;
 	}
 

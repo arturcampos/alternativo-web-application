@@ -1,28 +1,27 @@
 package app.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
 
 import app.model.Usuario;
 
-public class UsuarioDAO {
+public class UsuarioDAO extends DAOImpl<Usuario>{
 
-	private EntityManagerFactory factory = Persistence
-			.createEntityManagerFactory("alternativowebPU");
-	private EntityManager em = factory.createEntityManager();
+	private static Logger logger = Logger.getLogger(UsuarioDAO.class);
 
-	public boolean ValidaUsuario(String nomeUsuario, String senha) {
+	public UsuarioDAO(Class<Usuario> clazz) {
+		super(clazz);
+	}
 
+	public boolean validateUser(String nomeUsuario, String senha) {
 		try {
-			Usuario usuario = (Usuario) em
-					.createQuery(
-							"SELECT u from Usuario u where u.nomeUsuario = :name and u.senha = :senha")
-					.setParameter("name", nomeUsuario)
-					.setParameter("senha", senha).getSingleResult();
+			Usuario usuario = (Usuario) entitymanager
+					.createQuery("SELECT u from Usuario u where u.nomeUsuario = :name and u.senha = :senha")
+					.setParameter("name", nomeUsuario).setParameter("senha", senha).getSingleResult();
 
-			if( usuario.getNomeUsuario() != null && usuario.getSenha() != null ) {
+			if (usuario.getNomeUsuario() != null && usuario.getSenha() != null) {
 
 				return true;
 
@@ -30,15 +29,16 @@ public class UsuarioDAO {
 
 		} catch (NoResultException e) {
 			System.out.println("Login error -->" + e.getMessage());
+			logger.error("Login error -->" + e.getMessage(), e);
 			return false;
 		}
 		return false;
 
 	}
 
-	public boolean inserirUsuario(Usuario usuario) {
+	public boolean save2(Usuario usuario) {
 		try {
-			em.persist(usuario);
+			entitymanager.persist(usuario);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,13 +46,24 @@ public class UsuarioDAO {
 		}
 	}
 
-	public boolean deletarUsuario(Usuario usuario) {
+	public boolean delete2(Usuario usuario) {
 		try {
-			em.remove(usuario);
+			entitymanager.remove(usuario);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	public Usuario findByName(String name) {
+		Query query = entitymanager.createNamedQuery("Usuario.findByName", Usuario.class)
+				.setParameter("name", name);
+		try {
+			return (Usuario) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

@@ -2,9 +2,9 @@ package app.dao;
 
 import app.model.Endereco;
 
-public class EnderecoDao extends DaoImpl<Endereco> {
+public class EnderecoDAO extends DAOImpl<Endereco> {
 
-	public EnderecoDao(Class<Endereco> clazz) {
+	public EnderecoDAO(Class<Endereco> clazz) {
 		super(clazz);
 	}
 

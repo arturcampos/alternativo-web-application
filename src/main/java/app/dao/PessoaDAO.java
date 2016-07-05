@@ -2,9 +2,9 @@ package app.dao;
 
 import app.model.Pessoa;
 
-public class PessoaDao extends DaoImpl<Pessoa> {
+public class PessoaDAO extends DAOImpl<Pessoa> {
 
-	public PessoaDao(Class<Pessoa> clazz) {
+	public PessoaDAO(Class<Pessoa> clazz) {
 		super(clazz);
 	}
 }

@@ -2,9 +2,9 @@ package app.dao;
 
 import app.model.Disciplina;
 
-public class DisciplinaDao extends DaoImpl<Disciplina> {
+public class DisciplinaDAO extends DAOImpl<Disciplina> {
 
-	public DisciplinaDao(Class<Disciplina> clazz) {
+	public DisciplinaDAO(Class<Disciplina> clazz) {
 		super(clazz);
 	}
 

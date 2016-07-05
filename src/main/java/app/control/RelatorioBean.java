@@ -105,7 +105,7 @@ public class RelatorioBean implements Serializable {
 	 * @param nomeRelatorio
 	 */
 	public void relatorioAlunoSimples(String nomeRelatorio) {
-		System.out.println("Entrou no relatório simples");
+		System.out.println("Entrou no relatï¿½rio simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
@@ -169,7 +169,7 @@ public class RelatorioBean implements Serializable {
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível criar o relatório");
+				error("Nï¿½o foi possï¿½vel criar o relatï¿½rio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
@@ -207,8 +207,8 @@ public class RelatorioBean implements Serializable {
 	}
 
 	/**
-	 * Relatï¿½rio de faltas cometidas por entrar no segundo horário ou sair
-	 * antes do horário final
+	 * Relatï¿½rio de faltas cometidas por entrar no segundo horï¿½rio ou sair
+	 * antes do horï¿½rio final
 	 */
 	public void relatorioFaltaHorarios() {
 		System.out.println("Entrou no relatï¿½rio simples");
@@ -262,22 +262,22 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Código abaixo gerar o relatório e disponibiliza diretamente na
-			// página
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
+			// pï¿½gina
 			res.setHeader("Content-disposition", "inline;filename=faltas_x_horarios.pdf");
-			// Cï¿½digo abaixo gerar o relatório e disponibiliza para o cliente
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível cirar o relatório");
+				error("Nï¿½o foi possï¿½vel cirar o relatï¿½rio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatório simples");
+			System.out.println("Saiu do relatï¿½rio simples");
 		} catch (DRException e) {
 			error(e.getMessage());
 		}
@@ -310,7 +310,7 @@ public class RelatorioBean implements Serializable {
 	 *            - the date to have search present list
 	 */
 	public void relatorioPresencaPorData(Date data) {
-		System.out.println("Entrou no relatório presença");
+		System.out.println("Entrou no relatï¿½rio presenï¿½a");
 		String dataTmp = null;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -347,7 +347,7 @@ public class RelatorioBean implements Serializable {
 					// .highlightDetailEvenRows()
 					.title(// shows report title
 							cmp.horizontalList()
-									.add(cmp.text("Lista de presença " + dataTmp)
+									.add(cmp.text("Lista de presenï¿½a " + dataTmp)
 											.setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
 											cmp.text("Futuro-Alternativo").setStyle(titleStyle)
 													.setHorizontalAlignment(HorizontalAlignment.RIGHT))
@@ -365,24 +365,24 @@ public class RelatorioBean implements Serializable {
 					.toPdf(baos);
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// Cï¿½digo abaixo gerar o relatório e disponibiliza diretamente na
+			// Cï¿½digo abaixo gerar o relatï¿½rio e disponibiliza diretamente na
 			// pï¿½gina
-			res.setHeader("Content-disposition", "inline;filename=Lista de presença.pdf");
-			// CÃ³digo abaixo gerar o relatório e disponibiliza para o cliente
+			res.setHeader("Content-disposition", "inline;filename=Lista de presenï¿½a.pdf");
+			// CÃ³digo abaixo gerar o relatï¿½rio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("Não foi possível criar o relatório: " + e.getMessage());
+				error("Nï¿½o foi possï¿½vel criar o relatï¿½rio: " + e.getMessage());
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relatório presença");
+			System.out.println("Saiu do relatï¿½rio presenï¿½a");
 		} catch (DRException e) {
-			error("Não foi possível criar o relatório: " + e.getMessage());
+			error("Nï¿½o foi possï¿½vel criar o relatï¿½rio: " + e.getMessage());
 		}
 
 	}
@@ -405,7 +405,7 @@ public class RelatorioBean implements Serializable {
 				}
 			}
 
-			// Definindo presença ou falta
+			// Definindo presenï¿½a ou falta
 			String presenca = null;
 			this.eventoBean.buscarPorPessoaEData(aluno.getPessoa(), data);
 			if (this.eventoBean.getEventos().isEmpty() || this.eventoBean.getEventos() == null) {

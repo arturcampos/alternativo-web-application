@@ -6,9 +6,9 @@ import javax.persistence.Query;
 
 import app.model.Professor;
 
-public class ProfessorDao extends DaoImpl<Professor> {
+public class ProfessorDAO extends DAOImpl<Professor> {
 
-	public ProfessorDao(Class<Professor> clazz) {
+	public ProfessorDAO(Class<Professor> clazz) {
 		super(clazz);
 	}
 

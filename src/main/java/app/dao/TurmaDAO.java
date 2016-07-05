@@ -2,9 +2,9 @@ package app.dao;
 
 import app.model.Turma;
 
-public class TurmaDao extends DaoImpl<Turma> {
+public class TurmaDAO extends DAOImpl<Turma> {
 
-	public TurmaDao(Class<Turma> clazz) {
+	public TurmaDAO(Class<Turma> clazz) {
 		super(clazz);
 	}
 

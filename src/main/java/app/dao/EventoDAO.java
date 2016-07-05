@@ -9,9 +9,9 @@ import javax.persistence.Query;
 import app.model.Evento;
 import app.model.Pessoa;
 
-public class EventoDao extends DaoImpl<Evento> {
+public class EventoDAO extends DAOImpl<Evento> {
 
-	public EventoDao(Class<Evento> clazz) {
+	public EventoDAO(Class<Evento> clazz) {
 		super(clazz);
 	}
 
