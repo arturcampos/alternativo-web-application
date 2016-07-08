@@ -49,6 +49,7 @@ public class AlunoBean implements Serializable {
 	private Plastico plastico;
 	private DefaultStreamedContent reportStream;
 	private static Logger logger = Logger.getLogger(AlunoBean.class);
+
 	@ManagedProperty(value = "#{documentoBean}")
 	private DocumentoBean documentoBean;
 
@@ -197,12 +198,23 @@ public class AlunoBean implements Serializable {
 			logger.info("Removendo aluno");
 			if (this.alunos != null && !this.alunos.isEmpty()) {
 				this.aluno = aluno;
-				logger.info("Alterando o status para INATIVO");
+				logger.info("Alterando o status do aluno para INATIVO");
 				this.aluno.setStatus(Status.INATIVO.toString());
+
+				this.plastico = this.aluno.getPessoa().getPlasticos().get(0);
+				if (this.plastico == null) {
+					logger.info("Buscando plastico vinculado ao aluno");
+					this.plastico = plasticoBean.buscarPorPessoaId(aluno.getPessoa().getId());
+				}
+				logger.info("Alterando o status do plastico vinculado ao aluno para INATIVO");
+				this.plastico.setStatus(Status.INATIVO.toString());
+				plasticoBean.atualizar(this.plastico);
+
 				this.dao.update(this.aluno);
 				this.alunos.remove(this.aluno);
 				logger.info("Aluno removido: " + this.aluno.getPessoa().getNome());
 				info("Aluno removido: " + this.aluno.getPessoa().getNome());
+				this.plastico = new Plastico();
 				this.aluno = new Aluno();
 			} else {
 				logger.warn(
@@ -357,6 +369,7 @@ public class AlunoBean implements Serializable {
 		try {
 			this.aluno = aluno.clone();
 			this.alunoAnterior = aluno;
+			this.plastico = aluno.getPessoa().getPlasticos().get(0);
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
@@ -372,17 +385,30 @@ public class AlunoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			logger.info("Atualizando aluno");
+			this.plastico.setLinhaDigitavel(aluno.getMatricula());
+
+
+
 			this.dao.update(this.aluno);
+
+			logger.info("Atualizando número do cartão");
+			this.plasticoBean.atualizar(this.plastico);
+
 			this.alunos.remove(this.alunoAnterior);
 			this.alunos.add(this.aluno);
+			aluno.getPessoa().getPlasticos().clear();
+			aluno.getPessoa().getPlasticos().add(this.plastico);
 			this.editado = false;
+
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			logger.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
+
 			this.aluno = new Aluno();
 			this.alunoAnterior = new Aluno();
+			this.plastico = new Plastico();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			logger.error("Erro ao atualizar as informacoes",  e);
+			logger.error("Erro ao atualizar as informacoes", e);
 			error("Erro ao atualizar as informacoes: " + e.getMessage());
 			return "atualizarAluno?faces-redirect=true";
 		}
@@ -444,7 +470,7 @@ public class AlunoBean implements Serializable {
 				this.alunos.clear();
 			}
 			Long matriculaL = Long.parseLong(matricula);
-			String matriculaS = String.format("%09d", matriculaL);
+			String matriculaS = String.format("%06d", matriculaL);
 			Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
 			if (aluno != null) {
 				this.aluno = aluno.clone();

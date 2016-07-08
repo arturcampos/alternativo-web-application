@@ -9,9 +9,7 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import app.model.Aluno;
 import app.model.Documento;
-import app.util.DateUtil;
 import app.util.Status;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
