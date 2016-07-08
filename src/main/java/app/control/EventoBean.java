@@ -1,6 +1,6 @@
 package app.control;
 
-import java.text.ParseException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,22 +10,26 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import app.dao.EventoDao;
+import app.dao.EventoDAO;
 import app.model.Evento;
 import app.model.Pessoa;
 
-@ManagedBean
+@ManagedBean(name="eventoBean")
 @SessionScoped
-public class EventoBean {
+public class EventoBean implements Serializable {
 
-	private EventoDao dao;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private EventoDAO dao;
 	private Evento evento;
 	private List<Evento> eventos;
 
 	@PostConstruct
 	public void init() {
 		if (dao == null) {
-			dao = new EventoDao(Evento.class);
+			dao = new EventoDAO(Evento.class);
 		}
 		evento = new Evento();
 		eventos = new ArrayList<Evento>();
@@ -51,11 +55,11 @@ public class EventoBean {
 		return this.dao.findAll();
 	}
 
-	public EventoDao getDao() {
+	public EventoDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(EventoDao dao) {
+	public void setDao(EventoDAO dao) {
 		this.dao = dao;
 	}
 

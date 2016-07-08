@@ -6,19 +6,19 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import app.dao.TurmaDao;
+import app.dao.TurmaDAO;
 import app.model.Turma;
 
 @ManagedBean
 @RequestScoped
 public class TurmaBean {
-	TurmaDao dao;
+	TurmaDAO dao;
 	Turma turma;
 	List<Turma> turmas;
 
 	@PostConstruct
 	public void init() {
-		dao = new TurmaDao(Turma.class);
+		dao = new TurmaDAO(Turma.class);
 	}
 
 	public void salvar(Turma turma) {
@@ -41,11 +41,11 @@ public class TurmaBean {
 		return this.dao.findAll();
 	}
 
-	public TurmaDao getDao() {
+	public TurmaDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(TurmaDao dao) {
+	public void setDao(TurmaDAO dao) {
 		this.dao = dao;
 	}
 

@@ -12,7 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import app.dao.PlasticoDao;
+import app.dao.PlasticoDAO;
 import app.model.Aluno;
 import app.model.Pessoa;
 import app.model.Plastico;
@@ -26,7 +26,7 @@ public class PlasticoBean implements Serializable{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private PlasticoDao dao;
+	private PlasticoDAO dao;
 	private Plastico plastico;
 	private Plastico plasticoAnterior;
 	private List<Plastico> plasticos;
@@ -37,7 +37,7 @@ public class PlasticoBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		if (this.dao == null) {
-			this.dao = new PlasticoDao(Plastico.class);
+			this.dao = new PlasticoDAO(Plastico.class);
 		}
 		this.plastico = new Plastico();
 		this.plasticoAnterior = new Plastico();
@@ -54,7 +54,7 @@ public class PlasticoBean implements Serializable{
 		} else if (professor != null) {
 			this.pessoa = professor.getPessoa();
 		} else {
-			warn("Não é possível cadastrar um cartão.\nDúvidas, entre em contato com o Administrador do sistema.");
+			warn("Nï¿½o ï¿½ possï¿½vel cadastrar um cartï¿½o.\nDï¿½vidas, entre em contato com o Administrador do sistema.");
 			retorno = null;
 		}
 		this.tipoPessoa = this.pessoa.getTipopessoa();
@@ -80,9 +80,9 @@ public class PlasticoBean implements Serializable{
 			else
 				retorno = null;
 
-			info("Cartão cadastrado com sucesso.");
+			info("Cartï¿½o cadastrado com sucesso.");
 		} catch (Exception e) {
-			error("Erro ao cadastrar dados do cartão: " + e.getMessage());
+			error("Erro ao cadastrar dados do cartï¿½o: " + e.getMessage());
 		}
 		return retorno;
 	}
@@ -107,11 +107,11 @@ public class PlasticoBean implements Serializable{
 		return this.dao.findAll();
 	}
 
-	public PlasticoDao getDao() {
+	public PlasticoDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(PlasticoDao dao) {
+	public void setDao(PlasticoDAO dao) {
 		this.dao = dao;
 	}
 

@@ -6,20 +6,20 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import app.dao.DisciplinaDao;
+import app.dao.DisciplinaDAO;
 import app.model.Disciplina;
 
 @ManagedBean
 @RequestScoped
 public class DisciplinaBean {
 
-	DisciplinaDao dao;
+	DisciplinaDAO dao;
 	Disciplina disciplina;
 	List<Disciplina> disciplinas;
 
 	@PostConstruct
 	public void init() {
-		dao = new DisciplinaDao(Disciplina.class);
+		dao = new DisciplinaDAO(Disciplina.class);
 	}
 
 	public void salvar(Disciplina disciplina) {
@@ -42,11 +42,11 @@ public class DisciplinaBean {
 		return this.dao.findAll();
 	}
 
-	public DisciplinaDao getDao() {
+	public DisciplinaDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(DisciplinaDao dao) {
+	public void setDao(DisciplinaDAO dao) {
 		this.dao = dao;
 	}
 

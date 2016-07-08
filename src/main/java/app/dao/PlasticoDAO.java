@@ -5,9 +5,9 @@ import javax.persistence.Query;
 
 import app.model.Plastico;
 
-public class PlasticoDao extends DaoImpl<Plastico> {
+public class PlasticoDAO extends DAOImpl<Plastico> {
 
-	public PlasticoDao(Class<Plastico> clazz) {
+	public PlasticoDAO(Class<Plastico> clazz) {
 		super(clazz);
 	}
 

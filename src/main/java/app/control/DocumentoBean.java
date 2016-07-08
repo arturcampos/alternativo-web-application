@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import app.dao.DocumentoDao;
+import app.dao.DocumentoDAO;
 import app.model.Documento;
 import app.model.Pessoa;
 
@@ -19,7 +19,7 @@ import app.model.Pessoa;
 public class DocumentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DocumentoDao dao;
+	private DocumentoDAO dao;
 	private Documento documento;
 	private List<Documento> documentos;
 	private Pessoa pessoa;
@@ -31,7 +31,7 @@ public class DocumentoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		if (dao == null) {
-			dao = new DocumentoDao(Documento.class);
+			dao = new DocumentoDAO(Documento.class);
 		}
 		this.documento = new Documento();
 		this.documentos = new ArrayList<Documento>();
@@ -48,7 +48,7 @@ public class DocumentoBean implements Serializable {
 		if (this.documento != null) {
 			info("Sucesso");
 		} else {
-			warn("Documetno não encotnrado");
+			warn("Documetno nï¿½o encotnrado");
 		}
 		return "listarDocumento?faces-redirect=true";
 	}
@@ -60,7 +60,7 @@ public class DocumentoBean implements Serializable {
 	 */
 	public String remover(Long id) {
 		if(this.documentos.size() == 1){
-			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um documento. Operação não permitida.");
+			error(pessoa.getTipopessoa() + " precisa possuir pelo menos um documento. Operaï¿½ï¿½o nï¿½o permitida.");
 		}
 		else{
 			Documento doc = this.dao.remove(id);
@@ -69,7 +69,7 @@ public class DocumentoBean implements Serializable {
 				info(doc.getTipo() + " removido com suecsso.");
 			}
 			else{
-				warn("documento não encontrado na base de dados, favor verificar novamente na lista.");
+				warn("documento nï¿½o encontrado na base de dados, favor verificar novamente na lista.");
 			}
 		}
 
@@ -88,7 +88,7 @@ public class DocumentoBean implements Serializable {
 			this.editado = true;
 			return "atualizarDocumento?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualização de dados do documento");
+			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do documento");
 			return "listarDocumento?faces-redirect=true";
 		}
 	}
@@ -108,7 +108,7 @@ public class DocumentoBean implements Serializable {
 			this.documentoAnterior = new Documento();
 			return "listarDocumento?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informações!");
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizarDocumento?faces-redirect=true";
 		}
 	}
@@ -147,11 +147,11 @@ public class DocumentoBean implements Serializable {
 		return "listarDocumento?faces-redirect=true";
 	}
 
-	public DocumentoDao getDao() {
+	public DocumentoDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(DocumentoDao dao) {
+	public void setDao(DocumentoDAO dao) {
 		this.dao = dao;
 	}
 
@@ -206,6 +206,7 @@ public class DocumentoBean implements Serializable {
 	/**
 	 *
 	 * @param message
+	 *
 	 */
 	public void info(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
@@ -215,15 +216,17 @@ public class DocumentoBean implements Serializable {
 	/**
 	 *
 	 * @param message
+	 *
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atencaoo!", message));
 	}
 
 	/**
 	 *
 	 * @param message
+	 *
 	 */
 	public void error(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,

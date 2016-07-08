@@ -10,7 +10,7 @@ import java.util.List;
  * @author artur.rodrigues
  *
  */
-public interface Dao<T> {
+public interface IDAO<T> {
 
 	public void save(T obj);
 	public T remove(Serializable id);

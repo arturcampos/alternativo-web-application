@@ -3,10 +3,12 @@ package app.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="usuario", schema="futurodb")
+@NamedQuery(name="Usuario.findByName", query="SELECT u from Usuario u where u.nomeUsuario = :name")
 public class Usuario {
 
       @Id
@@ -19,7 +21,8 @@ public class Usuario {
       @Column(name="senha", nullable=false, unique=false)
       private String senha;
 
-      public String getNomeUsuario() {
+
+	public String getNomeUsuario() {
             return nomeUsuario;
       }
 

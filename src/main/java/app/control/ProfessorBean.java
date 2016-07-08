@@ -10,8 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import app.dao.ProfessorDao;
-import app.model.Aluno;
+import app.dao.ProfessorDAO;
 import app.model.Documento;
 import app.model.Endereco;
 import app.model.Pessoa;
@@ -24,7 +23,7 @@ public class ProfessorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ProfessorDao dao;
+	private ProfessorDAO dao;
 	private Professor professor;
 	private Pessoa pessoa;
 	private List<Documento> documentos;
@@ -45,9 +44,9 @@ public class ProfessorBean implements Serializable {
 	public void init() {
 		System.out.println("init");
 		if (this.dao == null) {
-			this.dao = new ProfessorDao(Professor.class);
+			this.dao = new ProfessorDAO(Professor.class);
 		}
-		this.dao = new ProfessorDao(Professor.class);
+		this.dao = new ProfessorDAO(Professor.class);
 		this.professors = new ArrayList<Professor>();
 		this.professor = new Professor();
 		this.pessoa = new Pessoa();
@@ -70,26 +69,26 @@ public class ProfessorBean implements Serializable {
 
 			this.pessoa.setTipopessoa(TipoPessoa.PROFESSOR.toString());
 
-			// adicionando documentos à pessoa
+			// adicionando documentos ï¿½ pessoa
 			this.pessoa.setDocumentos(this.documentos);
 			vincularDocumento(this.pessoa, this.documentos);
 
-			// adicionando endereço pessoa
+			// adicionando endereï¿½o pessoa
 			this.pessoa.setEnderecos(this.enderecos);
 			vincularEndereco(this.pessoa, this.enderecos);
 
-			// adicionando pessoa à professors
+			// adicionando pessoa ï¿½ professors
 			this.professor.setPessoa(this.pessoa);
 
 			// executando metod DAO para salvar professor
 			this.dao.save(this.professor);
 			Professor novoProfessor = this.professor.clone();
-			info("Informações salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome());
+			info("Informaï¿½ï¿½es salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome());
 			init();
 			this.professors.add(novoProfessor);
 			return "listarProfessor?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao Salvar informações: " + e.getMessage());
+			error("Erro ao Salvar informaï¿½ï¿½es: " + e.getMessage());
 			return "listarProfessor?faces-redirect=true";
 		}
 	}
@@ -111,7 +110,7 @@ public class ProfessorBean implements Serializable {
 			if (this.professor != null) {
 				info("Professor encontrado: " + this.professor.getPessoa().getNome());
 			} else {
-				warn("Professor não encontrado!");
+				warn("Professor nï¿½o encontrado!");
 			}
 			return "atualizarProfessor?faces-redirect=true";
 		} catch (Exception e) {
@@ -125,10 +124,10 @@ public class ProfessorBean implements Serializable {
 	 * @param id
 	 * @return
 	 */
-	public String remover(Long id) {
+	public String remover(Professor professor) {
 		try {
-			this.professor = this.dao.findById(id);
 			if (this.professors != null && !this.professors.isEmpty()) {
+				this.professor = professor;
 				this.dao.remove(this.professor.getId());
 				this.professors.remove(this.professor);
 				info("Professor removido: " + this.professor.getPessoa().getNome());
@@ -159,7 +158,7 @@ public class ProfessorBean implements Serializable {
 			this.documentoTab = "active";
 			this.enderecoTab = "";
 		} catch (Exception e) {
-			error("Erro ao adicionar documento à lista");
+			error("Erro ao adicionar documento ï¿½ lista");
 		}
 		return "salvarProfessor?faces-redirect=true";
 	}
@@ -186,7 +185,7 @@ public class ProfessorBean implements Serializable {
 			this.enderecoTab = "";
 		} else {
 
-			warn("Não existem documentos à serem removidos");
+			warn("Nï¿½o existem documentos ï¿½ serem removidos");
 		}
 		return "salvarProfessor?faces-redirect=true";
 	}
@@ -209,7 +208,7 @@ public class ProfessorBean implements Serializable {
 			this.enderecoTab = "active";
 
 		} catch (Exception e) {
-			error("Erro ao adicionar endereco à lista");
+			error("Erro ao adicionar endereco ï¿½ lista");
 			return "salvarAluno?faces-redirect=true";
 		}
 
@@ -225,9 +224,9 @@ public class ProfessorBean implements Serializable {
 
 		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
 			this.enderecos.remove(endereco);
-			info("Endereço removido com sucesso!");
+			info("Endereï¿½o removido com sucesso!");
 		} else {
-			warn("Não existem endereços à serem removidos");
+			warn("Nï¿½o existem endereï¿½os ï¿½ serem removidos");
 		}
 		return "salvarProfessor?faces-redirect=true";
 	}
@@ -266,7 +265,7 @@ public class ProfessorBean implements Serializable {
 			this.editado = true;
 			return "atualizarProfessor?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao direcioar para atualização de dados do professor");
+			error("Erro ao direcioar para atualizaï¿½ï¿½o de dados do professor");
 			return "listarProfessor?faces-redirect=true";
 		}
 	}
@@ -286,7 +285,7 @@ public class ProfessorBean implements Serializable {
 			this.professorAnterior = new Professor();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			error("Erro ao atualizar as informações!");
+			error("Erro ao atualizar as informaï¿½ï¿½es!");
 			return "atualizarProfessor?faces-redirect=true";
 		}
 	}
@@ -356,7 +355,7 @@ public class ProfessorBean implements Serializable {
 	 *
 	 * @return
 	 */
-	public ProfessorDao getDao() {
+	public ProfessorDAO getDao() {
 		return dao;
 	}
 
@@ -364,7 +363,7 @@ public class ProfessorBean implements Serializable {
 	 *
 	 * @param dao
 	 */
-	public void setDao(ProfessorDao dao) {
+	public void setDao(ProfessorDAO dao) {
 		this.dao = dao;
 	}
 
@@ -543,7 +542,7 @@ public class ProfessorBean implements Serializable {
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenção!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atenï¿½ï¿½o!", message));
 	}
 
 	/**

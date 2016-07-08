@@ -8,13 +8,13 @@ import javax.persistence.Query;
 
 import app.model.Aluno;
 
-public class AlunoDao extends DaoImpl<Aluno> {
+public class AlunoDAO extends DAOImpl<Aluno> {
 
 	/**
 	 *
 	 * @param clazz
 	 */
-	public AlunoDao(Class<Aluno> clazz) {
+	public AlunoDAO(Class<Aluno> clazz) {
 		super(clazz);
 	}
 
