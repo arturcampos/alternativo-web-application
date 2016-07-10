@@ -62,9 +62,6 @@ public class AlunoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		logger.info("Inicializando AlunoBean");
-		if (this.dao == null) {
-			this.dao = new AlunoDAO(Aluno.class);
-		}
 		this.dao = new AlunoDAO(Aluno.class);
 		this.alunos = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
@@ -171,6 +168,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorId(Long id) {
 		try {
+			init();
 			logger.info("Buscando aluno por Id");
 			this.aluno = this.dao.findById(id);
 			if (this.aluno != null) {
@@ -387,8 +385,6 @@ public class AlunoBean implements Serializable {
 			logger.info("Atualizando aluno");
 			this.plastico.setLinhaDigitavel(aluno.getMatricula());
 
-
-
 			this.dao.update(this.aluno);
 
 			logger.info("Atualizando número do cartão");
@@ -428,7 +424,15 @@ public class AlunoBean implements Serializable {
 	 *
 	 */
 	public void buscarTodos() {
+		init();
+		logger.info("Buscando alunos");
 		this.alunos = this.dao.findAll();
+		if (this.alunos.isEmpty() || this.alunos == null) {
+			logger.info("Nenhum aluno encontrado");
+			info("Nenhum aluno encontrado");
+		} else {
+			logger.info("Lista de alunos");
+		}
 	}
 
 	/**
@@ -463,29 +467,36 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
-			logger.info("Buscando aluno por matricula: " + matricula);
-			if (this.alunos == null) {
-				this.alunos = new ArrayList<Aluno>();
+			if (matricula.equals("") || matricula == null) {
+				logger.warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
+				warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
 			} else {
-				this.alunos.clear();
-			}
-			Long matriculaL = Long.parseLong(matricula);
-			String matriculaS = String.format("%06d", matriculaL);
-			Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
-			if (aluno != null) {
-				this.aluno = aluno.clone();
-				this.alunos.add(this.aluno);
-				this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
-				logger.info("Aluno encontrado.");
-				info("Aluno encontrado.");
-			} else {
-				logger.warn("Matricula nao existe.");
-				warn("Matricula nao existe.");
+				Long matriculaL = Long.parseLong(matricula);
+				String matriculaS = String.format("%06d", matriculaL);
+				logger.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
+				if (this.alunos == null) {
+					this.alunos = new ArrayList<Aluno>();
+				} else {
+					this.alunos.clear();
+				}
+
+				Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
+				if (aluno != null) {
+					this.aluno = aluno.clone();
+					this.alunos.add(this.aluno);
+					this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
+					logger.info("Aluno encontrado.");
+					info("Aluno encontrado.");
+				} else {
+					logger.warn("Matricula nao existe.");
+					warn("Matricula nao existe.");
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Erro ao consultar aluno", e);
 			error("Erro ao consultar aluno: " + e.getMessage());
 		}
+
 		return "listarAluno?faces-redirect=true";
 	}
 
