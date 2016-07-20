@@ -12,6 +12,7 @@ public class ProfessorDAO extends DAOImpl<Professor> {
 		super(clazz);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Professor> findByName(String name){
 		Query query = entitymanager.createNamedQuery("Professor.findByName", Professor.class)
 				.setParameter("nome", "%" + name + "%");

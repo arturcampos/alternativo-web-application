@@ -26,15 +26,11 @@ public class AlunoDAO extends DAOImpl<Aluno> {
 	 * @author ARTUR
 	 *
 	 */
-	public Aluno findByRegistrationNumber(String registrationNumber) {
+	public List<Aluno> findByRegistrationNumber(String registrationNumber) throws NoResultException{
 		Query query = entitymanager.createNamedQuery("Aluno.findByRegistrationNumber", Aluno.class)
-				.setParameter("wantedNumber", registrationNumber);
-		try {
-			return (Aluno) query.getSingleResult();
-		} catch (NoResultException e) {
-			e.printStackTrace();
-			return null;
-		}
+				.setParameter("wantedNumber", "%" + registrationNumber);
+			return query.getResultList();
+
 	}
 
 	/**

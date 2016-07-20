@@ -54,7 +54,7 @@ public class PlasticoBean implements Serializable{
 		} else if (professor != null) {
 			this.pessoa = professor.getPessoa();
 		} else {
-			warn("N�o � poss�vel cadastrar um cart�o.\nD�vidas, entre em contato com o Administrador do sistema.");
+			warn("Nao e possivel cadastrar um cartao. Entre em contato com o Administrador do sistema.");
 			retorno = null;
 		}
 		this.tipoPessoa = this.pessoa.getTipopessoa();
@@ -80,11 +80,16 @@ public class PlasticoBean implements Serializable{
 			else
 				retorno = null;
 
-			info("Cart�o cadastrado com sucesso.");
+			info("Cartao cadastrado com sucesso.");
 		} catch (Exception e) {
 			error("Erro ao cadastrar dados do cart�o: " + e.getMessage());
 		}
 		return retorno;
+	}
+
+	public Plastico buscarPorLinhaDigitavel(String linhaDigitavel){
+		this.plastico = this.dao.findByDigitableLine(linhaDigitavel);
+		return this.plastico;
 	}
 
 	public Plastico buscarPorId(Long id) {

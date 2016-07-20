@@ -21,7 +21,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "plastico", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Plastico.findAll", query = "SELECT p FROM Plastico p"),
-		@NamedQuery(name = "Plastico.findByPersonId", query = "SELECT p FROM Plastico p WHERE p.pessoa.id = :wantedId") })
+		@NamedQuery(name = "Plastico.findByPersonId", query = "SELECT p FROM Plastico p WHERE p.pessoa.id = :wantedId"),
+		@NamedQuery(name = "Plastico.findByDigitableLine", query = "SELECT p FROM Plastico p WHERE p.linhaDigitavel = :digitableLine")})
 public class Plastico implements Serializable {
 	private static final long serialVersionUID = 1L;
 

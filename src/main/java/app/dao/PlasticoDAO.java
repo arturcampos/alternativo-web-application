@@ -23,4 +23,17 @@ public class PlasticoDAO extends DAOImpl<Plastico> {
 		}
 
 	}
+	public Plastico findByDigitableLine(String digitableLine){
+
+		Query query = entitymanager.createNamedQuery("Plastico.findByDigitableLine", Plastico.class)
+				.setParameter("digitableLine", digitableLine);
+		try {
+			Plastico p = (Plastico) query.getSingleResult();
+			return p;
+		} catch (NoResultException e) {
+			System.err.println(e.getMessage());
+			return null;
+		}
+
+	}
 }

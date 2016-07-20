@@ -8,14 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultStreamedContent;
 
 import app.dao.AlunoDAO;
 import app.model.Aluno;
@@ -28,7 +27,7 @@ import app.util.Status;
 import app.util.TipoPessoa;
 
 @ManagedBean
-@SessionScoped
+@ConversationScoped
 public class AlunoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,8 +46,8 @@ public class AlunoBean implements Serializable {
 	private String documentoTab;
 	private String enderecoTab;
 	private Plastico plastico;
-	private DefaultStreamedContent reportStream;
 	private static Logger logger = Logger.getLogger(AlunoBean.class);
+
 	@ManagedProperty(value = "#{documentoBean}")
 	private DocumentoBean documentoBean;
 
@@ -61,9 +60,6 @@ public class AlunoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		logger.info("Inicializando AlunoBean");
-		if (this.dao == null) {
-			this.dao = new AlunoDAO(Aluno.class);
-		}
 		this.dao = new AlunoDAO(Aluno.class);
 		this.alunos = new ArrayList<Aluno>();
 		this.aluno = new Aluno();
@@ -170,6 +166,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorId(Long id) {
 		try {
+			init();
 			logger.info("Buscando aluno por Id");
 			this.aluno = this.dao.findById(id);
 			if (this.aluno != null) {
@@ -197,12 +194,23 @@ public class AlunoBean implements Serializable {
 			logger.info("Removendo aluno");
 			if (this.alunos != null && !this.alunos.isEmpty()) {
 				this.aluno = aluno;
-				logger.info("Alterando o status para INATIVO");
+				logger.info("Alterando o status do aluno para INATIVO");
 				this.aluno.setStatus(Status.INATIVO.toString());
+
+				this.plastico = this.aluno.getPessoa().getPlasticos().get(0);
+				if (this.plastico == null) {
+					logger.info("Buscando plastico vinculado ao aluno");
+					this.plastico = plasticoBean.buscarPorPessoaId(aluno.getPessoa().getId());
+				}
+				logger.info("Alterando o status do plastico vinculado ao aluno para INATIVO");
+				this.plastico.setStatus(Status.INATIVO.toString());
+				plasticoBean.atualizar(this.plastico);
+
 				this.dao.update(this.aluno);
 				this.alunos.remove(this.aluno);
 				logger.info("Aluno removido: " + this.aluno.getPessoa().getNome());
 				info("Aluno removido: " + this.aluno.getPessoa().getNome());
+				this.plastico = new Plastico();
 				this.aluno = new Aluno();
 			} else {
 				logger.warn(
@@ -357,6 +365,7 @@ public class AlunoBean implements Serializable {
 		try {
 			this.aluno = aluno.clone();
 			this.alunoAnterior = aluno;
+			this.plastico = aluno.getPessoa().getPlasticos().get(0);
 			this.editado = true;
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
@@ -372,17 +381,28 @@ public class AlunoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			logger.info("Atualizando aluno");
+			this.plastico.setLinhaDigitavel(aluno.getMatricula());
+
 			this.dao.update(this.aluno);
+
+			logger.info("Atualizando número do cartão");
+			this.plasticoBean.atualizar(this.plastico);
+
 			this.alunos.remove(this.alunoAnterior);
 			this.alunos.add(this.aluno);
+			aluno.getPessoa().getPlasticos().clear();
+			aluno.getPessoa().getPlasticos().add(this.plastico);
 			this.editado = false;
+
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			logger.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
+
 			this.aluno = new Aluno();
 			this.alunoAnterior = new Aluno();
+			this.plastico = new Plastico();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
-			logger.error("Erro ao atualizar as informacoes",  e);
+			logger.error("Erro ao atualizar as informacoes", e);
 			error("Erro ao atualizar as informacoes: " + e.getMessage());
 			return "atualizarAluno?faces-redirect=true";
 		}
@@ -402,7 +422,15 @@ public class AlunoBean implements Serializable {
 	 *
 	 */
 	public void buscarTodos() {
+		init();
+		logger.info("Buscando alunos");
 		this.alunos = this.dao.findAll();
+		if (this.alunos.isEmpty() || this.alunos == null) {
+			logger.info("Nenhum aluno encontrado");
+			info("Nenhum aluno encontrado");
+		} else {
+			logger.info("Lista de alunos");
+		}
 	}
 
 	/**
@@ -437,29 +465,28 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
-			logger.info("Buscando aluno por matricula: " + matricula);
-			if (this.alunos == null) {
-				this.alunos = new ArrayList<Aluno>();
+			init();
+			if (matricula.equals("") || matricula == null) {
+				logger.warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
+				warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
 			} else {
-				this.alunos.clear();
-			}
-			Long matriculaL = Long.parseLong(matricula);
-			String matriculaS = String.format("%09d", matriculaL);
-			Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
-			if (aluno != null) {
-				this.aluno = aluno.clone();
-				this.alunos.add(this.aluno);
-				this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
-				logger.info("Aluno encontrado.");
-				info("Aluno encontrado.");
-			} else {
-				logger.warn("Matricula nao existe.");
-				warn("Matricula nao existe.");
+				long matriculaL = Long.parseLong(matricula);
+				logger.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
+
+				this.alunos = this.dao.findByRegistrationNumber(matricula);
+				if (alunos != null && !alunos.isEmpty()) {
+					logger.info("Alunos encontrados.");
+					info("Alunos encontrados.");
+				} else {
+					logger.warn("Matricula nao existe.");
+					warn("Matricula nao existe.");
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Erro ao consultar aluno", e);
 			error("Erro ao consultar aluno: " + e.getMessage());
 		}
+
 		return "listarAluno?faces-redirect=true";
 	}
 
@@ -753,21 +780,6 @@ public class AlunoBean implements Serializable {
 	 */
 	public void setPlasticoBean(PlasticoBean plasticoBean) {
 		this.plasticoBean = plasticoBean;
-	}
-
-	/**
-	 * @return the reportStream
-	 */
-	public DefaultStreamedContent getReportStream() {
-		return reportStream;
-	}
-
-	/**
-	 * @param reportStream
-	 *            the reportStream to set
-	 */
-	public void setReportStream(DefaultStreamedContent reportStream) {
-		this.reportStream = reportStream;
 	}
 
 	/**

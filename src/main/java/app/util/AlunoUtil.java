@@ -22,7 +22,7 @@ public abstract class AlunoUtil {
 		if (ultimaMatricula != null && !ultimaMatricula.equals("")) {
 			logger.info("Ultima matricula: " + ultimaMatricula);
 			long lMatricula = Long.parseUnsignedLong(ultimaMatricula);
-			matricula = String.format("%09d", (lMatricula + 1l));
+			matricula = String.format("%06d", (lMatricula + 1l));
 			logger.info("Nova matricula: " + matricula);
 		}
 		return matricula;
