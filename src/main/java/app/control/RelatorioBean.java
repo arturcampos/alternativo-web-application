@@ -19,6 +19,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import app.model.Aluno;
 import app.model.Documento;
 import app.util.Status;
@@ -51,6 +53,8 @@ public class RelatorioBean implements Serializable {
 
 	@ManagedProperty(value = "#{eventoBean}")
 	private EventoBean eventoBean;
+
+	private static Logger LOGGER = Logger.getLogger(RelatorioBean.class);
 
 	/**
 	 * @return the alunoBean
@@ -102,7 +106,7 @@ public class RelatorioBean implements Serializable {
 	 * @param nomeRelatorio
 	 */
 	public void relatorioAlunoSimples(String nomeRelatorio) {
-		System.out.println("Entrou no relat�rio simples");
+		LOGGER.info("Iniciando a geracao do relatorio Aluno Simples");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
@@ -122,6 +126,7 @@ public class RelatorioBean implements Serializable {
 			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
 					.setBorder(DynamicReports.stl.pen1Point());
 
+			LOGGER.info("Preenchendo informacoes");
 			report().setColumnTitleStyle(columnTitleStyle)
 					// add columns
 					.columns(
@@ -152,27 +157,27 @@ public class RelatorioBean implements Serializable {
 					// create and show report
 					.toPdf(baos);
 
+			LOGGER.info("Gerando PDF");
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// C�digo abaixo gerar o relat�rio e disponibiliza diretamente
-			// na
-			// p�gina
+			// Codigo abaixo gerar o relatorio e disponibiliza diretamente na pagina
 			res.setHeader("Content-disposition", "inline;filename=" + nomeRelatorio + ".pdf");
-			// C�digo abaixo gerar o relat�rio e disponibiliza para o
-			// cliente
-			// baixar ou salvar
+			// Codigo abaixo gerar o relatorio e disponibiliza para o
+			// cliente baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("N�o foi poss�vel criar o relat�rio");
+				LOGGER.error("Nao foi possivel criar o relatorio", e);
+				error("Nao foi possivel criar o relatorio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relat�rio simples");
+			LOGGER.info("Relatorio concluido");
 		} catch (DRException e) {
+			LOGGER.error("Erro ao gerar relatorio", e);
 			error(e.getMessage());
 		}
 
@@ -204,11 +209,11 @@ public class RelatorioBean implements Serializable {
 	}
 
 	/**
-	 * Relat�rio de faltas cometidas por entrar no segundo hor�rio ou sair
-	 * antes do hor�rio final
+	 * Relatorio de faltas cometidas por entrar no segundo horario ou sair
+	 * antes do horario final
 	 */
 	public void relatorioFaltaHorarios() {
-		System.out.println("Entrou no relat�rio simples");
+		LOGGER.info("Iniciando a geracao do relatorio penalidades horarios");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
@@ -228,6 +233,7 @@ public class RelatorioBean implements Serializable {
 			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
 					.setBorder(DynamicReports.stl.pen1Point());
 
+			LOGGER.info("Preenchendo informacoes");
 			report().setColumnTitleStyle(columnTitleStyle)
 					// add columns
 					.columns(
@@ -259,24 +265,26 @@ public class RelatorioBean implements Serializable {
 
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// C�digo abaixo gerar o relat�rio e disponibiliza diretamente na
-			// p�gina
+			// Codigo abaixo gerar o relaorio e disponibiliza diretamente na
+			// pagina
 			res.setHeader("Content-disposition", "inline;filename=faltas_x_horarios.pdf");
-			// C�digo abaixo gerar o relat�rio e disponibiliza para o cliente
+			// Codigo abaixo gerar o relaorio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("N�o foi poss�vel cirar o relat�rio");
+				LOGGER.error("Nao foi possivel cirar o relatorio", e);
+				error("Nao foi possivel cirar o relatorio");
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relat�rio simples");
+			LOGGER.info("Saiu do relatorio simples");
 		} catch (DRException e) {
-			error(e.getMessage());
+			LOGGER.error("Erro ao gerar relatorio", e);
+			error("Erro ao gerar relatorio: " + e.getMessage());
 		}
 
 	}
@@ -307,7 +315,7 @@ public class RelatorioBean implements Serializable {
 	 *            - the date to have search present list
 	 */
 	public void relatorioPresencaPorData(Date data) {
-		System.out.println("Entrou no relat�rio presen�a");
+		LOGGER.info("Iniciando a geracao do relatorio Presenca por data");
 		String dataTmp = null;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -332,6 +340,7 @@ public class RelatorioBean implements Serializable {
 			StyleBuilder columnStyle = DynamicReports.stl.style().setHorizontalAlignment(HorizontalAlignment.CENTER)
 					.setBorder(DynamicReports.stl.pen1Point());
 
+			LOGGER.info("Preenchendo relatorio");
 			report().setColumnTitleStyle(columnTitleStyle)
 					// add columns
 					.columns(
@@ -362,24 +371,25 @@ public class RelatorioBean implements Serializable {
 					.toPdf(baos);
 			baos.toByteArray();
 			res.setContentType("application/pdf");
-			// C�digo abaixo gerar o relat�rio e disponibiliza diretamente na
-			// p�gina
-			res.setHeader("Content-disposition", "inline;filename=Lista de presen�a.pdf");
-			// Código abaixo gerar o relat�rio e disponibiliza para o cliente
+			// Codigo abaixo gerar o relatorio e disponibiliza diretamente na pagina
+			res.setHeader("Content-disposition", "inline;filename=Lista de presenca.pdf");
+			// Código abaixo gerar o relatorio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
 			// "attachment;filename=arquivo.pdf");
 			try {
 				res.getOutputStream().write(baos.toByteArray());
 			} catch (IOException e) {
-				error("N�o foi poss�vel criar o relat�rio: " + e.getMessage());
+				LOGGER.error("Nao foi possivel criar o relatorio", e);
+				error("Nao foi possivel criar o relatorio: " + e.getMessage());
 			}
 			res.getCharacterEncoding();
 			FacesContext.getCurrentInstance().responseComplete();
 
-			System.out.println("Saiu do relat�rio presen�a");
+			LOGGER.info("Finalizando a geracao do relatorio Presenca por data");
 		} catch (DRException e) {
-			error("N�o foi poss�vel criar o relat�rio: " + e.getMessage());
+			LOGGER.error("Nao foi possivel criar o relatorio", e);
+			error("Nao foi possivel criar o relatorio: " + e.getMessage());
 		}
 
 	}

@@ -8,14 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultStreamedContent;
 
 import app.dao.AlunoDAO;
 import app.model.Aluno;
@@ -28,7 +27,7 @@ import app.util.Status;
 import app.util.TipoPessoa;
 
 @ManagedBean
-@SessionScoped
+@ConversationScoped
 public class AlunoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,7 +46,6 @@ public class AlunoBean implements Serializable {
 	private String documentoTab;
 	private String enderecoTab;
 	private Plastico plastico;
-	private DefaultStreamedContent reportStream;
 	private static Logger logger = Logger.getLogger(AlunoBean.class);
 
 	@ManagedProperty(value = "#{documentoBean}")
@@ -467,26 +465,18 @@ public class AlunoBean implements Serializable {
 	 */
 	public String buscarPorMatricula(String matricula) {
 		try {
+			init();
 			if (matricula.equals("") || matricula == null) {
 				logger.warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
 				warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
 			} else {
-				Long matriculaL = Long.parseLong(matricula);
-				String matriculaS = String.format("%06d", matriculaL);
+				long matriculaL = Long.parseLong(matricula);
 				logger.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
-				if (this.alunos == null) {
-					this.alunos = new ArrayList<Aluno>();
-				} else {
-					this.alunos.clear();
-				}
 
-				Aluno aluno = this.dao.findByRegistrationNumber(matriculaS);
-				if (aluno != null) {
-					this.aluno = aluno.clone();
-					this.alunos.add(this.aluno);
-					this.plastico = this.plasticoBean.buscarPorPessoaId(this.aluno.getPessoa().getId());
-					logger.info("Aluno encontrado.");
-					info("Aluno encontrado.");
+				this.alunos = this.dao.findByRegistrationNumber(matricula);
+				if (alunos != null && !alunos.isEmpty()) {
+					logger.info("Alunos encontrados.");
+					info("Alunos encontrados.");
 				} else {
 					logger.warn("Matricula nao existe.");
 					warn("Matricula nao existe.");
@@ -790,21 +780,6 @@ public class AlunoBean implements Serializable {
 	 */
 	public void setPlasticoBean(PlasticoBean plasticoBean) {
 		this.plasticoBean = plasticoBean;
-	}
-
-	/**
-	 * @return the reportStream
-	 */
-	public DefaultStreamedContent getReportStream() {
-		return reportStream;
-	}
-
-	/**
-	 * @param reportStream
-	 *            the reportStream to set
-	 */
-	public void setReportStream(DefaultStreamedContent reportStream) {
-		this.reportStream = reportStream;
 	}
 
 	/**
