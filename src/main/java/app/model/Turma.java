@@ -1,17 +1,8 @@
 package app.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 /**
@@ -31,17 +22,8 @@ public class Turma implements Serializable {
 	private String codigo;
 
 	//bi-directional many-to-one association to Aluno
-	@OneToMany(mappedBy="turma")
+	@OneToMany(mappedBy="turma", fetch=FetchType.EAGER)
 	private List<Aluno> alunos;
-
-	//bi-directional many-to-one association to Disciplina
-	@ManyToOne
-	private Disciplina disciplina;
-
-	//bi-directional many-to-one association to Professor
-	@ManyToOne
-	@JoinColumn(name="Professor_id")
-	private Professor professor;
 
 	public Turma() {
 	}
@@ -84,20 +66,20 @@ public class Turma implements Serializable {
 		return aluno;
 	}
 
-	public Disciplina getDisciplina() {
-		return this.disciplina;
+	@Override
+	public Turma clone(){
+		Turma turmaClone = new Turma();
+		turmaClone.setId(this.id);
+		turmaClone.setCodigo(this.codigo);
+		turmaClone.setAlunos(this.alunos);
+
+		return turmaClone;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
-	public Professor getProfessor() {
-		return this.professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void restaurar(Turma turma){
+		this.id = turma.getId();
+		this.codigo = turma.getCodigo();
+		this.alunos = turma.getAlunos();
 	}
 
 }
