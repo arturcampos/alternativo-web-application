@@ -110,7 +110,7 @@ public class Documento implements Serializable {
 	@Override
 	public String toString() {
 		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoEmissor + "\nData de Emissão:"
-				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade);
+				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade + "\nTipo: " + this.tipo);
 	}
 
 	@Override
@@ -121,6 +121,7 @@ public class Documento implements Serializable {
 		docClone.setDataExpedicao(dataExpedicao);
 		docClone.setDataValidade(dataValidade);
 		docClone.setOrgaoEmissor(orgaoEmissor);
+		docClone.setTipo(tipo);
 		docClone.setUf(uf);
 		docClone.setPessoa(pessoa);
 

@@ -148,7 +148,7 @@ public class AlunoBean implements Serializable {
 			return "listarAluno?faces-redirect=true";
 
 		} catch (Exception e) {
-			LOGGER.error("Erro ao Salvar informacoes: " + e);
+			LOGGER.error("Erro ao Salvar informacoes", e);
 			error("Erro ao Salvar informacoes: " + e.getMessage());
 			return "salvarAluno?faces-redirect=true";
 		}
@@ -231,9 +231,7 @@ public class AlunoBean implements Serializable {
 	public String adicionarDocumento() {
 		try {
 			LOGGER.info("Adicioando documento.");
-			if (this.documentos == null) {
-				this.documentos = new ArrayList<Documento>();
-			}
+			LOGGER.info(documento.toString());
 			Documento doc = this.documento.clone();
 			this.documentos.add(doc);
 			this.documento = new Documento();
@@ -243,7 +241,7 @@ public class AlunoBean implements Serializable {
 			LOGGER.info("Documento adicionado");
 			info("Documento adicionado");
 		} catch (Exception e) {
-			LOGGER.error("Erro ao adicionar documento a lista: " + e);
+			LOGGER.error("Erro ao adicionar documento a lista",  e);
 			error("Erro ao adicionar documento a lista: " + e.getMessage());
 		}
 		return "salvarAluno?faces-redirect=true";

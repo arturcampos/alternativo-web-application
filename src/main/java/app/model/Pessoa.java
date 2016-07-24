@@ -5,18 +5,17 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the pessoa database table.
  *
  */
 @Entity
-@NamedQuery(name="Pessoa.findAll", query="SELECT p FROM Pessoa p")
+@NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")
 public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
@@ -50,16 +49,16 @@ public class Pessoa implements Serializable {
 
 	private String uf;
 
-	//bi-directional many-to-one association to Documento
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Documento
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Documento> documentos;
 
-	//bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Endereco
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Endereco> enderecos;
 
-	//bi-directional many-to-one association to Plastico
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Plastico
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Plastico> plasticos;
 
 	public Pessoa() {
@@ -246,16 +245,19 @@ public class Pessoa implements Serializable {
 	}
 
 	public Plastico addPlastico(Plastico plastico) {
-		getPlasticos().add(plastico);
+		if (getPlasticos() == null) {
+			getPlasticos().add(plastico);
+		}
 		plastico.setPessoa(this);
 
 		return plastico;
 	}
 
 	public Plastico removePlastico(Plastico plastico) {
-		getPlasticos().remove(plastico);
-		plastico.setPessoa(null);
-
+		if ((getPlasticos() != null) && !getPlasticos().isEmpty()) {
+			getPlasticos().remove(plastico);
+			plastico.setPessoa(null);
+		}
 		return plastico;
 	}
 
