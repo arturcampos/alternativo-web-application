@@ -248,23 +248,23 @@
 														</tr>
 													</thead>
 													<tbody id="docs-table-body">
-														<ui:repeat var="documento" value="#{alunoBean.documentos}"
+														<ui:repeat var="doc" value="#{alunoBean.documentos}"
 															varStatus="status">
 															<tr>
-																<td><h:outputText valeu="#{documento.numero}"/></td>
-																<td><h:outputText valeu="#{documento.tipo}"/></td>
+																<td><h:outputText valeu="#{doc.numero}"/></td>
+																<td><h:outputText valeu="#{doc.tipo}"/></td>
 																<td>
-																	<h:outputText value="#{documento.dataExpedicao}">
-																		<f:convertDateTime pattern="dd/MM/yyyy"/>
+																	<h:outputText id="exp" value="#{doc.dataExpedicao}">
+																		<f:convertDateTime pattern="dd/MM/yyyy" for="exp"/>
 																	</h:outputText></td>
 																<td>
-																<h:outputText value="#{documento.dataValidade}">
-																		<f:convertDateTime pattern="dd/MM/yyyy"/>
+																<h:outputText value="#{doc.dataValidade}" id="vali">
+																		<f:convertDateTime pattern="dd/MM/yyyy" for="vali"/>
 																	</h:outputText></td>
-																<td><h:outputText valeu="#{documento.uf}"/></td>
-																<td><h:outputText valeu="#{documento.orgaoEmissor}"/></td>
+																<td><h:outputText valeu="#{doc.uf}"/></td>
+																<td><h:outputText valeu="#{doc.orgaoEmissor}"/></td>
 																<td><h:commandLink
-																		actionListener="#{alunoBean.removerDocumento(documento)}"
+																		actionListener="#{alunoBean.removerDocumento(doc)}"
 																		process="@this" class="glyphicon glyphicon-trash"
 																		update="@form"> Remover</h:commandLink></td>
 															</tr>

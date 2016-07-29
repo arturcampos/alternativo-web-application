@@ -12,412 +12,54 @@
 			<ol class="breadcrumb">
 				<li><a href="#{request.contextPath}/Inicio.xhtml"><span
 						class="glyphicon glyphicon-home"></span></a></li>
-				<li class="active">Cadastrar Aluno</li>
+				<li class="active">Cadastrar Turma</li>
 			</ol>
 		</div>
 		<!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h3 class="page-header">Cadastrar Aluno</h3>
+				<h3 class="page-header">Cadastrar Turma</h3>
 			</div>
 		</div>
 		<!--/.row-->
 
 		<h:panelGroup>
 			<div class="row">
-				<div class="col-lg-12">
-					<h:form id="salvar-form">
+				<h:form id="salvar-form">
+					<div class="col-lg-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">Preencha o formulário.</div>
 							<h:messages id="messages" showDetail="true" closable="true"
 								autoUpdate="true" />
-							<div class="panel-body tabs">
-								<ul class="nav nav-pills">
-									<li class="#{alunoBean.alunoTab}"><a href="#tab-aluno"
-										data-toggle="tab">Dados principais</a></li>
-									<li class="#{alunoBean.documentoTab}"><a
-										href="#tab-documento" data-toggle="tab">Documento</a></li>
-									<li class="#{alunoBean.enderecoTab}"><a
-										href="#tab-endereco" data-toggle="tab">Endereço</a></li>
-								</ul>
-								<div class="tab-content">
-									<!-- INICIO TAB ALUNO -->
-									<div class="tab-pane #{alunoBean.alunoTab}" id="tab-aluno">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Nome:</label>
-												<h:inputText value="#{alunoBean.pessoa.nome}"
-													required="true" styleClass="form-control" id="Nome" />
-											</div>
-											<div class="form-group">
-												<label>Sexo:</label>
-												<h:selectOneMenu value="#{alunoBean.pessoa.sexo}"
-													styleClass="form-control" id="Sexo">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
-													<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
-													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-												</h:selectOneMenu>
-											</div>
-											<div class="form-group">
-												<label>Data de nascimento :</label>
-												<p:calendar value="#{alunoBean.pessoa.dataNasc}"
-													pattern="MM/dd/yyyy" locale="pt_BR" required="true" styleClass="form-date"
-													id="Data_Nascimento" />
-											</div>
-											<div class="form-group">
-												<label>Email:</label>
-												<h:inputText value="#{alunoBean.pessoa.email}"
-													required="true" styleClass="form-control" id="Email" />
-											</div>
-											<div class="form-group">
-												<label>Estado Civil:</label>
-												<h:selectOneMenu value="#{alunoBean.pessoa.estadoCivil}"
-													styleClass="form-control" id="Estado_Civil">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="SOLTEIRO(A)"
-														itemLabel="Solteiro(a)" />
-													<f:selectItem itemValue="CASADO(A)" itemLabel="Casado(a)" />
-													<f:selectItem itemValue="DIVORCIADO(A)"
-														itemLabel="Divorciado(a)" />
-													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-												</h:selectOneMenu>
-											</div>
-											<div class="form-group">
-												<label>Etnia:</label>
-												<h:inputText value="#{alunoBean.pessoa.etnia}"
-													required="true" styleClass="form-control" id="Etnia" />
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Nacionalidade:</label>
-												<h:inputText value="#{alunoBean.pessoa.nacionalidade}"
-													required="true" styleClass="form-control"
-													id="Nacionalidade" />
-											</div>
-											<div class="form-group">
-												<label>Naturalidade:</label>
-												<h:inputText value="#{alunoBean.pessoa.naturalidade}"
-													required="true" styleClass="form-control" id="Naturalidade" />
-											</div>
-
-											<div class="form-group">
-												<label>UF:</label>
-												<h:inputText value="#{alunoBean.pessoa.uf}" required="true"
-													styleClass="form-control" id="UF" style="width: 70px" />
-											</div>
-											<div class="form-group">
-												<label>Necessidades Especiais:</label>
-												<h:inputText
-													value="#{alunoBean.pessoa.necessidadesEspeciais}"
-													required="true" styleClass="form-control"
-													id="Necessidades_Especiais" />
-											</div>
-											<div class="form-group">
-												<label>Nome da Mãe:</label>
-												<h:inputText value="#{alunoBean.pessoa.nomeMae}"
-													required="true" styleClass="form-control" id="Nome_Mae" />
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Nome do Pai:</label>
-												<h:inputText value="#{alunoBean.pessoa.nomePai}"
-													required="true" styleClass="form-control" id="Nome_Pai" />
-											</div>
-											<div class="form-group">
-												<label>Numero do Celular:</label>
-												<h:inputText value="#{alunoBean.pessoa.responsavelLegal}"
-													required="true" styleClass="form-control"
-													id="Numero_Celular" />
-											</div>
-											<div class="form-group">
-												<label>Responsavel Legal:</label>
-												<h:inputText value="#{alunoBean.pessoa.numeroCelular}"
-													styleClass="form-control" id="Responsavel_Legal" />
-											</div>
-											<div class="form-group">
-												<label> Data de ingresso:</label>
-												<p:calendar pattern="MM/dd/yyyy" required="true"
-													styleClass="form-date" id="data-ingresso"
-													value="#{alunoBean.aluno.dataIngresso}" locale="pt_BR" />
-											</div>
-											<div class="form-group">
-												<label>Tipo de Cota:</label>
-												<h:selectOneMenu value="#{alunoBean.aluno.tipoCotaIngresso}"
-													styleClass="form-control" id="tipo-cota-ingresso">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="1" itemLabel="Cota 1" />
-													<f:selectItem itemValue="2" itemLabel="Cota 2" />
-													<f:selectItem itemValue="3" itemLabel="Cota 3" />
-												</h:selectOneMenu>
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group" align="left">
-												<h:commandButton value="Adicionar"
-													action="#{alunoBean.adicionarAluno}"
-													styleClass="btn btn-secondary"
-													process="@this, Nome, Sexo, Data_Nascimento, Email, Estado_Civil, Etnia, Nacionalidade, Naturalidade, UF, Necessidades_Especiais, Nome_Mae, Nome_Pai, Numero_Celular, Responsavel_Legal, data-ingresso, tipo-cota-ingresso"
-													id="btn-add-aluno" />
-
-											</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel value="Nome da turma:" for="codigo" />
+											<h:inputText value="#{turmaBean.turma.codigo}"
+												required="true" styleClass="form-control" id="codigo" />
 										</div>
 									</div>
-									<!-- FIM TAB ALUNO -->
-
-									<!-- INICIO TAB DOCUMENTO -->
-									<div class="tab-pane #{alunoBean.documentoTab}"
-										id="tab-documento">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Tipo de documento:</label>
-												<h:selectOneMenu value="#{alunoBean.documento.tipo}"
-													styleClass="form-control" id="tipo-doc">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="CPF" itemLabel="CPF" />
-													<f:selectItem itemValue="RG" itemLabel="RG" />
-													<f:selectItem itemValue="PASSAPORTE" itemLabel="Passaporte" />
-													<f:selectItem itemValue="CNPJ" itemLabel="CNPJ" />
-													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-												</h:selectOneMenu>
-											</div>
-											<div class="form-group">
-												<label>Numero:</label>
-												<h:inputText value="#{alunoBean.documento.numero}"
-													styleClass="form-control" id="numero-doc" />
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Data de expedição:</label>
-												<p:calendar value="#{alunoBean.documento.dataExpedicao}"
-													pattern="MM/dd/yyyy" locale="pt_BR" styleClass="form-date"
-													id="data-emissao" />
-											</div>
-											<div class="form-group">
-												<label>Data vencimento:</label>
-												<p:calendar value="#{alunoBean.documento.dataValidade}"
-													pattern="MM/dd/yyyy" styleClass="form-date"
-													id="data-validade" locale="pt_BR" />
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>UF:</label>
-												<h:inputText value="#{alunoBean.documento.uf}"
-													styleClass="form-control" id="uf-doc" style="width: 70px" />
-											</div>
-											<div class="form-group">
-												<label>Orgão emissor:</label>
-												<h:inputText value="#{alunoBean.documento.orgaoEmissor}"
-													styleClass="form-control" id="emissor-doc" />
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group">
-												<h:commandButton value="Adicionar"
-													action="#{alunoBean.adicionarDocumento}"
-													styleClass="btn btn-secondary"
-													process="@this, tipo-doc, numero-doc, data-validade, data-emissao, uf-doc, emissor-doc"
-													id="btn-add-doc" />
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group">
-												<table data-toggle="table" id="docs-table">
-													<thead>
-														<tr>
-															<th data-field="numero" data-sortable="true">Número</th>
-															<th data-field="tipo" data-sortable="true">Tipo de
-																documento</th>
-															<th data-field="dataexpedicao" data-sortable="true">Data
-																de Expedicao</th>
-															<th data-field="datavalidade" data-sortable="true">Data
-																de validade</th>
-															<th data-field="uf" data-sortable="true">UF</th>
-															<th data-field="orgaoemissor" data-sortable="true">Orgão
-																Emissor</th>
-															<th data-field="remover" data-sortable="true">Remover</th>
-														</tr>
-													</thead>
-													<tbody id="docs-table-body">
-														<ui:repeat var="documento" value="#{alunoBean.documentos}"
-															varStatus="status">
-															<tr>
-																<td>#{documento.numero}</td>
-																<td>#{documento.tipo}</td>
-																<td>
-																	<h:outputText value="#{documento.dataExpedicao}">
-																		<f:convertDateTime pattern="dd/MM/yyyy"/>
-																	</h:outputText></td>
-																<td>
-																<h:outputText value="#{documento.dataValidade}">
-																		<f:convertDateTime pattern="dd/MM/yyyy"/>
-																	</h:outputText></td>
-																<td>#{documento.uf}</td>
-																<td>#{documento.orgaoEmissor}</td>
-																<td><h:commandLink
-																		actionListener="#{alunoBean.removerDocumento(documento)}"
-																		process="@this" class="glyphicon glyphicon-trash"
-																		update="@form"> Remover</h:commandLink></td>
-															</tr>
-														</ui:repeat>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-									<!-- FIM TAB DOCUMENTO -->
-									<!-- INICIO TAB ENDERECO -->
-									<div class="tab-pane #{alunoBean.enderecoTab}"
-										id="tab-endereco">
-
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>CEP:</label>
-												<h:inputText value="#{alunoBean.endereco.cep}"
-													styleClass="form-control" id="cep-end" />
-											</div>
-											<div class="form-group">
-												<label>Logradouro:</label>
-												<h:inputText value="#{alunoBean.endereco.logradouro}"
-													styleClass="form-control" id="logradouro-end" />
-											</div>
-											<div class="form-group">
-												<label>Número:</label>
-												<h:inputText value="#{alunoBean.endereco.numero}"
-													styleClass="form-control" id="numero-end" />
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>Bairro:</label>
-												<h:inputText value="#{alunoBean.endereco.bairro}"
-													styleClass="form-control" id="bairro-end" />
-											</div>
-
-
-											<div class="form-group">
-												<label>Cidade:</label>
-												<h:inputText value="#{alunoBean.endereco.cidade}"
-													styleClass="form-control" id="cidade-end" />
-											</div>
-
-											<div class="form-group">
-												<label>UF:</label>
-												<h:inputText value="#{alunoBean.endereco.uf}"
-													styleClass="form-control" id="uf-end" style="width: 70px" />
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>Endereço para correspondências:</label>
-
-												<h:selectOneMenu
-													value="#{alunoBean.endereco.enderecoCorrespondencia}"
-													styleClass="form-control" id="correspondencia-end">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="SIM" itemLabel="SIM" />
-													<f:selectItem itemValue="NAO" itemLabel="NÃO" />
-												</h:selectOneMenu>
-											</div>
-											<div class="form-group">
-												<label>Tipo de Endereço:</label>
-
-												<h:selectOneMenu value="#{alunoBean.endereco.tipo}"
-													styleClass="form-control" id="tipo-end">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="RESIDENCIAL"
-														itemLabel="Residencial" />
-													<f:selectItem itemValue="COMERCIAL" itemLabel="Comercial" />
-													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-												</h:selectOneMenu>
-											</div>
-											<div class="form-group">
-												<label>Telefone:</label>
-												<h:inputText value="#{alunoBean.endereco.telefone}"
-													styleClass="form-control" id="telefone-end" />
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group">
-												<h:commandButton value="Adicionar"
-													actionListener="#{alunoBean.adicionarEndereco}"
-													styleClass="btn btn-secondary"
-													process="@this, tipo-end, cep-end, logradouro-end, numero-end, bairro-end, cidade-end, uf-end, correspondencia-end, telefone-end"
-													id="btn-add-end" update="@all"/>
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<table data-toggle="table" id="end-table">
-												<thead>
-													<tr>
-														<th data-field="cep" data-sortable="true">CEP</th>
-														<th data-field="logradouro" data-sortable="true">Logradouro</th>
-														<th data-field="numero" data-sortable="true">Numero</th>
-														<th data-field="bairro" data-sortable="true">Bairro</th>
-														<th data-field="cidade" data-sortable="true">Cidade</th>
-														<th data-field="uf" data-sortable="true">UF</th>
-														<th data-field="enderecoCorrespondencia"
-															data-sortable="true">Correspondência</th>
-														<th data-field="telefone" data-sortable="true">Telefone</th>
-														<th data-field="remover" data-sortable="true">Remover</th>
-													</tr>
-												</thead>
-												<tbody>
-													<ui:repeat var="endereco" value="#{alunoBean.enderecos}"
-														varStatus="status">
-														<tr>
-															<td>#{endereco.cep}</td>
-															<td>#{endereco.logradouro}</td>
-															<td>#{endereco.numero}</td>
-															<td>#{endereco.bairro}</td>
-															<td>#{endereco.cidade}</td>
-															<td>#{endereco.uf}</td>
-															<td>#{endereco.enderecoCorrespondencia}</td>
-															<td>#{endereco.telefone}</td>
-															<td><h:commandLink
-																	actionListener="#{alunoBean.removerEndereco(endereco)}"
-																	process="@this" class="glyphicon glyphicon-trash"
-																	update="@form"> Remover</h:commandLink></td>
-														</tr>
-													</ui:repeat>
-												</tbody>
-											</table>
-											<div class="col-lg-12">
-												<br />
-											</div>
-										</div>
-									</div>
-									<!-- FIM TAB DOCUMENTO -->
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12">
-							<div class="form-group" align="right">
-							<div class="form-group col-md-4" >
-								<h:commandButton value="Salvar" process="salvar-form" rendered="#{alunoBean.enderecoTab == 'active'}"
-									type="submit" action="#{alunoBean.salvar}"
-									styleClass="btn btn-primary" update="salvar-form"/>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group" align="right">
+							<div class="form-group col-md-4">
+								<h:commandButton value="Salvar" process="salvar-form"
+									type="submit" action="#{turmaBean.salvar}"
+									styleClass="btn btn-primary" update="salvar-form" />
 							</div>
 							<div class="form-group col-md-4">
 								<h:commandButton value="Cancelar" process="salvar-form"
-									type="submit" action="#{alunoBean.cancelarSalvar}"
-									styleClass="btn btn-primary"/>
-							</div>
+									type="submit" action="#{turmaBean.cancelarSalvar}"
+									styleClass="btn btn-primary" />
 							</div>
 						</div>
-					</h:form>
-				</div>
+					</div>
+				</h:form>
 			</div>
 		</h:panelGroup>
 	</ui:define>

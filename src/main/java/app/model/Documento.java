@@ -116,14 +116,14 @@ public class Documento implements Serializable {
 	@Override
 	public Documento clone() {
 		Documento docClone = new Documento();
-		docClone.setId(id);
-		docClone.setNumero(numero);
-		docClone.setDataExpedicao(dataExpedicao);
-		docClone.setDataValidade(dataValidade);
-		docClone.setOrgaoEmissor(orgaoEmissor);
-		docClone.setTipo(tipo);
-		docClone.setUf(uf);
-		docClone.setPessoa(pessoa);
+		docClone.setId(this.id);
+		docClone.setNumero(this.numero);
+		docClone.setDataExpedicao(this.dataExpedicao);
+		docClone.setDataValidade(this.dataValidade);
+		docClone.setOrgaoEmissor(this.orgaoEmissor);
+		docClone.setTipo(this.tipo);
+		docClone.setUf(this.uf);
+		docClone.setPessoa(this.pessoa);
 
 		return docClone;
 	}

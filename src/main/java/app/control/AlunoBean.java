@@ -231,8 +231,8 @@ public class AlunoBean implements Serializable {
 	public String adicionarDocumento() {
 		try {
 			LOGGER.info("Adicioando documento.");
-			LOGGER.info(documento.toString());
-			Documento doc = this.documento.clone();
+			Documento doc =	this.documento.clone();
+			LOGGER.info(doc.toString());
 			this.documentos.add(doc);
 			this.documento = new Documento();
 			this.alunoTab = "";

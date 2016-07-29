@@ -1,5 +1,6 @@
 package app.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,15 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import app.dao.TurmaDAO;
-import app.model.Aluno;
-import app.model.Plastico;
 import app.model.Turma;
 
 @ManagedBean(name = "turmaBean")
 @SessionScoped
-public class TurmaBean {
+public class TurmaBean implements Serializable{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private TurmaDAO dao;
 	private Turma turma;
 	private Turma turmaAnterior;
@@ -37,12 +40,15 @@ public class TurmaBean {
 
 	}
 
-	public String salvar(Turma turma) {
+	public String salvar() {
 		LOGGER.info("Salvando turma");
 		try {
-			this.dao.save(turma);
+			this.dao.save(this.turma);
 			LOGGER.info("Turma cadastrada com sucesso");
 			info("Turma cadastrada com sucesso");
+			Turma novaTurma = this.turma.clone();
+			this.turmas.add(novaTurma);
+			this.turma = new Turma();
 			return "listarTurma?faces-redirect=true";
 		} catch (Exception e) {
 			LOGGER.error("Erro ao salvar turma", e);
@@ -103,7 +109,7 @@ public class TurmaBean {
 			this.turma = turma.clone();
 			LOGGER.info("Realizando clone");
 			this.turmaAnterior = turma;
-			this.editado = true;
+			this.setEditado(true);
 			LOGGER.info("Pronto para atualizar");
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
@@ -142,7 +148,7 @@ public class TurmaBean {
 	public String cancelarAtualizar() {
 		this.turma.restaurar(this.turmaAnterior);
 		this.turmaAnterior = new Turma();
-		editado = false;
+		this.editado = false;
 		return "listarAluno?faces-redirect=true";
 	}
 
@@ -151,11 +157,10 @@ public class TurmaBean {
 	 */
 	public String buscarTodos() {
 		init();
-		LOGGER.info("Buscando turmas");
+		LOGGER.info("Buscando turmas...");
 		this.turmas = this.dao.findAll();
 		if (this.turmas.isEmpty() || this.turmas == null) {
 			LOGGER.info("Nenhuma turma encontrada");
-			info("Nenhuma turma encontrada");
 		} else {
 			LOGGER.info("Lista de turmas");
 		}
@@ -165,6 +170,10 @@ public class TurmaBean {
 	public String cancelarSalvar() {
 		init();
 		return "Inicio?faces-redirect=true";
+	}
+
+	public String adicionarAluno(Turma turma){
+		return "adicionarAlunoTurma?faces-redirect=true";
 	}
 
 	public TurmaDAO getDao() {
@@ -189,6 +198,14 @@ public class TurmaBean {
 
 	public void setTurmas(List<Turma> turmas) {
 		this.turmas = turmas;
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
 	}
 
 	/**
