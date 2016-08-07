@@ -2,22 +2,27 @@ package app.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.log4j.Logger;
 
 import app.dao.TurmaDAO;
+import app.model.Aluno;
 import app.model.Turma;
+import app.util.Status;
 
 @ManagedBean(name = "turmaBean")
 @SessionScoped
-public class TurmaBean implements Serializable{
+public class TurmaBean implements Serializable {
 	/**
 	 *
 	 */
@@ -26,7 +31,12 @@ public class TurmaBean implements Serializable{
 	private Turma turma;
 	private Turma turmaAnterior;
 	private List<Turma> turmas;
-	private boolean editado;
+	private List<Aluno> alunosSelecionados;
+	private List<Aluno> alunosSelecionadosTurma;
+
+	@ManagedProperty(value = "#{alunoBean}")
+	private AlunoBean alunoBean;
+
 	private Logger LOGGER = Logger.getLogger(TurmaBean.class);
 
 	@PostConstruct
@@ -35,8 +45,9 @@ public class TurmaBean implements Serializable{
 		this.dao = new TurmaDAO(Turma.class);
 		this.turma = new Turma();
 		this.turmaAnterior = new Turma();
-		this.editado = false;
 		this.turmas = new ArrayList<Turma>();
+		this.alunosSelecionados = new ArrayList<Aluno>();
+		this.alunosSelecionadosTurma = new ArrayList<Aluno>();
 
 	}
 
@@ -105,11 +116,10 @@ public class TurmaBean implements Serializable{
 	 */
 	public String atualizar(Turma turma) {
 		try {
-			LOGGER.info("Iniciando atualizacao do turma: " + turma.getId() );
+			LOGGER.info("Iniciando atualizacao do turma: " + turma.getId());
 			this.turma = turma.clone();
 			LOGGER.info("Realizando clone");
 			this.turmaAnterior = turma;
-			this.setEditado(true);
 			LOGGER.info("Pronto para atualizar");
 			return "atualizarAluno?faces-redirect=true";
 		} catch (Exception e) {
@@ -129,7 +139,6 @@ public class TurmaBean implements Serializable{
 			this.dao.update(this.turma);
 			this.turmas.remove(this.turmaAnterior);
 			this.turmas.add(this.turma);
-			this.editado = false;
 
 			info("Dados de " + this.turma.getId() + " atualizados");
 			LOGGER.info("Dados de " + this.turma.getId() + " atualizados");
@@ -148,8 +157,12 @@ public class TurmaBean implements Serializable{
 	public String cancelarAtualizar() {
 		this.turma.restaurar(this.turmaAnterior);
 		this.turmaAnterior = new Turma();
-		this.editado = false;
 		return "listarAluno?faces-redirect=true";
+	}
+
+	public void onload() {
+		LOGGER.info("passou no onload");
+		this.turmas = this.dao.findAll();
 	}
 
 	/**
@@ -172,7 +185,37 @@ public class TurmaBean implements Serializable{
 		return "Inicio?faces-redirect=true";
 	}
 
-	public String adicionarAluno(Turma turma){
+	public String vincularAlunoTurma(Turma turma) {
+		this.turma = turma;
+		LOGGER.info("Buscando alunos...");
+		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
+		if (this.alunoBean.getAlunos() != null && !this.alunoBean.getAlunos().isEmpty()) {
+			LOGGER.info("Montando lista de disponiveis e nao disponiveis...");
+			Iterator<Aluno> iter = this.alunoBean.getAlunos().iterator();
+			while (iter.hasNext()) {
+				Aluno alunoExistente = iter.next();
+				if (alunoExistente.getTurma() != null) {
+					LOGGER.info("Aluno:\n" + alunoExistente.toString());
+					this.turma.getAlunos().add(alunoExistente);
+					iter.remove();
+				}
+			}
+		}
+		return "adicionarAlunoTurma?faces-redirect=true";
+
+	}
+
+	public String adicionarAluno(Aluno aluno) {
+		aluno.setTurma(this.turma);
+		this.turma.getAlunos().add(aluno);
+		this.alunoBean.getAlunos().remove(aluno);
+		return "adicionarAlunoTurma?faces-redirect=true";
+	}
+
+	public String removerAluno(Aluno aluno) {
+		aluno.setTurma(null);
+		this.turma.getAlunos().remove(aluno);
+		this.alunoBean.getAlunos().add(aluno);
 		return "adicionarAlunoTurma?faces-redirect=true";
 	}
 
@@ -200,12 +243,28 @@ public class TurmaBean implements Serializable{
 		this.turmas = turmas;
 	}
 
-	public boolean isEditado() {
-		return editado;
+	public AlunoBean getAlunoBean() {
+		return alunoBean;
 	}
 
-	public void setEditado(boolean editado) {
-		this.editado = editado;
+	public void setAlunoBean(AlunoBean alunoBean) {
+		this.alunoBean = alunoBean;
+	}
+
+	public List<Aluno> getAlunosSelecionados() {
+		return alunosSelecionados;
+	}
+
+	public void setAlunosSelecionados(List<Aluno> alunosSelecionados) {
+		this.alunosSelecionados = alunosSelecionados;
+	}
+
+	public List<Aluno> getAlunosSelecionadosTurma() {
+		return alunosSelecionadosTurma;
+	}
+
+	public void setAlunosSelecionadosTurma(List<Aluno> alunosSelecionadosTurma) {
+		this.alunosSelecionadosTurma = alunosSelecionadosTurma;
 	}
 
 	/**

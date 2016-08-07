@@ -6,6 +6,7 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
+	<f:view> <f:event type="preRenderView" listener="#{turmaBean.onload}"/> </f:view>
 		<div class="row">
 			<h:form id="breadcrumb-form">
 				<ol class="breadcrumb">
@@ -31,8 +32,8 @@
 					<div class="panel-heading">Alunos cadastrados</div>
 					<h:messages id="messages" showDetail="true" closable="true"
 						autoUpdate="true" />
-					<div class="panel-body">
-						<table data-toggle="table" data-show-refresh="true"
+					<div class="panel-body" id="turma-table">
+						<table  data-toggle="table" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="toolbar1"
 							data-pagination="true" data-sort-name="name"
@@ -51,7 +52,7 @@
 										<tr>
 											<td><h:outputText value="#{turma.id}" /></td>
 											<td><h:commandLink id="btn_edit"
-													action="#{turmaBean.adicionarAluno(turma)}" type="submit"
+													action="#{turmaBean.vincularAlunoTurma(turma)}" type="submit"
 													process="@form" styleClass="form-group">
 													<h:outputText value="#{turma.codigo}" />
 												</h:commandLink></td>
