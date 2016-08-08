@@ -38,17 +38,17 @@
 						<div class="col-lg-12">
 							<div class="col-md-6">
 								<h:form id="alunos-list-form">
-									<h:selectManyCheckbox id="alunos-checkbox"
-										value="#{turmaBean.alunosSelecionados}">
+									<p:selectCheckboxMenu filter="true" filterMatchMode="startsWith"
+									id="alunos-list-checkbox" value="#{turmaBean.alunosSelecionados}" label="Disponíveis">
 										<f:selectItems value="#{alunoBean.alunos}" var="aluno"
 											itemLabel="#{aluno.pessoa.nome}" itemValue="#{aluno}" />
-									</h:selectManyCheckbox>
+									</p:selectCheckboxMenu>
 								</h:form>
 							</div>
 							<div class="col-md-6">
 								<h:form id="alunos-selected-form">
-									<h:selectManyCheckbox id="alunos-checkbox"
-										value="#{turmaBean.alunosSelecionadosTurma}">
+									<p:selectCheckboxMenu filter="true" filterMatchMode="startsWith"
+									id="alunos-selected-checkbox" value="#{turmaBean.alunosSelecionadosTurma}">
 										<f:selectItems value="#{turmaBean.turma.alunos}" var="aluno"
 											itemLabel="#{aluno.pessoa.nome}" itemValue="#{aluno}" />
 									</h:selectManyCheckbox>
