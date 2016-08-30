@@ -1,9 +1,24 @@
 package app.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -43,9 +58,9 @@ public class Aluno implements Serializable {
 	@ManyToOne
 	private Turma turma;
 
-	//bi-directional many-to-one association to Penalidade
+	//bi-directional many-to-one association to Infracao
 	@OneToMany(mappedBy="aluno")
-	private List<Penalidade> penalidades;
+	private List<Infracao> infracoes;
 
 	public Aluno() {
 	}
@@ -114,23 +129,26 @@ public class Aluno implements Serializable {
 		this.turma = turma;
 	}
 
-	public List<Penalidade> getPenalidades() {
-		return this.penalidades;
+	public List<Infracao> getInfracoes() {
+		return this.infracoes;
 	}
 
-	public void setPenalidades(List<Penalidade> penalidades) {
-		this.penalidades = penalidades;
+	public void setInfracoes(List<Infracao> infracoes) {
+		this.infracoes = infracoes;
 	}
 
-	public Penalidade addPenalidade(Penalidade penalidade) {
-		getPenalidades().add(penalidade);
+	public Infracao addInfracao(Infracao penalidade) {
+		if(infracoes == null){
+			infracoes = new ArrayList<Infracao>();
+		}
+		getInfracoes().add(penalidade);
 		penalidade.setAluno(this);
 
 		return penalidade;
 	}
 
-	public Penalidade removePenalidade(Penalidade penalidade) {
-		getPenalidades().remove(penalidade);
+	public Infracao removeInfracao(Infracao penalidade) {
+		getInfracoes().remove(penalidade);
 		penalidade.setAluno(null);
 
 		return penalidade;
@@ -147,7 +165,7 @@ public class Aluno implements Serializable {
 		alunoClone.setTurma(turma);
 		alunoClone.setPessoa(pessoa);
 		alunoClone.setStatus(status);
-		alunoClone.setPenalidades(penalidades);
+		alunoClone.setInfracoes(infracoes);
 
 		return alunoClone;
 
@@ -162,7 +180,7 @@ public class Aluno implements Serializable {
 		this.turma = aluno.getTurma();
 		this.pessoa = aluno.getPessoa();
 		this.status = aluno.getStatus();
-		this.penalidades = aluno.getPenalidades();
+		this.infracoes = aluno.getInfracoes();
 	}
 
 	@Override

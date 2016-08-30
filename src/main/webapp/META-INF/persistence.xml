@@ -10,11 +10,11 @@
 		<class>app.model.Documento</class>
 		<class>app.model.Endereco</class>
 		<class>app.model.Evento</class>
-		<class>app.model.Penalidade</class>
+		<class>app.model.Infracao</class>
 		<class>app.model.Pessoa</class>
 		<class>app.model.Plastico</class>
 		<class>app.model.Professor</class>
-		<class>app.model.TipoPenalidade</class>
+		<class>app.model.TipoInfracao</class>
 		<class>app.model.Turma</class>
 		<class>app.model.Usuario</class>
 		<properties>

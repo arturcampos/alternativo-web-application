@@ -54,6 +54,8 @@ public class AlunoBean implements Serializable {
 	@ManagedProperty(value = "#{plasticoBean}")
 	private PlasticoBean plasticoBean;
 
+	@ManagedProperty(value = "#{turmaBean}")
+	private TurmaBean turmaBean;
 	/**
 	 *
 	 */
@@ -72,6 +74,7 @@ public class AlunoBean implements Serializable {
 		this.enderecoTab = "";
 		this.documentoTab = "";
 		this.plastico = new Plastico();
+		this.turmaBean.buscarPorStatus("ATIVO");
 	}
 
 	/**
@@ -781,6 +784,20 @@ public class AlunoBean implements Serializable {
 	 */
 	public void setPlasticoBean(PlasticoBean plasticoBean) {
 		this.plasticoBean = plasticoBean;
+	}
+
+	/**
+	 * @return the turmaBean
+	 */
+	public TurmaBean getTurmaBean() {
+		return turmaBean;
+	}
+
+	/**
+	 * @param turmaBean the turmaBean to set
+	 */
+	public void setTurmaBean(TurmaBean turmaBean) {
+		this.turmaBean = turmaBean;
 	}
 
 	/**

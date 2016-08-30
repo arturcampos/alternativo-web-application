@@ -2,23 +2,19 @@ package app.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.log4j.Logger;
 
 import app.dao.TurmaDAO;
 import app.model.Aluno;
 import app.model.Turma;
-import app.util.Status;
 
 @ManagedBean(name = "turmaBean")
 @SessionScoped
@@ -31,11 +27,7 @@ public class TurmaBean implements Serializable {
 	private Turma turma;
 	private Turma turmaAnterior;
 	private List<Turma> turmas;
-	private List<Aluno> alunosSelecionados;
-	private List<Aluno> alunosSelecionadosTurma;
-
-	@ManagedProperty(value = "#{alunoBean}")
-	private AlunoBean alunoBean;
+	private List<Aluno> alunos;
 
 	private Logger LOGGER = Logger.getLogger(TurmaBean.class);
 
@@ -46,27 +38,32 @@ public class TurmaBean implements Serializable {
 		this.turma = new Turma();
 		this.turmaAnterior = new Turma();
 		this.turmas = new ArrayList<Turma>();
-		this.alunosSelecionados = new ArrayList<Aluno>();
-		this.alunosSelecionadosTurma = new ArrayList<Aluno>();
-
+		this.alunos = new ArrayList<Aluno>();
 	}
 
 	public String salvar() {
-		LOGGER.info("Salvando turma");
 		try {
-			this.dao.save(this.turma);
-			LOGGER.info("Turma cadastrada com sucesso");
-			info("Turma cadastrada com sucesso");
-			Turma novaTurma = this.turma.clone();
-			this.turmas.add(novaTurma);
-			this.turma = new Turma();
-			return "listarTurma?faces-redirect=true";
+			LOGGER.info("Verificando existencia da nova turma...");
+			this.turmas = dao.findByStatus("ATIVO");
+			if (this.turma.exists(this.turmas)) {
+				LOGGER.warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
+				warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
+				return "salvarTurma?faces-redirect=true";
+			} else {
+				LOGGER.info("Salvando turma com status ativo");
+				this.turma.setStatus("ATIVO");
+				this.dao.save(this.turma);
+				Turma novaTurma = this.turma.clone();
+				this.turmas.add(novaTurma);
+				this.turma = new Turma();
+				LOGGER.info("Turma " + novaTurma.getCodigo() + " criada com sucesso");
+				info("Turma " + novaTurma.getCodigo() + " criada com sucesso");
+			}
 		} catch (Exception e) {
 			LOGGER.error("Erro ao salvar turma", e);
 			error("Erro ao salvar turma: " + e.getMessage());
-			return "salvarTurma?faces-redirect=true";
 		}
-
+		return "salvarTurma?faces-redirect=true";
 	}
 
 	public String buscarPorId(Long id) {
@@ -160,11 +157,6 @@ public class TurmaBean implements Serializable {
 		return "listarAluno?faces-redirect=true";
 	}
 
-	public void onload() {
-		LOGGER.info("passou no onload");
-		this.turmas = this.dao.findAll();
-	}
-
 	/**
 	 *
 	 */
@@ -185,38 +177,43 @@ public class TurmaBean implements Serializable {
 		return "Inicio?faces-redirect=true";
 	}
 
-	public String vincularAlunoTurma(Turma turma) {
-		this.turma = turma;
-		LOGGER.info("Buscando alunos...");
-		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
-		if (this.alunoBean.getAlunos() != null && !this.alunoBean.getAlunos().isEmpty()) {
-			LOGGER.info("Montando lista de disponiveis e nao disponiveis...");
-			Iterator<Aluno> iter = this.alunoBean.getAlunos().iterator();
-			while (iter.hasNext()) {
-				Aluno alunoExistente = iter.next();
-				if (alunoExistente.getTurma() != null) {
-					LOGGER.info("Aluno:\n" + alunoExistente.toString());
-					this.turma.getAlunos().add(alunoExistente);
-					iter.remove();
-				}
-			}
+	/*
+	 * public String vincularAlunoTurma(Turma turma) { this.turma = turma;
+	 * LOGGER.info("Buscando alunos...");
+	 * this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString()); if
+	 * (this.alunoBean.getAlunos() != null &&
+	 * !this.alunoBean.getAlunos().isEmpty()) { LOGGER.info(
+	 * "Montando lista de disponiveis e nao disponiveis..."); Iterator<Aluno>
+	 * iter = this.alunoBean.getAlunos().iterator(); while (iter.hasNext()) {
+	 * Aluno alunoExistente = iter.next(); if (alunoExistente.getTurma() !=
+	 * null) { LOGGER.info("Aluno:\n" + alunoExistente.toString());
+	 * this.turma.getAlunos().add(alunoExistente); iter.remove(); } } } return
+	 * "adicionarAlunoTurma?faces-redirect=true";
+	 *
+	 * }
+	 */
+
+	/*
+	 * public String adicionarAluno(Aluno aluno) { aluno.setTurma(this.turma);
+	 * this.turma.getAlunos().add(aluno);
+	 * this.alunoBean.getAlunos().remove(aluno); return
+	 * "adicionarAlunoTurma?faces-redirect=true"; }
+	 *
+	 * public String removerAluno(Aluno aluno) { aluno.setTurma(null);
+	 * this.turma.getAlunos().remove(aluno);
+	 * this.alunoBean.getAlunos().add(aluno); return
+	 * "adicionarAlunoTurma?faces-redirect=true"; }
+	 */
+
+	public String buscarPorStatus(String status) {
+
+		try {
+			this.turmas = dao.findByStatus(status);
+		} catch (Exception e) {
+			LOGGER.error("Erro ao consultar ativas", e);
+			error("Erro ao consultar ativas.");
 		}
-		return "adicionarAlunoTurma?faces-redirect=true";
-
-	}
-
-	public String adicionarAluno(Aluno aluno) {
-		aluno.setTurma(this.turma);
-		this.turma.getAlunos().add(aluno);
-		this.alunoBean.getAlunos().remove(aluno);
-		return "adicionarAlunoTurma?faces-redirect=true";
-	}
-
-	public String removerAluno(Aluno aluno) {
-		aluno.setTurma(null);
-		this.turma.getAlunos().remove(aluno);
-		this.alunoBean.getAlunos().add(aluno);
-		return "adicionarAlunoTurma?faces-redirect=true";
+		return "listarTurmas?faces-redirect=true";
 	}
 
 	public TurmaDAO getDao() {
@@ -243,28 +240,12 @@ public class TurmaBean implements Serializable {
 		this.turmas = turmas;
 	}
 
-	public AlunoBean getAlunoBean() {
-		return alunoBean;
+	public List<Aluno> getAlunos() {
+		return alunos;
 	}
 
-	public void setAlunoBean(AlunoBean alunoBean) {
-		this.alunoBean = alunoBean;
-	}
-
-	public List<Aluno> getAlunosSelecionados() {
-		return alunosSelecionados;
-	}
-
-	public void setAlunosSelecionados(List<Aluno> alunosSelecionados) {
-		this.alunosSelecionados = alunosSelecionados;
-	}
-
-	public List<Aluno> getAlunosSelecionadosTurma() {
-		return alunosSelecionadosTurma;
-	}
-
-	public void setAlunosSelecionadosTurma(List<Aluno> alunosSelecionadosTurma) {
-		this.alunosSelecionadosTurma = alunosSelecionadosTurma;
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 
 	/**

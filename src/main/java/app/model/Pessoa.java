@@ -1,9 +1,20 @@
 package app.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the pessoa database table.
@@ -201,6 +212,9 @@ public class Pessoa implements Serializable {
 	}
 
 	public Documento addDocumento(Documento documento) {
+		if(documentos == null){
+			documentos = new ArrayList<Documento>();
+		}
 		getDocumentos().add(documento);
 		documento.setPessoa(this);
 
@@ -223,6 +237,9 @@ public class Pessoa implements Serializable {
 	}
 
 	public Endereco addEndereco(Endereco endereco) {
+		if(enderecos == null){
+			enderecos = new ArrayList<Endereco>();
+		}
 		getEnderecos().add(endereco);
 		endereco.setPessoa(this);
 
@@ -246,8 +263,9 @@ public class Pessoa implements Serializable {
 
 	public Plastico addPlastico(Plastico plastico) {
 		if (getPlasticos() == null) {
-			getPlasticos().add(plastico);
+			plasticos = new ArrayList<Plastico>();
 		}
+		getPlasticos().add(plastico);
 		plastico.setPessoa(this);
 
 		return plastico;

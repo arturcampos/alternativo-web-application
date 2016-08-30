@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the penalidades database table.
- * 
+ * The persistent class for the infracao database table.
+ *
  */
 @Entity
-@Table(name="penalidades")
-@NamedQuery(name="Penalidade.findAll", query="SELECT p FROM Penalidade p")
-public class Penalidade implements Serializable {
+@Table(name="infracao")
+@NamedQuery(name="Infracao.findAll", query="SELECT p FROM Infracao p")
+public class Infracao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,11 +26,11 @@ public class Penalidade implements Serializable {
 	@ManyToOne
 	private Aluno aluno;
 
-	//bi-directional many-to-one association to TipoPenalidade
+	//bi-directional many-to-one association to TipoInfracao
 	@ManyToOne
-	private TipoPenalidade tipoPenalidade;
+	private TipoInfracao tipoInfracao;
 
-	public Penalidade() {
+	public Infracao() {
 	}
 
 	public Long getId() {
@@ -65,12 +65,12 @@ public class Penalidade implements Serializable {
 		this.aluno = aluno;
 	}
 
-	public TipoPenalidade getTipoPenalidade() {
-		return this.tipoPenalidade;
+	public TipoInfracao getTipoInfracao() {
+		return this.tipoInfracao;
 	}
 
-	public void setTipoPenalidade(TipoPenalidade tipoPenalidade) {
-		this.tipoPenalidade = tipoPenalidade;
+	public void setTipoInfracao(TipoInfracao tipoInfracao) {
+		this.tipoInfracao = tipoInfracao;
 	}
 
 }
