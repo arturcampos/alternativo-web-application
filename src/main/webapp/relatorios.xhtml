@@ -26,14 +26,14 @@
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<p:messages id="messages" autoUpdate="true" showDetail="true" />
+					<h:messages id="messages" autoUpdate="true" showDetail="true" />
 					<div class="col-xs-12 col-md-6 col-lg-3">
 						<div class="">
 							<div class="row no-padding">
 								<div class="col-sm-12 col-lg-12">
 									<h:form id="link-form-simples-aluno" target="_blank">
 										<div class="form-group">
-											<p:inputText placeholder="Nome do Relatório"
+											<h:inputText placeholder="Nome do Relatório"
 												value="#{nomeRelatorio}" class="form-control" />
 											<h:commandButton
 												action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio)}"
@@ -70,10 +70,10 @@
 								<div class="col-sm-12 col-lg-12">
 									<h:form id="link-form-presenca" target="_blank">
 										<div class="form-group">
-											<p:inputText placeholder="AAAA-MM-DD" value="#{data}"
+											<h:inputText placeholder="AAAA-MM-DD" value="#{data}"
 												class="form-control">
 												<f:convertDateTime pattern="yyyy-MM-dd" />
-											</p:inputText>
+											</h:inputText>
 											<h:commandButton
 												action="#{relatorioBean.relatorioPresencaPorData(data)}"
 												process="@form" styleClass="btn btn-primary form-control"

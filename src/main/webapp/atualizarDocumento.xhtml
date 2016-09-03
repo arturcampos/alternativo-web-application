@@ -9,30 +9,30 @@
 		<div class="row">
 			<h:form id="breadcrumb-form" rendered="#{documentoBean.tipoPessoa == 'ALUNO'}">
 				<ol class="breadcrumb">
-					<li><p:commandLink action="Inicio?faces-redirect=true"
+					<li><h:commandLink action="Inicio?faces-redirect=true"
 							process="@this" type="submit"
 							styleClass="glyphicon glyphicon-home" /></li>
-					<li><p:commandLink action="listarAluno?faces-redirect=true"
-							process="@this" type="submit">Listagem de alunos</p:commandLink></li>
-					<li><p:commandLink action="atualizarAluno?faces-redirect=true"
-							process="@this" type="submit">Atualizar dados alunos</p:commandLink></li>
-					<li><p:commandLink action="listarEndereco?faces-redirect=true"
-							process="@this" type="submit">Listagem de documentos</p:commandLink></li>
+					<li><h:commandLink action="listarAluno?faces-redirect=true"
+							process="@this" type="submit">Listagem de alunos</h:commandLink></li>
+					<li><h:commandLink action="atualizarAluno?faces-redirect=true"
+							process="@this" type="submit">Atualizar dados alunos</h:commandLink></li>
+					<li><h:commandLink action="listarEndereco?faces-redirect=true"
+							process="@this" type="submit">Listagem de documentos</h:commandLink></li>
 					<li class="active">Atualizar Documento</li>
 				</ol>
 			</h:form>
 
 			<h:form id="breadcrumb-form-2" rendered="#{documentoBean.tipoPessoa == 'PROFESSOR'}">
 				<ol class="breadcrumb">
-					<li><p:commandLink action="Inicio?faces-redirect=true"
+					<li><h:commandLink action="Inicio?faces-redirect=true"
 							process="@this" type="submit"
 							styleClass="glyphicon glyphicon-home" /></li>
-					<li><p:commandLink action="listarProfessor?faces-redirect=true"
-							process="@this" type="submit">Listagem de alunos</p:commandLink></li>
-					<li><p:commandLink action="atualizarProfessor?faces-redirect=true"
-							process="@this" type="submit">Atualizar dados alunos</p:commandLink></li>
-					<li><p:commandLink action="listarEndereco?faces-redirect=true"
-							process="@this" type="submit">Listagem de documentos</p:commandLink></li>
+					<li><h:commandLink action="listarProfessor?faces-redirect=true"
+							process="@this" type="submit">Listagem de alunos</h:commandLink></li>
+					<li><h:commandLink action="atualizarProfessor?faces-redirect=true"
+							process="@this" type="submit">Atualizar dados alunos</h:commandLink></li>
+					<li><h:commandLink action="listarEndereco?faces-redirect=true"
+							process="@this" type="submit">Listagem de documentos</h:commandLink></li>
 					<li class="active">Atualizar Documento</li>
 				</ol>
 			</h:form>
@@ -71,7 +71,7 @@
 											</div>
 											<div class="form-group">
 												<label>Numero:</label>
-												<p:inputText value="#{documentoBean.documento.numero}"
+												<h:inputText value="#{documentoBean.documento.numero}"
 													styleClass="form-control" id="numero-doc" />
 											</div>
 										</div>
@@ -92,12 +92,12 @@
 										<div class="col-md-3">
 											<div class="form-group">
 												<label>UF:</label>
-												<p:inputText value="#{documentoBean.documento.uf}"
+												<h:inputText value="#{documentoBean.documento.uf}"
 													styleClass="form-control" id="uf-doc" style="width: 70px" />
 											</div>
 											<div class="form-group">
 												<label>Orgão emissor:</label>
-												<p:inputText value="#{documentoBean.documento.orgaoEmissor}"
+												<h:inputText value="#{documentoBean.documento.orgaoEmissor}"
 													styleClass="form-control" id="emissor-doc" />
 											</div>
 										</div>

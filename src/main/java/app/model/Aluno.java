@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  * The persistent class for the aluno database table.
@@ -30,7 +32,8 @@ public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(insertable=false)
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
@@ -41,32 +44,18 @@ public class Aluno implements Serializable {
 
 	private String matricula;
 
+	private String status;
+
 	private int tipoCotaIngresso;
 
-	// bi-directional many-to-one association to Turma
-	@ManyToOne
-	private Turma turma;
-
-	// bi-directional one-to-one association to Pessoa
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private Pessoa pessoa;
 
-	private String status;
+	//bi-directional many-to-one association to Turma
+	@ManyToOne
+	private Turma turma;
 
 	public Aluno() {
-	}
-
-	public Aluno(Long id, Date dataEgresso, Date dataIngresso, String matricula, int tipoCotaIngresso, Turma turma,
-			Pessoa pessoa, String status) {
-		super();
-		this.id = id;
-		this.dataEgresso = dataEgresso;
-		this.dataIngresso = dataIngresso;
-		this.matricula = matricula;
-		this.tipoCotaIngresso = tipoCotaIngresso;
-		this.turma = turma;
-		this.pessoa = pessoa;
-		this.status = status;
 	}
 
 	public Long getId() {
@@ -101,20 +90,20 @@ public class Aluno implements Serializable {
 		this.matricula = matricula;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getTipoCotaIngresso() {
 		return this.tipoCotaIngresso;
 	}
 
 	public void setTipoCotaIngresso(int tipoCotaIngresso) {
 		this.tipoCotaIngresso = tipoCotaIngresso;
-	}
-
-	public Turma getTurma() {
-		return this.turma;
-	}
-
-	public void setTurma(Turma turma) {
-		this.turma = turma;
 	}
 
 	public Pessoa getPessoa() {
@@ -125,17 +114,28 @@ public class Aluno implements Serializable {
 		this.pessoa = pessoa;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public Turma getTurma() {
+		return this.turma;
 	}
 
-	public String getStatus() {
-		return this.status;
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	@Override
 	public Aluno clone() {
-		return new Aluno(id, dataEgresso, dataIngresso, matricula, tipoCotaIngresso, turma, pessoa, status);
+		Aluno alunoClone = new Aluno();
+		alunoClone.setId(id);
+		alunoClone.setDataEgresso(dataEgresso);
+		alunoClone.setDataIngresso(dataIngresso);
+		alunoClone.setMatricula(matricula);
+		alunoClone.setTipoCotaIngresso(tipoCotaIngresso);
+		alunoClone.setTurma(turma);
+		alunoClone.setPessoa(pessoa);
+		alunoClone.setStatus(status);
+
+		return alunoClone;
+
 	}
 
 	public void restaurar(Aluno aluno) {

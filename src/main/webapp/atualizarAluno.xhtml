@@ -38,6 +38,11 @@
 									autoUpdate="true" />
 								<div class="col-md-4">
 								<div class="form-group">
+										<label>Turma:</label>
+										<p:inputText value="#{alunoBean.aluno.turma.codigo}"
+											styleClass="form-control" id="turma" readonly="true"/>
+									</div>
+									<div class="form-group">
 										<label>Matricula:</label>
 										<p:inputText value="#{alunoBean.aluno.matricula}"
 											styleClass="form-control" id="matricula" />
@@ -75,13 +80,13 @@
 											<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
 										</h:selectOneMenu>
 									</div>
+								</div>
+								<div class="col-md-4">
 									<div class="form-group">
 										<label>Etnia:</label>
 										<p:inputText value="#{alunoBean.pessoa.etnia}"
 											styleClass="form-control" id="Etnia" />
 									</div>
-								</div>
-								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nacionalidade:</label>
 										<p:inputText value="#{alunoBean.aluno.pessoa.nacionalidade}"
@@ -98,12 +103,7 @@
 										<p:inputText value="#{alunoBean.aluno.pessoa.uf}"
 											styleClass="form-control" id="UF" style="width: 70px" />
 									</div>
-									<div class="form-group">
-										<label>Necessidades Especiais:</label>
-										<p:inputText
-											value="#{alunoBean.aluno.pessoa.necessidadesEspeciais}"
-											styleClass="form-control" id="Necessidades_Especiais" />
-									</div>
+
 									<div class="form-group">
 										<label>Nome da Mãe:</label>
 										<p:inputText value="#{alunoBean.aluno.pessoa.nomeMae}"
@@ -130,6 +130,12 @@
 											process="@form" id="btn-atualizar-endereco" type="submit" />
 									</div>
 									<div class="form-group">
+										<label>Necessidades Especiais:</label>
+										<p:inputText
+											value="#{alunoBean.aluno.pessoa.necessidadesEspeciais}"
+											styleClass="form-control" id="Necessidades_Especiais" />
+									</div>
+									<div class="form-group">
 										<label>Numero do Celular:</label>
 										<p:inputText
 											value="#{alunoBean.aluno.pessoa.responsavelLegal}"
@@ -141,19 +147,19 @@
 											styleClass="form-control" id="Responsavel_Legal" />
 									</div>
 									<div class="form-group">
-										<label> Data de ingresso:</label>
+										<label>Data de ingresso:</label>
 										<p:calendar pattern="dd/MM/yyyy" locale="pt_BR"
 											id="data-ingresso" value="#{alunoBean.aluno.dataIngresso}" />
 									</div>
 									<div class="form-group">
-										<label>Tipo de Cota:</label>
+										<label>Modalidade de Ingresso:</label>
 										<h:selectOneMenu value="#{alunoBean.aluno.tipoCotaIngresso}"
 											styleClass="form-control" id="tipo-cota-ingresso">
 											<f:selectItem itemValue="" itemLabel="-"
 												noSelectionOption="true" />
-											<f:selectItem itemValue="1" itemLabel="Cota 1" />
-											<f:selectItem itemValue="2" itemLabel="Cota 2" />
-											<f:selectItem itemValue="3" itemLabel="Cota 3" />
+											<f:selectItem itemValue="1" itemLabel="Modalidade 1" />
+											<f:selectItem itemValue="2" itemLabel="Modalidade 2" />
+											<f:selectItem itemValue="3" itemLabel="Modalidade 3" />
 										</h:selectOneMenu>
 									</div>
 								</div>
