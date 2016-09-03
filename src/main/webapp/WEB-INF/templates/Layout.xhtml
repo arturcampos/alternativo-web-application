@@ -21,12 +21,23 @@
 
 	<!--Icons-->
 	<script src="#{request.contextPath}/resources/js/lumino.glyphs.js"></script>
+	<!-- script
+		src="#{request.contextPath}/resources/js/jquery.maskedinput-1.4.1.js"></script-->
 	<!--h:outputScript name="#{request.contextPath}/resources/js/locales.js" library="js"></h:outputScript-->
 	<!--[if lt IE 9]>
 <script src="#{request.contextPath}/resources/js/html5shiv.js"></script>
 <script src="#{request.contextPath}/resources/js/respond.min.js"></script>
 <![endif]-->
-
+	<!-- script type="text/javascript">
+		jQuery(function($) {
+			$("#date").mask("99/99/9999", {
+				placeholder : "mm/dd/yyyy"
+			});
+			$("#phone").mask("(999) 999-9999");
+			$("#tin").mask("99-9999999");
+			$("#ssn").mask("999-99-9999");
+		});
+	</script-->
 </h:head>
 
 <h:body>

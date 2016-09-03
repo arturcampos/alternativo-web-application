@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "turma", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
 		@NamedQuery(name = "Turma.findByStatus", query = "SELECT t FROM Turma t WHERE t.status LIKE :wantedStatus") })
-public class Turma implements Serializable {
+public class Turma implements Serializable, IBaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -110,5 +110,59 @@ public class Turma implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+	    return "Turma[id=" + id + ", codigo=" + codigo + ", status=" + status + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alunos == null) ? 0 : alunos.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Turma other = (Turma) obj;
+		if (alunos == null) {
+			if (other.alunos != null)
+				return false;
+		} else if (!alunos.equals(other.alunos))
+			return false;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+
+	@Override
+	public Long pegarId() {
+		return new Long(id);
 	}
 }

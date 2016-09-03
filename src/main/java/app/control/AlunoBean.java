@@ -40,6 +40,7 @@ public class AlunoBean implements Serializable {
 	private Documento documento;
 	private List<Endereco> enderecos;
 	private List<Turma> turmas;
+	private Turma turma;
 	private Endereco endereco;
 	private Aluno alunoAnterior = null;
 	private List<Aluno> alunos;
@@ -76,6 +77,7 @@ public class AlunoBean implements Serializable {
 		this.enderecoTab = "";
 		this.documentoTab = "";
 		this.plastico = new Plastico();
+		this.turma = new Turma();
 		this.turmaBean.buscarPorStatus("ATIVO");
 		this.setTurmas(this.turmaBean.getTurmas());
 	}
@@ -139,6 +141,9 @@ public class AlunoBean implements Serializable {
 
 			// adicionando pessoa ao aluno
 			this.aluno.setPessoa(this.pessoa);
+
+			// adicionando turma <-> aluno
+			this.turma.addAluno(this.aluno);
 
 			// executando metod DAO para salvar aluno
 			this.dao.save(this.aluno);
@@ -765,6 +770,14 @@ public class AlunoBean implements Serializable {
 
 	public void setTurmas(List<Turma> turmas) {
 		this.turmas = turmas;
+	}
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	/**
