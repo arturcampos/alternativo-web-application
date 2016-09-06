@@ -37,40 +37,44 @@
 								<h:messages id="messages" showDetail="true" closable="true"
 									autoUpdate="true" />
 								<div class="col-md-4">
-								<div class="form-group">
-										<label>Turma:</label>
-										<p:inputText value="#{alunoBean.aluno.turma.codigo}"
-											styleClass="form-control" id="turma" readonly="true"/>
+									<div class="form-group">
+										<h:outputLabel value="Turma:" for="turma"/>
+										<h:inputText value="#{alunoBean.aluno.turma.codigo}"
+											styleClass="form-control" id="turma" readonly="true" />
 									</div>
 									<div class="form-group">
-										<label>Matricula:</label>
-										<p:inputText value="#{alunoBean.aluno.matricula}"
+										<h:outputLabel value="Matricula:" for="matricula"/>
+										<h:inputText value="#{alunoBean.aluno.matricula}"
 											styleClass="form-control" id="matricula" />
 									</div>
 									<div class="form-group">
-										<label>Nome:</label>
-										<p:inputText value="#{alunoBean.aluno.pessoa.nome}"
-											styleClass="form-control" id="Nome" />
+										<h:outputLabel value="Nome:" for="nome"/>
+										<h:inputText value="#{alunoBean.aluno.pessoa.nome}"
+											styleClass="form-control" id="nome" />
 									</div>
 									<div class="form-group">
-										<label>Sexo:</label>
-										<p:inputText value="#{alunoBean.aluno.pessoa.sexo}"
-											styleClass="form-control" id="Sexo" />
+										<h:outputLabel value="Sexo:" for="sexo"/>
+										<h:inputText value="#{alunoBean.aluno.pessoa.sexo}"
+											styleClass="form-control" id="sexo" />
 									</div>
 									<div class="form-group">
-										<label>Data de nascimento :</label>
-										<p:calendar value="#{alunoBean.aluno.pessoa.dataNasc}"
-											pattern="dd/MM/yyyy" locale="pt_BR" id="Data_Nascimento" />
+										<h:outputLabel value="Data de nascimento :" for="data-nascimento"/>
+										<p:inputMask value="#{alunoBean.pessoa.dataNasc}"
+											id="data-nascimento" styleClass="form-control" maxlength="10"
+											mask="99/99/9999">
+											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+												for="data-nascimento" />
+										</p:inputMask>
 									</div>
 									<div class="form-group">
-										<label>Email:</label>
+										<h:outputLabel value="Email:" for="email"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.email}"
-											styleClass="form-control" id="Email" />
+											styleClass="form-control" id="email" />
 									</div>
 									<div class="form-group">
-										<label>Estado Civil:</label>
+										<h:outputLabel value="Estado Civil:" for="estado-civil"/>
 										<h:selectOneMenu value="#{alunoBean.aluno.pessoa.estadoCivil}"
-											styleClass="form-control" id="Estado_Civil">
+											styleClass="form-control" id="estado-civil">
 											<f:selectItem itemValue="" itemLabel="-"
 												noSelectionOption="true" />
 											<f:selectItem itemValue="SOLTEIRO(A)" itemLabel="Solteiro(a)" />
@@ -83,36 +87,36 @@
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Etnia:</label>
+										<h:outputLabel value="Etnia:" for="etnia"/>
 										<p:inputText value="#{alunoBean.pessoa.etnia}"
-											styleClass="form-control" id="Etnia" />
+											styleClass="form-control" id="etnia" />
 									</div>
 									<div class="form-group">
-										<label>Nacionalidade:</label>
+										<h:outputLabel value="Nacionalidade:" for="nacionalidade"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.nacionalidade}"
-											styleClass="form-control" id="Nacionalidade" />
+											styleClass="form-control" id="nacionalidade" />
 									</div>
 									<div class="form-group">
-										<label>Naturalidade:</label>
+										<h:outputLabel value="Naturalidade:" for="naturalidade"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.naturalidade}"
-											styleClass="form-control" id="Naturalidade" />
+											styleClass="form-control" id="naturalidade" />
 									</div>
 
 									<div class="form-group">
-										<label>UF:</label>
+										<h:outputLabel value="UF:" for="UF"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.uf}"
 											styleClass="form-control" id="UF" style="width: 70px" />
 									</div>
 
 									<div class="form-group">
-										<label>Nome da Mãe:</label>
+										<h:outputLabel value="Nome da Mãe:" for="nome-mae"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.nomeMae}"
-											styleClass="form-control" id="Nome_Mae" />
+											styleClass="form-control" id="nome-mae" />
 									</div>
 									<div class="form-group">
-										<label>Nome do Pai:</label>
+										<h:outputLabel value="Nome do Pai:" for="nome-pai"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.nomePai}"
-											styleClass="form-control" id="Nome_Pai" />
+											styleClass="form-control" id="nome-pai" />
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -130,29 +134,33 @@
 											process="@form" id="btn-atualizar-endereco" type="submit" />
 									</div>
 									<div class="form-group">
-										<label>Necessidades Especiais:</label>
+										<h:outputLabel value="Necessidades Especiais:" for="necessidades-especiais"/>
 										<p:inputText
 											value="#{alunoBean.aluno.pessoa.necessidadesEspeciais}"
-											styleClass="form-control" id="Necessidades_Especiais" />
+											styleClass="form-control" id="necessidades-especiais" />
 									</div>
 									<div class="form-group">
-										<label>Numero do Celular:</label>
+										<h:outputLabel value="Numero do Celular:" for="numero-celular"/>
 										<p:inputText
 											value="#{alunoBean.aluno.pessoa.responsavelLegal}"
-											styleClass="form-control" id="Numero_Celular" />
+											styleClass="form-control" id="numero-celular" />
 									</div>
 									<div class="form-group">
-										<label>Responsavel Legal:</label>
+										<h:outputLabel value="Responsavel Legal:" for="responsavel-legal"/>
 										<p:inputText value="#{alunoBean.aluno.pessoa.numeroCelular}"
-											styleClass="form-control" id="Responsavel_Legal" />
+											styleClass="form-control" id="responsavel-legal" />
 									</div>
 									<div class="form-group">
-										<label>Data de ingresso:</label>
-										<p:calendar pattern="dd/MM/yyyy" locale="pt_BR"
-											id="data-ingresso" value="#{alunoBean.aluno.dataIngresso}" />
+										<h:outputLabel value="Data de ingresso:" for="data-ingresso"/>
+										<p:inputMask required="true" styleClass="form-control"
+											id="data-ingresso" value="#{alunoBean.aluno.dataIngresso}"
+											maxlength="10" mask="99/99/9999">
+											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+												for="data-ingresso" />
+										</p:inputMask>
 									</div>
 									<div class="form-group">
-										<label>Modalidade de Ingresso:</label>
+										<h:outputLabel value="Modalidade de Ingresso:" for="tipo-cota-ingresso"/>
 										<h:selectOneMenu value="#{alunoBean.aluno.tipoCotaIngresso}"
 											styleClass="form-control" id="tipo-cota-ingresso">
 											<f:selectItem itemValue="" itemLabel="-"
