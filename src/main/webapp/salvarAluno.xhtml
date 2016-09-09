@@ -220,7 +220,7 @@
 											<div class="form-group">
 												<h:outputLabel value="Data de expedição:" for="data-emissao" />
 												<p:inputMask value="#{alunoBean.documento.dataExpedicao}"
-													styleClass="form-control" id="data-emissao" maxlength="10"
+													styleClass="form-control" id="data-emissao" maxlength="15"
 													mask="99/99/9999">
 													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 														for="data-emissao" />
@@ -229,7 +229,7 @@
 											<div class="form-group">
 												<h:outputLabel value="Data vencimento:" for="data-validade" />
 												<p:inputMask value="#{alunoBean.documento.dataValidade}"
-													styleClass="form-control" id="data-validade" maxlength="10"
+													styleClass="form-control" id="data-validade" maxlength="15"
 													mask="99/99/9999">
 													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 														for="data-validade" />
@@ -279,18 +279,18 @@
 														<ui:repeat var="doc" value="#{alunoBean.documentos}"
 															varStatus="status">
 															<tr>
-																<td><h:outputText valeu="#{doc.numero}" /></td>
+																<td><h:outputText id="numero" valeu="#{doc.numero}" /></td>
 																<td><h:outputText valeu="#{doc.tipo}" /></td>
-																<td><h:outputText id="exp"
+																<td><h:outputText id="dataexpedicao"
 																		value="#{doc.dataExpedicao}">
-																		<f:convertDateTime pattern="dd/MM/yyyy" for="exp" />
+																		<f:convertDateTime pattern="dd/MM/yyyy" for="dataexpedicao" />
 																	</h:outputText></td>
 																<td><h:outputText value="#{doc.dataValidade}"
-																		id="vali">
-																		<f:convertDateTime pattern="dd/MM/yyyy" for="vali" />
+																		id="datavalidade">
+																		<f:convertDateTime pattern="dd/MM/yyyy" for="datavalidade" />
 																	</h:outputText></td>
-																<td><h:outputText valeu="#{doc.uf}" /></td>
-																<td><h:outputText valeu="#{doc.orgaoEmissor}" /></td>
+																<td><h:outputText id="uf" valeu="#{doc.uf}" /></td>
+																<td><h:outputText id="orgaoemissor" valeu="#{doc.orgaoEmissor}" /></td>
 																<td><h:commandLink
 																		actionListener="#{alunoBean.removerDocumento(doc)}"
 																		process="@this" class="glyphicon glyphicon-trash"
@@ -405,15 +405,15 @@
 													<ui:repeat var="endereco" value="#{alunoBean.enderecos}"
 														varStatus="status">
 														<tr>
-															<td><h:outputText valeu="#{endereco.cep}" /></td>
-															<td><h:outputText valeu="#{endereco.logradouro}" /></td>
-															<td><h:outputText valeu="#{endereco.numero}" /></td>
-															<td><h:outputText valeu="#{endereco.bairro}" /></td>
-															<td><h:outputText valeu="#{endereco.cidade}" /></td>
-															<td><h:outputText valeu="#{endereco.uf}" /></td>
-															<td><h:outputText
+															<td><h:outputText id="cep" valeu="#{endereco.cep}" /></td>
+															<td><h:outputText id="logradouro" valeu="#{endereco.logradouro}" /></td>
+															<td><h:outputText id="numero" valeu="#{endereco.numero}" /></td>
+															<td><h:outputText id="bairro" valeu="#{endereco.bairro}" /></td>
+															<td><h:outputText id="cidade" valeu="#{endereco.cidade}" /></td>
+															<td><h:outputText id="uf" valeu="#{endereco.uf}" /></td>
+															<td><h:outputText id="enderecoCorrespondencia"
 																	valeu="#{endereco.enderecoCorrespondencia}" /></td>
-															<td><h:outputText valeu="#{endereco.telefone}" /></td>
+															<td><h:outputText id="telefone" valeu="#{endereco.telefone}" /></td>
 															<td><h:commandLink
 																	actionListener="#{alunoBean.removerEndereco(endereco)}"
 																	process="@this" class="glyphicon glyphicon-trash"

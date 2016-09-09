@@ -109,8 +109,8 @@ public class Documento implements Serializable {
 
 	@Override
 	public String toString() {
-		return new String("Número:" + this.numero + "\nOrgão Emissor:" + this.orgaoEmissor + "\nData de Emissão:"
-				+ this.dataExpedicao + "\nData Validade:" + this.dataValidade + "\nTipo: " + this.tipo);
+		return "Documento [id=" + id + ", numero=" + numero + ", orgaoEmissor=" + orgaoEmissor + ", dataEmissao="
+				+ dataExpedicao + ", dataValidade=" + dataValidade + ", tipo=" + tipo + "]";
 	}
 
 	@Override

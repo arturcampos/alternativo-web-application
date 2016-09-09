@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the aluno database table.
  *
@@ -26,14 +25,14 @@ import javax.persistence.TemporalType;
 @Table(name = "aluno", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
 		@NamedQuery(name = "Aluno.findLastRegistrationNumber", query = "SELECT MAX(a.matricula) as last FROM Aluno a"),
-		@NamedQuery(name="Aluno.findByRegistrationNumber", query="SELECT a FROM Aluno a WHERE a.matricula LIKE :wantedNumber"),
-		@NamedQuery(name="Aluno.findByStatus", query="SELECT a FROM Aluno a WHERE a.status LIKE :wantedStatus")})
+		@NamedQuery(name = "Aluno.findByRegistrationNumber", query = "SELECT a FROM Aluno a WHERE a.matricula LIKE :wantedNumber"),
+		@NamedQuery(name = "Aluno.findByStatus", query = "SELECT a FROM Aluno a WHERE a.status LIKE :wantedStatus") })
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(insertable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(insertable = false)
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
@@ -48,10 +47,10 @@ public class Aluno implements Serializable {
 
 	private int tipoCotaIngresso;
 
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa;
 
-	//bi-directional many-to-one association to Turma
+	// bi-directional many-to-one association to Turma
 	@ManyToOne
 	private Turma turma;
 
@@ -151,10 +150,8 @@ public class Aluno implements Serializable {
 
 	@Override
 	public String toString() {
-		return new String(this.id + "\nData Egresso: " + this.dataEgresso + "\nData Ingresso: " + this.dataIngresso
-				+ "\nMatricula: " + this.matricula + "\n Tipo de Cota: " + this.tipoCotaIngresso + "\nStatus:"
-				+ this.status);
+		return "Aluno[id=" + id + ", dataIgresso=" + dataIngresso + ", dataEgresso=" + dataEgresso + ", matricula="
+				+ matricula + ", tipoCotaIngresso=" + tipoCotaIngresso + ", status=" + status + "]";
 	}
-
 
 }

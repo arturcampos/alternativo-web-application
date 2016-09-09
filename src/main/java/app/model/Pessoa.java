@@ -328,17 +328,10 @@ public class Pessoa implements Serializable {
 	}
 
 	public String toString() {
-		return new String("id = " + this.id + "\n" + "dataNasc = " + this.dataNasc + "\n" + "email = " + this.email
-				+ "\n" + "estadoCivil = " + this.estadoCivil + "\n" + "etnia = " + this.etnia + "\n"
-				+ "nacionalidade = " + this.nacionalidade + "\n" + "naturalidade = " + this.naturalidade + "\n"
-				+ "necessidadesEspeciais = " + this.necessidadesEspeciais + "\n" + "nome = " + this.nome + "\n"
-				+ "nomeMae = " + this.nomeMae + "\n" + "nomePai = " + this.nomePai + "\n" + "numeroCelular = "
-				+ this.numeroCelular + "\n" + "responsavelLegal = " + this.responsavelLegal + "\n" + "sexo = "
-				+ this.sexo + "\n" + "uf = " + this.uf + "\n" + "documentos = " + this.documentos + "\n"
-				+ "enderecos = " + this.enderecos + "\n" + "plasticos = " + this.plasticos + "\n" + "tipopessoa = "
-				+ this.tipoPessoa + "\n"
-
-		);
+		return "Pessoa[id=" + id + ", dataNasc=" + dataNasc + ", email=" + email + ", estadoCivil=" + estadoCivil + ", etnia=" + etnia
+				+ ", nacionalidade=" + nacionalidade + ", naturalidade=" + naturalidade + ", necessidadesEspeciais=" + necessidadesEspeciais
+				+ ", nome=" + nome + ", nomeMae=" + nomeMae + ", nomePai=" + nomePai + ", numeroCelular=" + numeroCelular + ", responsavelLegal="
+				+ responsavelLegal + ", sexo=" + sexo + ", uf=" + uf + ", tipopessoa=" + tipoPessoa + "]";
 	}
 
 }

@@ -59,6 +59,7 @@ public class AlunoBean implements Serializable {
 
 	@ManagedProperty(value = "#{turmaBean}")
 	private TurmaBean turmaBean;
+
 	/**
 	 *
 	 */
@@ -241,8 +242,8 @@ public class AlunoBean implements Serializable {
 	 */
 	public String adicionarDocumento() {
 		try {
-			LOGGER.info("Adicioando documento.");
-			Documento doc =	this.documento.clone();
+			LOGGER.info("Adicioando documento:\n" + documento.toString());
+			Documento doc = this.documento.clone();
 			LOGGER.info(doc.toString());
 			this.documentos.add(doc);
 			this.documento = new Documento();
@@ -252,7 +253,7 @@ public class AlunoBean implements Serializable {
 			LOGGER.info("Documento adicionado");
 			info("Documento adicionado");
 		} catch (Exception e) {
-			LOGGER.error("Erro ao adicionar documento a lista",  e);
+			LOGGER.error("Erro ao adicionar documento a lista", e);
 			error("Erro ao adicionar documento a lista: " + e.getMessage());
 		}
 		return "salvarAluno?faces-redirect=true";
@@ -372,9 +373,8 @@ public class AlunoBean implements Serializable {
 	 */
 	public String atualizar(Aluno aluno) {
 		try {
-			LOGGER.info("Iniciando atualizacao do aluno: " + aluno.getMatricula() );
+			LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
 			this.aluno = aluno.clone();
-			LOGGER.info("Realizando clone");
 			this.alunoAnterior = aluno;
 			this.plastico = aluno.getPessoa().getPlasticos().get(0);
 			this.editado = true;
@@ -392,24 +392,23 @@ public class AlunoBean implements Serializable {
 	 */
 	public String salvarAtualizar() {
 		try {
-			LOGGER.info("Atualizando aluno");
+			LOGGER.info("Atualizando aluno:\n" + this.aluno.toString());
 			this.plastico.setLinhaDigitavel(aluno.getMatricula());
 
 			this.dao.update(this.aluno);
 
-			LOGGER.info("Atualizando número do cartão");
+			LOGGER.info("Atualizando nnmero do cartao");
 			this.plasticoBean.atualizar(this.plastico);
 
 			this.alunos.remove(this.alunoAnterior);
-			this.alunos.add(this.aluno);
 			aluno.getPessoa().getPlasticos().clear();
 			aluno.getPessoa().getPlasticos().add(this.plastico);
+			this.alunos.add(this.aluno);
 			this.editado = false;
 
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			LOGGER.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 
-			this.aluno = new Aluno();
 			this.alunoAnterior = new Aluno();
 			this.plastico = new Plastico();
 			return "listarAluno?faces-redirect=true";
@@ -818,7 +817,8 @@ public class AlunoBean implements Serializable {
 	}
 
 	/**
-	 * @param turmaBean the turmaBean to set
+	 * @param turmaBean
+	 *            the turmaBean to set
 	 */
 	public void setTurmaBean(TurmaBean turmaBean) {
 		this.turmaBean = turmaBean;
