@@ -20,4 +20,10 @@ public class TurmaDAO extends DAOImpl<Turma> {
 			return query.getResultList();
 	}
 
+	public List<Turma> findByCode(String codigo){
+		Query query = entitymanager.createNamedQuery("Turma.findByCode", Turma.class)
+				.setParameter("code", codigo);
+		return query.getResultList();
+	}
+
 }

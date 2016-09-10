@@ -20,7 +20,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "turma", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
-		@NamedQuery(name = "Turma.findByStatus", query = "SELECT t FROM Turma t WHERE t.status LIKE :wantedStatus") })
+		@NamedQuery(name = "Turma.findByStatus", query = "SELECT t FROM Turma t WHERE t.status LIKE :wantedStatus"),
+		@NamedQuery(name = "Turma.findByCode", query = "SELECT t FROM Turma t WHERE t.codigo LIKE :code")})
 public class Turma implements Serializable, IBaseEntity {
 	private static final long serialVersionUID = 1L;
 

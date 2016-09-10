@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import app.dao.TurmaDAO;
 import app.model.Aluno;
 import app.model.Turma;
+import app.util.ListUtil;
+import app.util.Status;
 
 @ManagedBean(name = "turmaBean")
 @SessionScoped
@@ -47,8 +49,8 @@ public class TurmaBean implements Serializable {
 			this.turmas = dao.findByStatus("ATIVO");
 			if (this.turma.exists(this.turmas)) {
 				LOGGER.warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN, " Atencao!", "Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo()));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+						" Atencao!", "Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo()));
 				return "salvarTurma?faces-redirect=true";
 			} else {
 				LOGGER.info("Salvando turma com status ativo");
@@ -174,10 +176,10 @@ public class TurmaBean implements Serializable {
 
 		try {
 			this.turmas = dao.findByStatus(status);
-			if(this.turmas == null || this.turmas.isEmpty()){
+			if (this.turmas == null || this.turmas.isEmpty()) {
 				LOGGER.warn("Não existem turmas ativas");
 				warn("Não existem turmas ativas");
-			}else{
+			} else {
 				LOGGER.warn("Foram encontradas " + turmas.size() + " turmas ativas");
 			}
 		} catch (Exception e) {
@@ -188,8 +190,17 @@ public class TurmaBean implements Serializable {
 	}
 
 	public void buscarPorCodigo(String codigoTurma) {
-
-
+		turmas = dao.findByCode(codigoTurma);
+		if (ListUtil.isValid(turmas)) {
+			for (Turma t : turmas) {
+				if (t.getStatus().equals(Status.ATIVO.toString())) {
+					turma = t;
+					break;
+				}
+			}
+		} else {
+			turma = null;
+		}
 	}
 
 	public TurmaDAO getDao() {
@@ -259,7 +270,5 @@ public class TurmaBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
 	}
-
-
 
 }

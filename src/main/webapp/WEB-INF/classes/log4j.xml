@@ -17,7 +17,7 @@
 		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
 	    </layout>
 	</appender>
-
+	<Logger name="log4j.logger.org.hibernate.orm.deprecation" level="error" />
 	<root>
 		<level value="info" />
 		<appender-ref ref="console" />
