@@ -33,7 +33,7 @@ public class Turma implements Serializable, IBaseEntity {
 	private String status;
 
 	// bi-directional many-to-one association to Aluno
-	@OneToMany(mappedBy = "turma", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
 	private List<Aluno> alunos;
 
 	public Turma() {

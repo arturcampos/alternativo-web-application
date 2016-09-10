@@ -187,6 +187,11 @@ public class TurmaBean implements Serializable {
 		return "listarTurmas?faces-redirect=true";
 	}
 
+	public void buscarPorCodigo(String codigoTurma) {
+
+
+	}
+
 	public TurmaDAO getDao() {
 		return dao;
 	}
@@ -254,5 +259,7 @@ public class TurmaBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, " Fatal!", message));
 	}
+
+
 
 }

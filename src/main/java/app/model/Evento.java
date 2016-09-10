@@ -14,7 +14,7 @@ import java.util.Date;
 @NamedQueries({
 @NamedQuery(name="Evento.findAll", query="SELECT e FROM Evento e"),
 @NamedQuery(name="Evento.findEventsByPersonIdAndStatus", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND e.status = :status"),
-@NamedQuery(name="Evento.findEventsByPersonIdAndDate", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND date_format(e.dataHoraEntrada, 'yyyy-MM-dd') = date_format(:date, 'yyyy-MM-dd')")})
+@NamedQuery(name="Evento.findEventsByPersonIdAndDate", query="SELECT e FROM Evento e WHERE e.pessoa.id = :personId AND date_format(e.dataHoraEntrada, '%d/%m/%Y') = date_format(:date, '%d/%m/%Y')")})
 
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -24,6 +24,7 @@ import app.model.Pessoa;
 import app.model.Plastico;
 import app.model.Turma;
 import app.util.AlunoUtil;
+import app.util.ListUtil;
 import app.util.Status;
 import app.util.TipoPessoa;
 
@@ -436,7 +437,7 @@ public class AlunoBean implements Serializable {
 		init();
 		LOGGER.info("Buscando alunos");
 		this.alunos = this.dao.findAll();
-		if (this.alunos.isEmpty() || this.alunos == null) {
+		if (!ListUtil.isValid(alunos)) {
 			LOGGER.info("Nenhum aluno encontrado");
 			info("Nenhum aluno encontrado");
 		} else {
@@ -455,6 +456,10 @@ public class AlunoBean implements Serializable {
 			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
 				LOGGER.info("Buscando Alunos " + status);
 				this.alunos = this.dao.findByStatus(status);
+				if(!ListUtil.isValid(this.alunos)){
+					warn("Nenhum aluno encontrado");
+					LOGGER.warn("Nenhum aluno encontrado");
+				}
 			} else {
 				LOGGER.warn("Status " + status + " invalido para consulta");
 				warn("Status " + status + " invalido para consulta");
@@ -485,7 +490,7 @@ public class AlunoBean implements Serializable {
 				LOGGER.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
 
 				this.alunos = this.dao.findByRegistrationNumber(matricula);
-				if (alunos != null && !alunos.isEmpty()) {
+				if (ListUtil.isValid(alunos)) {
 					LOGGER.info("Alunos encontrados.");
 					info("Alunos encontrados.");
 				} else {
@@ -499,6 +504,25 @@ public class AlunoBean implements Serializable {
 		}
 
 		return "listarAluno?faces-redirect=true";
+	}
+
+	public String buscarPorTurma(String codigoTurma) {
+		turmaBean.buscarPorCodigo(codigoTurma);
+		if (turmaBean.getTurma() != null) {
+			turma = turmaBean.getTurma();
+			if (!ListUtil.isValid(turma.getAlunos())) {
+				alunos = dao.findByTurmaId(turma.getId());
+			} else {
+				alunos = turma.getAlunos();
+			}
+			LOGGER.info("Sucesso!");
+		} else {
+			LOGGER.info("Turma nao encontrada: " + codigoTurma);
+			info("Turma nao encontrada: " + codigoTurma);
+		}
+
+		return "listarAluno?faces-redirect=true";
+
 	}
 
 	/**
