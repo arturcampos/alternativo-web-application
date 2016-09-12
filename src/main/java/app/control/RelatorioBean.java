@@ -16,7 +16,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,7 +40,7 @@ import net.sf.jasperreports.engine.JRDataSource;
  *
  */
 @ManagedBean(name = "relatorioBean")
-@SessionScoped
+@ViewScoped
 public class RelatorioBean implements Serializable {
 
 	/**
@@ -186,7 +186,7 @@ public class RelatorioBean implements Serializable {
 	 * Relatorio de faltas cometidas por entrar no segundo horario ou sair antes
 	 * do horario final
 	 */
-	public void relatorioFaltaHorarios() {
+	public void relatorioInfracaoHorarios(Turma turma) {
 		LOGGER.info("Iniciando a geracao do relatorio penalidades horarios");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
@@ -214,13 +214,13 @@ public class RelatorioBean implements Serializable {
 							// title, field name data type
 							col.column("Nome", "nome", type.stringType()),
 							col.column("Matricula", "matricula", type.stringType()),
-							col.column("Qtd Faltas/Horario", "qtd", type.integerType()))
+							col.column("Qtd Penalidades", "qtd", type.integerType()))
 					.setColumnStyle(columnStyle)
 					// shows report title
 					// .highlightDetailEvenRows()
 					.title(// shows report title
 							cmp.horizontalList()
-									.add(cmp.text("Faltas cometidas em rela��o aos Hor�rios Entrada/Sa�da")
+									.add(cmp.text("Infracoes Entrada/Saida turma " + turma.getCodigo())
 											.setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
 											cmp.text("Futuro-Alternativo").setStyle(titleStyle)
 													.setHorizontalAlignment(HorizontalAlignment.RIGHT))
@@ -233,7 +233,7 @@ public class RelatorioBean implements Serializable {
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
-					.setDataSource(criaDataSourceFaltaHorarios())
+					.setDataSource(criaDataSourceInfracaoHorarios(turma.getCodigo()))
 					// create and show report
 					.toPdf(baos);
 
@@ -241,7 +241,7 @@ public class RelatorioBean implements Serializable {
 			res.setContentType("application/pdf");
 			// Codigo abaixo gerar o relaorio e disponibiliza diretamente na
 			// pagina
-			res.setHeader("Content-disposition", "inline;filename=faltas_x_horarios.pdf");
+			res.setHeader("Content-disposition", "inline;filename=penalidades_x_horarios.pdf");
 			// Codigo abaixo gerar o relaorio e disponibiliza para o cliente
 			// baixar ou salvar
 			// res.setHeader("Content-disposition",
@@ -267,20 +267,20 @@ public class RelatorioBean implements Serializable {
 	 *
 	 * @return
 	 */
-	private JRDataSource criaDataSourceFaltaHorarios() {
-		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
-
+	private JRDataSource criaDataSourceInfracaoHorarios(String codigoTurma) {
 		DRDataSource dataSource = new DRDataSource("nome", "matricula", "qtd");
-		for (Aluno aluno : this.alunoBean.getAlunos()) {
-			int qtd = this.eventoBean.buscarFaltasHorariosPorPessoa(aluno.getPessoa());
 
-			dataSource.add(aluno.getPessoa().getNome(), aluno.getMatricula(), qtd);
+		this.alunoBean.buscarPorTurma(codigoTurma);
+		if (ListUtil.isValid(alunoBean.getAlunos())) {
+			for (Aluno aluno : this.alunoBean.getAlunos()) {
+				int qtd = this.eventoBean.buscarInfracoesHorariosPorPessoa(aluno.getPessoa());
 
+				dataSource.add(aluno.getPessoa().getNome(), aluno.getMatricula(), qtd);
+			}
+			this.alunoBean.getAlunos().clear();
+			this.alunoBean.limparAluno();
+			this.eventoBean.getEventos().clear();
 		}
-		this.alunoBean.getAlunos().clear();
-		this.alunoBean.limparAluno();
-		this.eventoBean.getEventos().clear();
-		System.out.println("Fim relatorio faltas horario");
 		return dataSource;
 	}
 
@@ -288,7 +288,7 @@ public class RelatorioBean implements Serializable {
 	 * @param data
 	 *            - the date to have search present list
 	 */
-	public void relatorioPresencaPorData(Date data) {
+	public void relatorioPresencaPorData(Date data, Turma turma) {
 		LOGGER.info("Iniciando a geracao do relatorio Presenca por data");
 		String dataTmp = null;
 
@@ -327,7 +327,7 @@ public class RelatorioBean implements Serializable {
 					// .highlightDetailEvenRows()
 					.title(// shows report title
 							cmp.horizontalList()
-									.add(cmp.text("Lista de presen�a " + dataTmp).setStyle(titleStyle)
+									.add(cmp.text("Lista de presenca " + dataTmp + " turma " + turma.getCodigo()).setStyle(titleStyle)
 											.setHorizontalAlignment(HorizontalAlignment.LEFT),
 											cmp.text("Futuro-Alternativo").setStyle(titleStyle)
 													.setHorizontalAlignment(HorizontalAlignment.RIGHT))
@@ -340,7 +340,7 @@ public class RelatorioBean implements Serializable {
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
-					.setDataSource(criaDataSourceRelatorioPresenca(data))
+					.setDataSource(criaDataSourceRelatorioPresenca(data, turma.getCodigo()))
 					// create and show report
 					.toPdf(baos);
 			baos.toByteArray();
@@ -373,32 +373,33 @@ public class RelatorioBean implements Serializable {
 	 *
 	 * @return
 	 */
-	private JRDataSource criaDataSourceRelatorioPresenca(Date data) {
+	private JRDataSource criaDataSourceRelatorioPresenca(Date data, String codigoTurma) {
 		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "status");
-		this.alunoBean.buscarTodosPorStatus(Status.ATIVO.toString());
-		for (Aluno aluno : this.alunoBean.getAlunos()) {
-			// preenchendo documento
-			Documento cpf = null;
-			this.documentoBean.buscarPorPessoa(aluno.getPessoa());
-			for (Documento d : this.documentoBean.getDocumentos()) {
-				if (d.getTipo().equals("CPF")) {
-					cpf = d;
-					break;
+		this.alunoBean.buscarPorTurma(codigoTurma);
+		if (ListUtil.isValid(alunoBean.getAlunos())) {
+			for (Aluno aluno : this.alunoBean.getAlunos()) {
+				// preenchendo documento
+				Documento cpf = null;
+				this.documentoBean.buscarPorPessoa(aluno.getPessoa());
+				for (Documento d : this.documentoBean.getDocumentos()) {
+					if (d.getTipo().equals("CPF")) {
+						cpf = d;
+						break;
+					}
 				}
-			}
 
-			// Definindo presen�a ou falta
-			String presenca = null;
-			this.eventoBean.buscarPorPessoaEData(aluno.getPessoa(), data);
-			if (this.eventoBean.getEventos().isEmpty() || this.eventoBean.getEventos() == null) {
-				presenca = "FALTOU";
-			} else {
-				presenca = "PRESENTE";
+				// Definindo presenca ou falta
+				String presenca = null;
+				this.eventoBean.buscarPorPessoaEData(aluno.getPessoa(), data);
+				if (this.eventoBean.getEventos().isEmpty() || this.eventoBean.getEventos() == null) {
+					presenca = "FALTOU";
+				} else {
+					presenca = "PRESENTE";
+				}
+				dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(), presenca);
 			}
-			System.out.println(presenca);
-			dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(), presenca);
+			this.alunoBean.getAlunos().clear();
 		}
-		this.alunoBean.getAlunos().clear();
 		return dataSource;
 	}
 
