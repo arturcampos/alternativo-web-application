@@ -3,22 +3,19 @@ package app.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the endereco database table.
  *
  */
 @Entity
 @Table(name = "endereco", schema = "futurodb")
-@NamedQueries({
-	@NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
-	@NamedQuery(name = "Endereco.findByPersonId", query = "SELECT e FROM Endereco e WHERE e.pessoa.id = :personId")
-})
+@NamedQueries({ @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
+		@NamedQuery(name = "Endereco.findByPersonId", query = "SELECT e FROM Endereco e WHERE e.pessoa.id = :personId") })
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String bairro;
@@ -39,7 +36,7 @@ public class Endereco implements Serializable {
 
 	private String uf;
 
-	//bi-directional many-to-one association to Pessoa
+	// bi-directional many-to-one association to Pessoa
 	@ManyToOne
 	private Pessoa pessoa;
 
@@ -140,10 +137,9 @@ public class Endereco implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return new String("Logradouro: " + this.logradouro + "\nNumero: " + this.numero + "\nBairro: " + this.bairro
-				+ "\nCidade: " + this.cidade + "\nCEP: " + this.cep + "\nUF: " + this.uf
-				+ "\n Endereço de Correspondência: " + this.enderecoCorrespondencia + "\nTelefone:" + this.telefone
-				+ "\nTipo de endereço: " + this.tipo);
+		return "Endereco[logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade
+				+ ", cep=" + cep + ", uf=" + uf + ", enderecoCorrespondencia=" + enderecoCorrespondencia + ", telefone="
+				+ telefone + ", tipoEndereco=" + tipo + "]";
 	}
 
 	/**
@@ -152,22 +148,21 @@ public class Endereco implements Serializable {
 	 */
 	@Override
 	public Endereco clone() {
-		 Endereco endClone = new Endereco();
-		 endClone.setId(id);
-		 endClone.setBairro(bairro);
-		 endClone.setCep(cep);
-		 endClone.setCidade(cidade);
-		 endClone.setEnderecoCorrespondencia(enderecoCorrespondencia);
-		 endClone.setLogradouro(logradouro);
-		 endClone.setNumero(numero);
-		 endClone.setTelefone(telefone);
-		 endClone.setTipo(tipo);
-		 endClone.setUf(uf);
-		 endClone.setPessoa(pessoa);
+		Endereco endClone = new Endereco();
+		endClone.setId(id);
+		endClone.setBairro(bairro);
+		endClone.setCep(cep);
+		endClone.setCidade(cidade);
+		endClone.setEnderecoCorrespondencia(enderecoCorrespondencia);
+		endClone.setLogradouro(logradouro);
+		endClone.setNumero(numero);
+		endClone.setTelefone(telefone);
+		endClone.setTipo(tipo);
+		endClone.setUf(uf);
+		endClone.setPessoa(pessoa);
 
-		 return endClone;
+		return endClone;
 	}
-
 
 	public void restaurar(Endereco endereco) {
 		this.id = endereco.getId();

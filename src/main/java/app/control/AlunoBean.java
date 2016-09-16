@@ -303,7 +303,6 @@ public class AlunoBean implements Serializable {
 	public String adicionarEndereco() {
 		LOGGER.info("Adicionando Endereco.");
 		try {
-			LOGGER.info("Adicionando Endereco.");
 			if (this.enderecos == null) {
 				this.enderecos = new ArrayList<Endereco>();
 			}
@@ -313,7 +312,7 @@ public class AlunoBean implements Serializable {
 			this.alunoTab = "";
 			this.documentoTab = "";
 			this.enderecoTab = "active";
-			LOGGER.info("Endereco adicionado com Sucesso.");
+			LOGGER.info("Endereco adicionado com Sucesso.\n" + end.toString());
 			info("Endereco adicionado com Sucesso.");
 		} catch (Exception e) {
 			LOGGER.error("Erro ao adicionar endereco a lista: ", e);

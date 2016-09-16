@@ -30,7 +30,7 @@
 					<h:form id="salvar-form">
 						<div class="panel panel-default">
 							<div class="panel-heading">Preencha o formulário.</div>
-							<h:messages id="messages" showDetail="true" closable="true"
+							<h:messages id="messages" showSumary="true" closable="true"
 								autoUpdate="true" />
 							<div class="panel-body tabs">
 								<ul class="nav nav-pills">
@@ -46,14 +46,14 @@
 										id="tab-professor">
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Nome:</label>
+												<h:outputLabel value="Nome:" for="nome"/>
 												<h:inputText value="#{professorBean.pessoa.nome}"
-													required="true" styleClass="form-control" id="Nome" />
+													required="true" styleClass="form-control" id="nome" />
 											</div>
 											<div class="form-group">
-												<label>Sexo:</label>
+												<h:outputLabel value="Sexo:" for="sexo"/>
 												<h:selectOneMenu value="#{professorBean.pessoa.sexo}"
-													styleClass="form-control" id="Sexo">
+													styleClass="form-control" id="sexo">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
 													<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
@@ -62,20 +62,23 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Data de nascimento :</label>
-												<p:calendar value="#{professorBean.pessoa.dataNasc}"
-													pattern="dd/MM/yyyy" locale="pt_BR" required="true" styleClass="form-date"
-													id="Data-Nascimento" />
+												<h:outputLabel value="Data de nascimento:" for="data-nascimento"/>
+												<p:inputMask required="true" styleClass="form-control"
+													id="data-nascimento" value="#{professorBean.pessoa.dataNasc}"
+													maxlength="10" mask="99/99/9999">
+													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+														for="data-nascimento" />
+												</p:inputMask>
 											</div>
 											<div class="form-group">
-												<label>Email:</label>
+												<h:outputLabel value="Email:" for="email" />
 												<h:inputText value="#{professorBean.pessoa.email}"
-													required="true" styleClass="form-control" id="Email" />
+													required="true" styleClass="form-control" id="email" />
 											</div>
 											<div class="form-group">
-												<label>Estado Civil:</label>
+												<h:outputLabel value="Estado Civil:" for="estado-civil"/>
 												<h:selectOneMenu value="#{professorBean.pessoa.estadoCivil}"
-													styleClass="form-control" id="Estado-Civil">
+													styleClass="form-control" id="estado-civil">
 													<f:selectItem itemValue="" itemLabel="-"
 														noSelectionOption="true" />
 													<f:selectItem itemValue="SOLTEIRO(A)"
@@ -87,61 +90,61 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Etnia:</label>
+												<h:outputLabel value="Etnia:" for="etnia"/>
 												<h:inputText value="#{professorBean.pessoa.etnia}"
-													required="true" styleClass="form-control" id="Etnia" />
+													required="true" styleClass="form-control" id="etnia" />
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Nacionalidade:</label>
+												<h:outputLabel value="Nacionalidade:" for="nacionalidade"/>
 												<h:inputText value="#{professorBean.pessoa.nacionalidade}"
 													required="true" styleClass="form-control"
-													id="Nacionalidade" />
+													id="nacionalidade" />
 											</div>
 											<div class="form-group">
-												<label>Naturalidade:</label>
+												<h:outputLabel value="Naturalidade:" for="naturalidade"/>
 												<h:inputText value="#{professorBean.pessoa.naturalidade}"
-													required="true" styleClass="form-control" id="Naturalidade" />
+													required="true" styleClass="form-control" id="naturalidade" />
 											</div>
 
 											<div class="form-group">
-												<label>UF:</label>
+												<h:outputLabel value="UF:" for="UF"/>
 												<h:inputText value="#{professorBean.pessoa.uf}" required="true"
 													styleClass="form-control" id="UF" style="width: 70px" />
 											</div>
 											<div class="form-group">
-												<label>Necessidades Especiais:</label>
+												<h:outputLabel value="Necessidades Especiais:" for="necessidades-especiais"/>
 												<h:inputText
 													value="#{professorBean.pessoa.necessidadesEspeciais}"
 													required="true" styleClass="form-control"
-													id="Necessidades-Especiais" />
+													id="necessidades-especiais" />
 											</div>
 											<div class="form-group">
-												<label>Nome da Mãe:</label>
+												<h:outputLabel value="Nome da Mãe:" for="nome-mae"/>
 												<h:inputText value="#{professorBean.pessoa.nomeMae}"
-													required="true" styleClass="form-control" id="Nome-Mae" />
+													required="true" styleClass="form-control" id="nome-mae" />
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Nome do Pai:</label>
+												<h:outputLabel value="Nome do Pai:" for="nome-pai"/>
 												<h:inputText value="#{professorBean.pessoa.nomePai}"
-													required="true" styleClass="form-control" id="Nome-Pai" />
+													required="true" styleClass="form-control" id="nome-pai" />
 											</div>
 											<div class="form-group">
-												<label>Numero do Celular:</label>
-												<h:inputText value="#{professorBean.pessoa.responsavelLegal}"
-													required="true" styleClass="form-control"
-													id="Numero-Celular" />
-											</div>
-											<div class="form-group">
-												<label>Responsavel Legal:</label>
+												<h:outputLabel value="Numero do Celular:" for="numero-celular"/>
 												<h:inputText value="#{professorBean.pessoa.numeroCelular}"
-													styleClass="form-control" id="Responsavel-Legal" />
+													required="true" styleClass="form-control"
+													id="numero-celular" />
 											</div>
 											<div class="form-group">
-												<label>Nível de formação:</label>
+												<h:outputLabel value="Responsavel Legal:" for="responsavel-legal"/>
+												<h:inputText value=" #{professorBean.pessoa.responsavelLegal}"
+													styleClass="form-control" id="responsavel-legal" />
+											</div>
+											<div class="form-group">
+												<h:outputLabel value="Nível de formação:" for="nivel-formacao"/>
 												<h:selectOneMenu
 													value="#{professorBean.professor.nivelFormacao}"
 													styleClass="form-control" id="nivel-formacao">
@@ -166,7 +169,7 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Formação:</label><span style="color: red"
+												<h:outputLabel value="Formação:" for="formacao"/><span style="color: red"
 													class="small">(Caso não se aplique, preencha com
 													N.A.)</span>
 												<h:inputText required="true" styleClass="form-control"
@@ -177,14 +180,14 @@
 										<div class="col-lg-12">
 											<div class="form-group" align="left">
 												<h:commandButton value="Adicionar"
-													action="#{professorBean.adicionarProfessor}"
+													action="#{professorBean.adicionarProfessor()}"
 													styleClass="btn btn-secondary"
-													process="@this, Nome, Sexo,
-													Data-Nascimento, Email,
-													Estado-Civil, Etnia, Nacionalidade,
-													Naturalidade, UF, Necessidades-Especiais,
-													Nome-Mae, Nome-Pai, Numero-Celular,
-													Responsavel-Legal, nivel-formacao, formacao"
+													process="nome, sexo,
+													data-nascimento, email,
+													estado-civil, etnia, nacionalidade,
+													naturalidade, UF, necessidades-especiais,
+													nome-mae, nome-pai, numero-celular,
+													responsavel-legal, nivel-formacao, formacao"
 													id="btn-add-professor" />
 
 											</div>
@@ -195,7 +198,7 @@
 										id="tab-documento">
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Tipo de documento:</label>
+												<h:outputLabel value="Tipo de documento:" for="tipo-doc"/>
 												<h:selectOneMenu value="#{professorBean.documento.tipo}"
 													styleClass="form-control" id="tipo-doc">
 													<f:selectItem itemValue="" itemLabel="-"
@@ -208,33 +211,39 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Numero:</label>
+												<h:outputLabel value="Numero:" for="numero-doc"/>
 												<h:inputText value="#{professorBean.documento.numero}"
 													styleClass="form-control" id="numero-doc" />
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Data de expedição:</label>
-												<p:calendar value="#{professorBean.documento.dataExpedicao}"
-													pattern="dd/MM/yyyy" locale="pt_BR" styleClass="form-date"
-													id="data-emissao" />
+												<h:outputLabel value="Data de expedição:" for="data-emissao"/>
+												<p:inputMask styleClass="form-control"
+													id="data-emissao" value="#{professorBean.documento.dataExpedicao}"
+													maxlength="10" mask="99/99/9999">
+													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+														for="data-emissao" />
+												</p:inputMask>
 											</div>
 											<div class="form-group">
-												<label>Data vencimento:</label>
-												<p:calendar value="#{professorBean.documento.dataValidade}"
-													pattern="dd/MM/yyyy" styleClass="form-date"
-													id="data-validade" locale="pt_BR" />
+												<h:outputLabel value="Data vencimento:" for="data-validade"/>
+												<p:inputMask styleClass="form-control"
+													id="data-validade" value="##{professorBean.documento.dataValidade}"
+													maxlength="10" mask="99/99/9999">
+													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+														for="data-validade" />
+												</p:inputMask>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>UF:</label>
+												<h:outputLabel value="UF:" for="uf-doc"/>
 												<h:inputText value="#{professorBean.documento.uf}"
 													styleClass="form-control" id="uf-doc" style="width: 70px" />
 											</div>
 											<div class="form-group">
-												<label>Orgão emissor:</label>
+												<h:outputLabel value="Orgão emissor:" for="emissor-doc"/>
 												<h:inputText value="#{professorBean.documento.orgaoEmissor}"
 													styleClass="form-control" id="emissor-doc" />
 											</div>
@@ -294,45 +303,44 @@
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>CEP:</label>
+												<h:outputLabel value="CEP:" for="cep-end"/>
 												<h:inputText value="#{professorBean.endereco.cep}"
 													styleClass="form-control" id="cep-end" />
 											</div>
 											<div class="form-group">
-												<label>Logradouro:</label>
+												<h:outputLabel value="Logradouro:" for="logradouro-end"/>
 												<h:inputText value="#{professorBean.endereco.logradouro}"
 													styleClass="form-control" id="logradouro-end" />
 											</div>
 											<div class="form-group">
-												<label>Número:</label>
+												<h:outputLabel value="Número:" for="numero-end"/>
 												<h:inputText value="#{professorBean.endereco.numero}"
 													styleClass="form-control" id="numero-end" />
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Bairro:</label>
+												<h:outputLabel value="Bairro:" for="bairro-end"/>
 												<h:inputText value="#{professorBean.endereco.bairro}"
 													styleClass="form-control" id="bairro-end" />
 											</div>
 
 
 											<div class="form-group">
-												<label>Cidade:</label>
+												<h:outputLabel value="Cidade:" for="cidade-end"/>
 												<h:inputText value="#{professorBean.endereco.cidade}"
 													styleClass="form-control" id="cidade-end" />
 											</div>
 
 											<div class="form-group">
-												<label>UF:</label>
+												<h:outputLabel value="UF:" for="uf-end"/>
 												<h:inputText value="#{professorBean.endereco.uf}"
 													styleClass="form-control" id="uf-end" style="width: 70px" />
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Endereço para correspondências:</label>
-
+												<h:outputLabel value="Endereço para correspondências:" for="correspondencia-end"/>
 												<h:selectOneMenu
 													value="#{professorBean.endereco.enderecoCorrespondencia}"
 													styleClass="form-control" id="correspondencia-end">
@@ -343,8 +351,7 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Tipo de Endereço:</label>
-
+												<h:outputLabel value="Tipo de Endereço:" for="tipo-end"/>
 												<h:selectOneMenu value="#{professorBean.endereco.tipo}"
 													styleClass="form-control" id="tipo-end">
 													<f:selectItem itemValue="" itemLabel="-"
@@ -356,7 +363,7 @@
 												</h:selectOneMenu>
 											</div>
 											<div class="form-group">
-												<label>Telefone:</label>
+												<h:outputLabel value="Telefone:" for="telefone-end"/>
 												<h:inputText value="#{professorBean.endereco.telefone}"
 													styleClass="form-control" id="telefone-end" />
 											</div>

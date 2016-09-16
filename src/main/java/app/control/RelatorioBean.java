@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -64,11 +65,10 @@ public class RelatorioBean implements Serializable {
 
 	private static Logger LOGGER = Logger.getLogger(RelatorioBean.class);
 
-	public String carregarRelatorios() {
-		LOGGER.info("Carregando informacoes para relatorios");
+	public void carregarRelatorios() {
 		turmaBean.buscarPorStatus(Status.ATIVO.toString());
 		turmas = turmaBean.getTurmas();
-		return "relatorios?faces-redirect=true";
+		LOGGER.info("Dados para relatorios carregados...");
 	}
 
 	/**
