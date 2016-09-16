@@ -84,15 +84,15 @@ DROP TABLE IF EXISTS `infracao`;
 -- -------------------------
 -- tabela usuário
 -- -------------------------
-DROP TABLE IF EXISTS `usuario`;
+-- DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nomeusuario` varchar(100) NOT NULL,
-  `senha` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- CREATE TABLE `usuario` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `nomeusuario` varchar(100) NOT NULL,
+--   `senha` varchar(100) NOT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
