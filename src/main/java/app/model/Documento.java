@@ -140,4 +140,12 @@ public class Documento implements Serializable {
 	}
 
 
+	public boolean isCpf(){
+		if(this.tipo.equals("CPF")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }

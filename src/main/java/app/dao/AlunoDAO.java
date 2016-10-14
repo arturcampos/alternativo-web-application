@@ -51,7 +51,7 @@ public class AlunoDAO extends DAOImpl<Aluno> {
 	 * @throws SQLException
 	 * @author ARTUR
 	 */
-	public List<Aluno> findByStatus(String status) throws SQLException {
+	public List<Aluno> findByStatus(String status) {
 		return (List<Aluno>) entitymanager.createNamedQuery("Aluno.findByStatus", Aluno.class)
 				.setParameter("wantedStatus", status).getResultList();
 	}

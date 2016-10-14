@@ -178,23 +178,17 @@ public class AlunoBean implements Serializable {
 	 * @return
 	 */
 	public String buscarPorId(Long id) {
-		try {
-			init();
-			LOGGER.info("Buscando aluno por Id");
-			this.aluno = this.dao.findById(id);
-			if (this.aluno != null) {
-				LOGGER.info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
-				info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
-			} else {
-				LOGGER.warn("Aluno nao encontrado!");
-				warn("Aluno nao encontrado!");
-			}
-			return "atualizarAluno?faces-redirect=true";
-		} catch (Exception e) {
-			LOGGER.error("Erro ao consultar dados do aluno!", e);
-			error("Erro ao consultar dados do aluno: " + e.getMessage());
-			return "atualizarAluno?faces-redirect=true";
+		init();
+		LOGGER.info("Buscando aluno id: " + id);
+		this.aluno = this.dao.findById(id);
+		if (this.aluno != null) {
+			LOGGER.info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
+			info("Aluno encontrado: " + this.aluno.getPessoa().getNome());
+		} else {
+			LOGGER.warn("Aluno nao encontrado!");
+			warn("Aluno nao encontrado!");
 		}
+		return "atualizarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -205,7 +199,7 @@ public class AlunoBean implements Serializable {
 	public String remover(Aluno aluno) {
 		try {
 			LOGGER.info("Removendo aluno");
-			if (this.alunos != null && !this.alunos.isEmpty()) {
+			if (ListUtil.isValid(this.alunos)) {
 				this.aluno = aluno;
 				LOGGER.info("Alterando o status do aluno para INATIVO");
 				this.aluno.setStatus(Status.INATIVO.toString());
@@ -242,21 +236,18 @@ public class AlunoBean implements Serializable {
 	 * @return the action to go to save student
 	 */
 	public String adicionarDocumento() {
-		try {
-			LOGGER.info("Adicioando documento:\n" + documento.toString());
-			Documento doc = this.documento.clone();
-			LOGGER.info(doc.toString());
-			this.documentos.add(doc);
-			this.documento = new Documento();
-			this.alunoTab = "";
-			this.documentoTab = "active";
-			this.enderecoTab = "";
-			LOGGER.info("Documento adicionado");
-			info("Documento adicionado");
-		} catch (Exception e) {
-			LOGGER.error("Erro ao adicionar documento a lista", e);
-			error("Erro ao adicionar documento a lista: " + e.getMessage());
-		}
+		LOGGER.info("Adicioando documento:\n" + documento.toString());
+		Documento doc = this.documento.clone();
+		LOGGER.info(doc.toString());
+		this.documentos.add(doc);
+		this.documento = new Documento();
+		this.alunoTab = "";
+		this.documentoTab = "active";
+		this.enderecoTab = "";
+
+		LOGGER.info("Documento adicionado");
+		info("Documento adicionado");
+
 		return "salvarAluno?faces-redirect=true";
 	}
 
@@ -280,8 +271,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String removerDocumento(final Documento documento) {
 
-		if ((this.documentos != null) && (!this.documentos.isEmpty())) {
-			LOGGER.info("Removendo documento");
+		if (ListUtil.isValid(this.documentos)) {
 			this.documentos.remove(documento);
 			LOGGER.info("Documento removido com sucesso!");
 			info("Documento removido com sucesso!");
@@ -289,8 +279,8 @@ public class AlunoBean implements Serializable {
 			this.documentoTab = "active";
 			this.enderecoTab = "";
 		} else {
-			LOGGER.warn("Nao existe endereco a ser removido");
-			warn("Nao existe endereco a ser removido");
+			LOGGER.warn("Nao existe documento a ser removido");
+			warn("Nao existe documento a ser removido");
 		}
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -301,24 +291,16 @@ public class AlunoBean implements Serializable {
 	 */
 
 	public String adicionarEndereco() {
-		LOGGER.info("Adicionando Endereco.");
-		try {
-			if (this.enderecos == null) {
-				this.enderecos = new ArrayList<Endereco>();
-			}
-			Endereco end = this.endereco.clone();
-			this.enderecos.add(end);
-			this.endereco = new Endereco();
-			this.alunoTab = "";
-			this.documentoTab = "";
-			this.enderecoTab = "active";
-			LOGGER.info("Endereco adicionado com Sucesso.\n" + end.toString());
-			info("Endereco adicionado com Sucesso.");
-		} catch (Exception e) {
-			LOGGER.error("Erro ao adicionar endereco a lista: ", e);
-			error("Erro ao adicionar endereco a lista: " + e.getMessage());
-			return "salvarAluno?faces-redirect=true";
-		}
+
+		Endereco end = this.endereco.clone();
+		this.enderecos.add(end);
+		this.endereco = new Endereco();
+		this.alunoTab = "";
+		this.documentoTab = "";
+		this.enderecoTab = "active";
+
+		LOGGER.info("Endereco adicionado com Sucesso.\n" + end.toString());
+		info("Endereco adicionado com Sucesso.");
 
 		return "salvarAluno?faces-redirect=true";
 	}
@@ -331,8 +313,7 @@ public class AlunoBean implements Serializable {
 	 */
 	public String removerEndereco(final Endereco endereco) {
 
-		if ((this.enderecos != null) && (!this.enderecos.isEmpty())) {
-			LOGGER.info("Removendo endereco");
+		if (ListUtil.isValid(this.enderecos)) {
 			this.enderecos.remove(endereco);
 			LOGGER.info("Endereco removido com sucesso!");
 			info("Endereco removido com sucesso!");
@@ -372,18 +353,15 @@ public class AlunoBean implements Serializable {
 	 * @return the action to go to save ou list student
 	 */
 	public String atualizar(Aluno aluno) {
-		try {
-			LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
-			this.aluno = aluno.clone();
-			this.alunoAnterior = aluno;
-			this.plastico = aluno.getPessoa().getPlasticos().get(0);
-			this.editado = true;
-			LOGGER.info("Pronto para atualizar");
-			return "atualizarAluno?faces-redirect=true";
-		} catch (Exception e) {
-			error("Erro ao direcioar para atualizacao de dados do aluno");
-			return "listarAluno?faces-redirect=true";
-		}
+		LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
+		this.aluno = aluno.clone();
+		this.alunoAnterior = aluno;
+		this.plastico = aluno.getPessoa().getPlasticos().get(0);
+		this.editado = true;
+
+		LOGGER.info("Pronto para atualizar");
+
+		return "atualizarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -451,23 +429,11 @@ public class AlunoBean implements Serializable {
 	 * @return the action to go to list students
 	 */
 	public String buscarTodosPorStatus(String status) {
-		try {
-			if (status.equals(Status.ATIVO.toString()) || status.equals(Status.INATIVO.toString())) {
-				LOGGER.info("Buscando Alunos " + status);
-				this.alunos = this.dao.findByStatus(status);
-				if(!ListUtil.isValid(this.alunos)){
-					warn("Nenhum aluno encontrado");
-					LOGGER.warn("Nenhum aluno encontrado");
-				}
-			} else {
-				LOGGER.warn("Status " + status + " invalido para consulta");
-				warn("Status " + status + " invalido para consulta");
-			}
-
-		} catch (Exception e) {
-			LOGGER.error("Erro ao consultar dados", e);
-			error("Erro ao consultar dados: " + e.getMessage());
-
+		LOGGER.info("Buscando Alunos " + status);
+		this.alunos = this.dao.findByStatus(status);
+		if (!ListUtil.isValid(this.alunos)) {
+			warn("Nenhum aluno encontrado");
+			LOGGER.warn("Nenhum aluno encontrado");
 		}
 		return "listarAluno?faces-redirect=true";
 	}
@@ -479,34 +445,28 @@ public class AlunoBean implements Serializable {
 	 * @return the action to go to list student
 	 */
 	public String buscarPorMatricula(String matricula) {
-		try {
-			init();
-			if (matricula.equals("") || matricula == null) {
-				LOGGER.warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
-				warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
+		init();
+		if (matricula.equals("") || matricula == null) {
+			LOGGER.warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
+			warn("Erro ao consultar aluno: Matricula nao pode estar em branco");
+		} else {
+			long matriculaL = Long.parseLong(matricula);
+			LOGGER.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
+
+			this.alunos = this.dao.findByRegistrationNumber(matricula);
+			if (ListUtil.isValid(alunos)) {
+				LOGGER.info("Alunos encontrados.");
+				info("Alunos encontrados.");
 			} else {
-				long matriculaL = Long.parseLong(matricula);
-				LOGGER.info("Buscando aluno por matricula: " + String.format("%06d", matriculaL));
-
-				this.alunos = this.dao.findByRegistrationNumber(matricula);
-				if (ListUtil.isValid(alunos)) {
-					LOGGER.info("Alunos encontrados.");
-					info("Alunos encontrados.");
-				} else {
-					LOGGER.warn("Matricula nao existe.");
-					warn("Matricula nao existe.");
-				}
+				LOGGER.warn("Matricula nao existe.");
+				warn("Matricula nao existe.");
 			}
-		} catch (Exception e) {
-			LOGGER.error("Erro ao consultar aluno", e);
-			error("Erro ao consultar aluno: " + e.getMessage());
 		}
-
 		return "listarAluno?faces-redirect=true";
 	}
 
-	public String buscarPorTurma(String codigoTurma) {
-		turmaBean.buscarPorCodigo(codigoTurma);
+	public String buscarPorTurma(Turma turma) {
+		turmaBean.buscarPorId(turma.getId());
 		if (turmaBean.getTurma() != null) {
 			turma = turmaBean.getTurma();
 			if (!ListUtil.isValid(turma.getAlunos())) {
@@ -516,8 +476,8 @@ public class AlunoBean implements Serializable {
 			}
 			LOGGER.info("Sucesso!");
 		} else {
-			LOGGER.info("Turma nao encontrada: " + codigoTurma);
-			info("Turma nao encontrada: " + codigoTurma);
+			LOGGER.info("Turma nao encontrada: " + turma.getCodigo());
+			info("Turma nao encontrada: " + turma.getCodigo());
 		}
 
 		return "listarAluno?faces-redirect=true";

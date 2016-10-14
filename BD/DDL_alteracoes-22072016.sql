@@ -13,15 +13,15 @@
 -- removendo chave estrangeira disciplina
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-ALTER TABLE turma
-DROP FOREIGN KEY fk_Turma_Disciplina1;
+ALTER TABLE `futurodb`.`turma`
+DROP FOREIGN KEY `fk_Turma_Disciplina1`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- removendo columna disciplina_id
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-ALTER TABLE turma
-DROP COLUMN Disciplina_id;
+ALTER TABLE `futurodb`.`turma`
+DROP COLUMN `Disciplina_id`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 -- --------------------------------------------
 
@@ -29,21 +29,28 @@ DROP COLUMN Disciplina_id;
 -- removendo chave estrangeira professor
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-ALTER TABLE turma
-DROP FOREIGN KEY fk_Turma_Professor1;
+ALTER TABLE `futurodb`.`turma`
+DROP FOREIGN KEY `fk_Turma_Professor1`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- removendo columna professor_id
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-ALTER TABLE turma
-DROP COLUMN Professor_id;
+ALTER TABLE `futurodb`.`turma`
+DROP COLUMN `Professor_id`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
+-- criando coluna status
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+ALTER TABLE `futurodb`.`turma`
+ADD COLUMN `status` VARCHAR(50) NOT NULL AFTER `codigo`;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 -- ----------------------------------------------------------
 -- create table tipo infracao
-DROP TABLE IF EXISTS `tipo_infracao`;
+-- DROP TABLE IF EXISTS `tipo_infracao`;
 -- /*!40101 SET @saved_cs_client     = @@character_set_client */;
 -- /*!40101 SET character_set_client = utf8 */;
 -- CREATE TABLE `tipo_infracao` (
@@ -55,7 +62,7 @@ DROP TABLE IF EXISTS `tipo_infracao`;
 
 -- -------------------------------------------------------
 -- create table infracao
-DROP TABLE IF EXISTS `infracao`;
+-- DROP TABLE IF EXISTS `infracao`;
 -- /*!40101 SET @saved_cs_client     = @@character_set_client */;
 -- /*!40101 SET character_set_client = utf8 */;
 -- CREATE TABLE `infracao` (
@@ -85,15 +92,15 @@ DROP TABLE IF EXISTS `infracao`;
 -- tabela usuário
 -- -------------------------
 -- DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!40101 SET character_set_client = utf8 */;
 -- CREATE TABLE `usuario` (
 --   `id` int(11) NOT NULL AUTO_INCREMENT,
 --   `nomeusuario` varchar(100) NOT NULL,
 --   `senha` varchar(100) NOT NULL,
 --   PRIMARY KEY (`id`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

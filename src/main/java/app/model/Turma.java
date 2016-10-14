@@ -13,6 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import app.util.ListUtil;
+
 /**
  * The persistent class for the turma database table.
  *
@@ -21,7 +23,7 @@ import javax.persistence.Table;
 @Table(name = "turma", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
 		@NamedQuery(name = "Turma.findByStatus", query = "SELECT t FROM Turma t WHERE t.status LIKE :wantedStatus"),
-		@NamedQuery(name = "Turma.findByCode", query = "SELECT t FROM Turma t WHERE t.codigo LIKE :code")})
+		@NamedQuery(name = "Turma.findByCode", query = "SELECT t FROM Turma t WHERE t.codigo LIKE :code") })
 public class Turma implements Serializable, IBaseEntity {
 	private static final long serialVersionUID = 1L;
 
@@ -104,10 +106,12 @@ public class Turma implements Serializable, IBaseEntity {
 		this.status = turma.getStatus();
 	}
 
-	public boolean exists(List<Turma> turmas){
-		for(Turma t : turmas){
-			if(this.getCodigo().equals(t.getCodigo())){
-				return true;
+	public boolean exists(List<Turma> turmas) {
+		if (ListUtil.isValid(turmas)) {
+			for (Turma t : turmas) {
+				if (this.getCodigo().equals(t.getCodigo())) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -115,9 +119,8 @@ public class Turma implements Serializable, IBaseEntity {
 
 	@Override
 	public String toString() {
-	    return "Turma[id=" + id + ", codigo=" + codigo + ", status=" + status + "]";
+		return "Turma[id=" + id + ", codigo=" + codigo + ", status=" + status + "]";
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -166,4 +169,33 @@ public class Turma implements Serializable, IBaseEntity {
 	public Long pegarId() {
 		return new Long(id);
 	}
+
+	public boolean existeAlunoAtivo() {
+		return this.qtdAlunosAtivos() > 0;
+	}
+
+	public int qtdAlunosAtivos() {
+		int cont = 0;
+		if (ListUtil.isValid(alunos)) {
+			for (Aluno a : alunos) {
+				if (a.getStatus().equals("ATIVO")) {
+					cont++;
+				}
+			}
+		}
+		return cont;
+	}
+
+	public int qtdAlunosInativos() {
+		int cont = 0;
+		if (ListUtil.isValid(alunos)) {
+			for (Aluno a : alunos) {
+				if (a.getStatus().equals("INATIVO")) {
+					cont++;
+				}
+			}
+		}
+		return cont;
+	}
+
 }

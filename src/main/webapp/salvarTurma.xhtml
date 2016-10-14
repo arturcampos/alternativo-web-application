@@ -27,12 +27,13 @@
 		<h:panelGroup>
 			<div class="row">
 				<div class="col-lg-12">
-					<h:form id="salvar-form">
-						<div class="panel panel-default">
-							<div class="panel-heading">Nova Turma</div>
-							<h:messages id="messages" showDetail="false" closable="true"
-							autoUpdate="false" for="salvar-form"/>
-							<div class="panel-body">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Nova Turma</div>
+						<h:messages id="messages" showDetail="false" closable="true"
+								autoUpdate="false"/>
+						<div class="panel-body">
+							<h:form id="salvar-form">
 								<div class="col-sm-3 col-lg-5">
 									<div class="form-group">
 										<h:outputLabel value="Nome da turma:" for="codigo" />
@@ -42,17 +43,16 @@
 								</div>
 								<div class="col-lg-12">
 									<div class="form-group" align="left">
-										<h:commandButton value="Salvar"
-											action="#{turmaBean.salvar}"
-											styleClass="btn btn-primary"
-											process="form"
+										<h:commandButton value="Salvar" action="#{turmaBean.salvar}"
+											styleClass="btn btn-primary" process="form"
 											id="btn-add-turma" />
 
 									</div>
 								</div>
-							</div>
+							</h:form>
 						</div>
-					</h:form>
+					</div>
+
 				</div>
 			</div>
 		</h:panelGroup>

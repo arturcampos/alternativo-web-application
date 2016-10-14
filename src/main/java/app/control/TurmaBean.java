@@ -35,73 +35,64 @@ public class TurmaBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		LOGGER.info("recarregando bean Turma");
+		LOGGER.info("Metodo init()");
 		this.dao = new TurmaDAO(Turma.class);
 		this.turma = new Turma();
 		this.turmaAnterior = new Turma();
-		this.turmas = new ArrayList<Turma>();
 		this.alunos = new ArrayList<Aluno>();
+		if (!ListUtil.isValid(this.turmas)) {
+			this.turmas = dao.findByStatus(Status.ATIVO.toString());
+		}
 	}
 
 	public String salvar() {
-		try {
-			LOGGER.info("Verificando existencia da nova turma...");
-			this.turmas = dao.findByStatus("ATIVO");
-			if (this.turma.exists(this.turmas)) {
-				LOGGER.warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-						" Atencao!", "Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo()));
-				return "salvarTurma?faces-redirect=true";
-			} else {
-				LOGGER.info("Salvando turma com status ativo");
-				this.turma.setStatus("ATIVO");
-				this.dao.save(this.turma);
-				LOGGER.info("Turma " + this.turma.getCodigo() + " criada com sucesso");
-				info("Turma " + this.turma.getCodigo() + " criada com sucesso");
-				init();
-			}
-		} catch (Exception e) {
-			LOGGER.error("Erro ao salvar turma", e);
-			error("Erro ao salvar turma: " + e.getMessage());
+		this.turmas = dao.findByStatus("ATIVO");
+		if (this.turma.exists(this.turmas)) {
+			LOGGER.warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
+			warn("Ja existe uma turma ativa com o nome solicitado: " + this.turma.getCodigo());
+		} else {
+			LOGGER.info("Salvando turma com status ativo");
+			this.turma.setStatus("ATIVO");
+			this.dao.save(this.turma);
+			LOGGER.info("Turma " + this.turma.getCodigo() + " criada com sucesso");
+			info("Turma " + this.turma.getCodigo() + " criada com sucesso");
+			init();
 		}
 		return "salvarTurma?faces-redirect=true";
 	}
 
 	public String buscarPorId(Long id) {
-		LOGGER.info("Buscando id: " + id);
-		try {
-			init();
-			this.turma = this.dao.findById(id);
-			if (this.turma != null) {
-				this.turmas.add(this.turma);
-				LOGGER.info("Turma " + id + " encontrada");
-				info("Turma " + id + " encontrada");
-			} else {
-				LOGGER.info("Turma " + id + " nao encontrada");
-				warn("Turma " + id + " nao encontrada");
-			}
-		} catch (Exception e) {
-			LOGGER.error("Erro ao buscar turma " + id, e);
-			error("Erro ao buscar turma " + id + " " + e.getMessage());
+		LOGGER.info("Buscando turma com id: " + id);
+		init();
+		this.turma = this.dao.findById(id);
+		if (this.turma != null) {
+			this.turmas.add(this.turma);
+			LOGGER.info("Turma " + id + " encontrada");
+			info("Turma " + id + " encontrada");
+		} else {
+			LOGGER.info("Turma " + id + " nao encontrada");
+			warn("Turma " + id + " nao encontrada");
 		}
 		return "listarTurma?faces-redirect=true";
 	}
 
 	public String remover(Turma turma) {
-		LOGGER.info("Removendo id: " + turma.getId());
-		try {
-			if ((turma.getAlunos() != null) && !turma.getAlunos().isEmpty()) {
-				LOGGER.info("Existem alunos cadastrados na Turma " + turma.getId() + " e ela nao podera ser removida");
-				error("Existem alunos cadastrados na Turma " + turma.getId() + " e ela nao podera ser removida");
-			} else {
-				this.dao.remove(turma.getId());
+		LOGGER.info("Removendo turma com id: " + turma.getId());
+
+		if (turma.existeAlunoAtivo()) {
+			LOGGER.info("Existem alunos cadastrados na Turma " + turma.getId() + " e ela nao podera ser removida");
+			error("Existem alunos cadastrados na Turma " + turma.getId() + " e ela nao podera ser removida");
+		} else {
+			try {
+				turma.setStatus(Status.INATIVO.toString());
+				this.dao.update(turma);
 				this.turmas.remove(turma);
 				LOGGER.info("Turma " + turma.getId() + " removida");
 				info("Turma " + turma.getId() + " removida");
+			} catch (Exception e) {
+				LOGGER.error("Erro ao remover turma " + turma.getId(), e);
+				error("Erro ao remover turma " + turma.getId() + " " + e.getMessage());
 			}
-		} catch (Exception e) {
-			LOGGER.error("Erro ao remover turma " + turma.getId(), e);
-			error("Erro ao remover turma " + turma.getId() + " " + e.getMessage());
 		}
 		return "listarTurma?faces-redirect=true";
 	}
@@ -113,17 +104,10 @@ public class TurmaBean implements Serializable {
 	 * @return the action to go to save ou list student
 	 */
 	public String atualizar(Turma turma) {
-		try {
-			LOGGER.info("Iniciando atualizacao do turma: " + turma.getCodigo());
-			this.turma = turma.clone();
-			LOGGER.info("Realizando clone");
-			this.turmaAnterior = turma;
-			LOGGER.info("Pronto para atualizar");
-			return "atualizarAluno?faces-redirect=true";
-		} catch (Exception e) {
-			error("Erro ao direcioar para atualizacao de dados do turma");
-			return "listarAluno?faces-redirect=true";
-		}
+		LOGGER.info("Iniciando atualizacao do turma: " + turma.getCodigo());
+		this.turma = turma.clone();
+		this.turmaAnterior = turma;
+		return "atualizarAluno?faces-redirect=true";
 	}
 
 	/**
@@ -160,9 +144,8 @@ public class TurmaBean implements Serializable {
 		LOGGER.info("Buscando turmas...");
 		this.turmas = this.dao.findAll();
 		if (this.turmas.isEmpty() || this.turmas == null) {
-			LOGGER.info("Nenhuma turma encontrada");
-		} else {
-			LOGGER.info("Lista de turmas");
+			LOGGER.warn("Nenhuma turma encontrada");
+			warn("Nenhuma turma encontrada");
 		}
 		return "listarTurma?faces-redirect=true";
 	}
@@ -173,34 +156,12 @@ public class TurmaBean implements Serializable {
 	}
 
 	public String buscarPorStatus(String status) {
-
-		try {
-			this.turmas = dao.findByStatus(status);
-			if (this.turmas == null || this.turmas.isEmpty()) {
-				LOGGER.warn("Não existem turmas ativas");
-				warn("Não existem turmas ativas");
-			} else {
-				LOGGER.warn("Foram encontradas " + turmas.size() + " turmas ativas");
-			}
-		} catch (Exception e) {
-			LOGGER.error("Erro ao consultar ativas", e);
-			error("Erro ao consultar ativas.");
+		this.turmas = dao.findByStatus(status);
+		if (this.turmas == null || this.turmas.isEmpty()) {
+			LOGGER.warn("Nao existem turmas ativas");
+			warn("Nao existem turmas ativas");
 		}
 		return "listarTurmas?faces-redirect=true";
-	}
-
-	public void buscarPorCodigo(String codigoTurma) {
-		turmas = dao.findByCode(codigoTurma);
-		if (ListUtil.isValid(turmas)) {
-			for (Turma t : turmas) {
-				if (t.getStatus().equals(Status.ATIVO.toString())) {
-					turma = t;
-					break;
-				}
-			}
-		} else {
-			turma = null;
-		}
 	}
 
 	public TurmaDAO getDao() {

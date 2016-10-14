@@ -20,8 +20,8 @@ import javax.persistence.TemporalType;
  * The persistent class for the pessoa database table.
  *
  */
-@Entity
-@NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")
+@Entity(name="pessoa")
+@NamedQuery(name = "pessoa.findAll", query = "SELECT p FROM pessoa p")
 public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 

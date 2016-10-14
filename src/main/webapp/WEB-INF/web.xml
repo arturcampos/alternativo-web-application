@@ -7,12 +7,6 @@
 		<param-name>log4j-config-location</param-name>
 		<param-value>WEB-INF/log4j.xml</param-value>
 	</context-param>
-
-	<context-param>
-		<param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
-		<param-value>myfaces-2.2.12</param-value>
-	</context-param>
-
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>none</param-value>

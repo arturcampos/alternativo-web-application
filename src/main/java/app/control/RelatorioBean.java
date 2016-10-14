@@ -124,11 +124,11 @@ public class RelatorioBean implements Serializable {
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
-					.setDataSource(criaDataSourceRelatorioAlunoSimples(turma.getCodigo()))
+					.setDataSource(criaDataSourceRelatorioAlunoSimples(turma))
 					// create and show report
 					.toPdf(baos);
 
-			LOGGER.info("Gerando PDF");
+			LOGGER.info("Gerando PDF...");
 			baos.toByteArray();
 			res.setContentType("application/pdf");
 			// Codigo abaixo gerar o relatorio e disponibiliza diretamente na
@@ -159,15 +159,15 @@ public class RelatorioBean implements Serializable {
 	 *
 	 * @return
 	 */
-	private JRDataSource criaDataSourceRelatorioAlunoSimples(String codigoTurma) {
+	private JRDataSource criaDataSourceRelatorioAlunoSimples(Turma turma) {
 		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "datanasc", "item1", "item2", "item3");
-		this.alunoBean.buscarPorTurma(codigoTurma);
+		this.alunoBean.buscarPorTurma(turma);
 		if (ListUtil.isValid(alunoBean.getAlunos())) {
 			for (Aluno aluno : this.alunoBean.getAlunos()) {
 				Documento cpf = null;
 				this.documentoBean.buscarPorPessoa(aluno.getPessoa());
 				for (Documento d : this.documentoBean.getDocumentos()) {
-					if (d.getTipo().equals("CPF")) {
+					if (d.isCpf()) {
 						cpf = d;
 						break;
 					}
@@ -233,7 +233,7 @@ public class RelatorioBean implements Serializable {
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
-					.setDataSource(criaDataSourceInfracaoHorarios(turma.getCodigo()))
+					.setDataSource(criaDataSourceInfracaoHorarios(turma))
 					// create and show report
 					.toPdf(baos);
 
@@ -267,10 +267,10 @@ public class RelatorioBean implements Serializable {
 	 *
 	 * @return
 	 */
-	private JRDataSource criaDataSourceInfracaoHorarios(String codigoTurma) {
+	private JRDataSource criaDataSourceInfracaoHorarios(Turma turma) {
 		DRDataSource dataSource = new DRDataSource("nome", "matricula", "qtd");
 
-		this.alunoBean.buscarPorTurma(codigoTurma);
+		this.alunoBean.buscarPorTurma(turma);
 		if (ListUtil.isValid(alunoBean.getAlunos())) {
 			for (Aluno aluno : this.alunoBean.getAlunos()) {
 				int qtd = this.eventoBean.buscarInfracoesHorariosPorPessoa(aluno.getPessoa());
@@ -340,7 +340,7 @@ public class RelatorioBean implements Serializable {
 					// shows number of page at page footer
 					.pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
 					// set datasource
-					.setDataSource(criaDataSourceRelatorioPresenca(data, turma.getCodigo()))
+					.setDataSource(criaDataSourceRelatorioPresenca(data, turma))
 					// create and show report
 					.toPdf(baos);
 			baos.toByteArray();
@@ -373,9 +373,9 @@ public class RelatorioBean implements Serializable {
 	 *
 	 * @return
 	 */
-	private JRDataSource criaDataSourceRelatorioPresenca(Date data, String codigoTurma) {
+	private JRDataSource criaDataSourceRelatorioPresenca(Date data, Turma turma) {
 		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "status");
-		this.alunoBean.buscarPorTurma(codigoTurma);
+		this.alunoBean.buscarPorTurma(turma);
 		if (ListUtil.isValid(alunoBean.getAlunos())) {
 			for (Aluno aluno : this.alunoBean.getAlunos()) {
 				// preenchendo documento
