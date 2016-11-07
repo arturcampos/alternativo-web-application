@@ -101,11 +101,9 @@ public class RelatorioBean implements Serializable {
 					// add columns
 					.columns(
 							// title, field name data type
-							col.column("Nome", "nome", type.stringType()), col.column("CPF", "cpf", type.stringType()),
 							col.column("Matricula", "matricula", type.stringType()),
-							col.column("Data Nascimento", "datanasc", type.dateType()),
-							col.column("", "item1", type.stringType()), col.column("", "item2", type.stringType()),
-							col.column("", "item3", type.stringType()))
+							col.column("Nome", "nome", type.stringType()),
+							col.column("", "item1", type.stringType()))
 					.setColumnStyle(columnStyle)
 					// shows report title
 					// .highlightDetailEvenRows()
@@ -160,21 +158,11 @@ public class RelatorioBean implements Serializable {
 	 * @return
 	 */
 	private JRDataSource criaDataSourceRelatorioAlunoSimples(Turma turma) {
-		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "datanasc", "item1", "item2", "item3");
+		DRDataSource dataSource = new DRDataSource("matricula", "nome", "item1");
 		this.alunoBean.buscarPorTurma(turma);
 		if (ListUtil.isValid(alunoBean.getAlunos())) {
 			for (Aluno aluno : this.alunoBean.getAlunos()) {
-				Documento cpf = null;
-				this.documentoBean.buscarPorPessoa(aluno.getPessoa());
-				for (Documento d : this.documentoBean.getDocumentos()) {
-					if (d.isCpf()) {
-						cpf = d;
-						break;
-					}
-
-				}
-				dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(),
-						aluno.getPessoa().getDataNasc(), null, null, null);
+				dataSource.add(aluno.getMatricula(), aluno.getPessoa().getNome(), null);
 			}
 			this.alunoBean.getAlunos().clear();
 		}
@@ -319,8 +307,8 @@ public class RelatorioBean implements Serializable {
 					// add columns
 					.columns(
 							// title, field name data type
-							col.column("Nome", "nome", type.stringType()), col.column("CPF", "cpf", type.stringType()),
 							col.column("Matricula", "matricula", type.stringType()),
+							col.column("Nome", "nome", type.stringType()),
 							col.column("Status", "status", type.stringType()))
 					.setColumnStyle(columnStyle)
 					// shows report title
@@ -374,20 +362,10 @@ public class RelatorioBean implements Serializable {
 	 * @return
 	 */
 	private JRDataSource criaDataSourceRelatorioPresenca(Date data, Turma turma) {
-		DRDataSource dataSource = new DRDataSource("nome", "cpf", "matricula", "status");
+		DRDataSource dataSource = new DRDataSource("matricula", "nome", "status");
 		this.alunoBean.buscarPorTurma(turma);
 		if (ListUtil.isValid(alunoBean.getAlunos())) {
 			for (Aluno aluno : this.alunoBean.getAlunos()) {
-				// preenchendo documento
-				Documento cpf = null;
-				this.documentoBean.buscarPorPessoa(aluno.getPessoa());
-				for (Documento d : this.documentoBean.getDocumentos()) {
-					if (d.getTipo().equals("CPF")) {
-						cpf = d;
-						break;
-					}
-				}
-
 				// Definindo presenca ou falta
 				String presenca = null;
 				this.eventoBean.buscarPorPessoaEData(aluno.getPessoa(), data);
@@ -396,7 +374,7 @@ public class RelatorioBean implements Serializable {
 				} else {
 					presenca = "PRESENTE";
 				}
-				dataSource.add(aluno.getPessoa().getNome(), cpf.getNumero(), aluno.getMatricula(), presenca);
+				dataSource.add(aluno.getMatricula(), aluno.getPessoa().getNome(), presenca);
 			}
 			this.alunoBean.getAlunos().clear();
 		}
@@ -458,7 +436,7 @@ public class RelatorioBean implements Serializable {
 	 */
 	public void warn(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, " Aten��o!", message));
+				new FacesMessage(FacesMessage.SEVERITY_WARN, " Atencao!", message));
 	}
 
 	/**

@@ -143,7 +143,7 @@ public class TurmaBean implements Serializable {
 		init();
 		LOGGER.info("Buscando turmas...");
 		this.turmas = this.dao.findAll();
-		if (this.turmas.isEmpty() || this.turmas == null) {
+		if (!ListUtil.isValid(this.turmas)){
 			LOGGER.warn("Nenhuma turma encontrada");
 			warn("Nenhuma turma encontrada");
 		}
@@ -157,7 +157,7 @@ public class TurmaBean implements Serializable {
 
 	public String buscarPorStatus(String status) {
 		this.turmas = dao.findByStatus(status);
-		if (this.turmas == null || this.turmas.isEmpty()) {
+		if (!ListUtil.isValid(this.turmas)){
 			LOGGER.warn("Nao existem turmas ativas");
 			warn("Nao existem turmas ativas");
 		}

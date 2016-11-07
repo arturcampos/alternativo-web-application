@@ -156,6 +156,9 @@ public class AlunoBean implements Serializable {
 			info("Informacoes salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
 			init();
+			if(!ListUtil.isValid(this.alunos)){
+				this.alunos = this.dao.findByStatus(Status.ATIVO.toString());
+			}
 			this.alunos.add(novoAluno);
 			LOGGER.info("Novo aluno adicionado na lista");
 			return "listarAluno?faces-redirect=true";
@@ -354,6 +357,9 @@ public class AlunoBean implements Serializable {
 	 */
 	public String atualizar(Aluno aluno) {
 		LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
+		if(!ListUtil.isValid(this.alunos)){
+			this.alunos = this.dao.findByStatus(Status.ATIVO.toString());
+		}
 		this.aluno = aluno.clone();
 		this.alunoAnterior = aluno;
 		this.plastico = aluno.getPessoa().getPlasticos().get(0);
@@ -372,23 +378,28 @@ public class AlunoBean implements Serializable {
 		try {
 			LOGGER.info("Atualizando aluno:\n" + this.aluno.toString());
 			this.plastico.setLinhaDigitavel(aluno.getMatricula());
-
 			this.dao.update(this.aluno);
 
 			LOGGER.info("Atualizando nnmero do cartao");
 			this.plasticoBean.atualizar(this.plastico);
 
-			this.alunos.remove(this.alunoAnterior);
 			aluno.getPessoa().getPlasticos().clear();
-			aluno.getPessoa().getPlasticos().add(this.plastico);
-			this.alunos.add(this.aluno);
-			this.editado = false;
+			Plastico p = plastico.clone();
+			aluno.getPessoa().getPlasticos().add(p);
+			int indice = alunos.indexOf(alunoAnterior);
+			alunos.remove(this.alunoAnterior);
+			turma = aluno.getTurma();
+			turma.addAluno(aluno);
+			alunos.add(indice, aluno);
+			editado = false;
 
 			info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			LOGGER.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 
-			this.alunoAnterior = new Aluno();
-			this.plastico = new Plastico();
+			alunoAnterior = new Aluno();
+			plastico = new Plastico();
+			turmaBean.buscarPorStatus("ATIVO");
+			turmas = this.turmaBean.getTurmas();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
 			LOGGER.error("Erro ao atualizar as informacoes", e);

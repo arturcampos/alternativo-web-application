@@ -42,7 +42,8 @@
 										<h:selectOneMenu value="#{alunoBean.aluno.turma}"
 											styleClass="form-control" id="turma"
 											converter="objectConverter">
-											<f:selectItem itemLabel="#{alunoBean.aluno.turma.codigo}" itemValue="#{alunoBean.aluno.turma}" />
+											<f:selectItem itemLabel="#{alunoBean.aluno.turma.codigo}"
+												itemValue="#{alunoBean.aluno.turma}" />
 											<f:selectItems value="#{alunoBean.turmas}" var="varTurma"
 												itemLabel="#{varTurma.codigo}" itemValue="#{varTurma}" />
 										</h:selectOneMenu>

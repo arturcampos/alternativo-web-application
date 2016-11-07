@@ -130,7 +130,9 @@ public class Aluno implements Serializable {
 		alunoClone.setDataIngresso(dataIngresso);
 		alunoClone.setMatricula(matricula);
 		alunoClone.setTipoCotaIngresso(tipoCotaIngresso);
-		alunoClone.setTurma(turma);
+		if (turma != null) {
+			alunoClone.setTurma(turma);
+		}
 		alunoClone.setPessoa(pessoa);
 		alunoClone.setStatus(status);
 

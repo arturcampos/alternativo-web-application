@@ -36,7 +36,7 @@ public class Turma implements Serializable, IBaseEntity {
 	private String status;
 
 	// bi-directional many-to-one association to Aluno
-	@OneToMany(mappedBy = "turma", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
 	private List<Aluno> alunos;
 
 	public Turma() {
@@ -122,6 +122,9 @@ public class Turma implements Serializable, IBaseEntity {
 		return "Turma[id=" + id + ", codigo=" + codigo + ", status=" + status + "]";
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,13 +136,16 @@ public class Turma implements Serializable, IBaseEntity {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Turma))
 			return false;
 		Turma other = (Turma) obj;
 		if (alunos == null) {
