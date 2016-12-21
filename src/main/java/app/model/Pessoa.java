@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * The persistent class for the pessoa database table.
  *
@@ -62,14 +65,17 @@ public class Pessoa implements Serializable {
 
 	// bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Documento> documentos;
 
 	// bi-directional many-to-one association to Endereco
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Endereco> enderecos;
 
 	// bi-directional many-to-one association to Plastico
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Plastico> plasticos;
 
 	public Pessoa() {
