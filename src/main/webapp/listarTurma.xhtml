@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+
+	<f:metadata>
+		<f:viewAction action="#{turmaBean.init()}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<div class="row">
+			<h:form id="breadcrumb-form">
+			<ol class="breadcrumb">
+				<li><h:commandLink action="alunoBean.voltar" process="@this" type="submit" styleClass="glyphicon glyphicon-home"/></li>
+				<li class="active">Listagem de turmas</li>
+			</ol>
+			</h:form>
+		</div>
+		<!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header">Listagem de Turmas</h3>
+			</div>
+		</div>
+		<!--/.row-->
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Turmas cadastradas</div>
+					<h:messages id="messages" showDetail="true" closable="true"
+						autoUpdate="true" />
+					<div class="panel-body">
+						<table data-toggle="table" data-show-refresh="true"
+							data-show-toggle="true" data-show-columns="true"
+							data-search="true" data-select-item-name="toolbar1"
+							data-pagination="true" data-sort-name="name"
+							data-sort-order="desc">
+							<thead>
+								<tr>
+									<th data-field="codigo" data-sortable="true">Nome da turma</th>
+									<th data-field="qtdAlunos" data-sortable="true">Qtd de Alunos</th>
+									<th data-field="deletar" data-sortable="true">Deletar</th>
+								</tr>
+							</thead>
+							<h:form rendered="#{not empty turmaBean.turmas}" id="list-form">
+								<tbody>
+									<ui:repeat var="turma" value="#{turmaBean.turmas}"
+										varStatus="status">
+										<tr>
+											<td>#{turma.codigo}</td>
+											<td>#{turma.qtdAlunosAtivos()}</td>
+											<td><h:commandLink
+													action="#{turmaBean.remover(turma)}" type="submit"
+													process="@this @form" class="glyphicon glyphicon-trash"
+													immediate="true"> Remover</h:commandLink></td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</h:form>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

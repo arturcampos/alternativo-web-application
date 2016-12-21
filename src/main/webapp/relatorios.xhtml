@@ -5,8 +5,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/Layout.xhtml">
 
+	<f:metadata>
+		<f:viewAction action="#{relatorioBean.carregarRelatorios()}" />
+	</f:metadata>
 	<ui:define name="content">
-
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
@@ -24,70 +26,126 @@
 
 
 		<div class="row">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<p:messages id="messages" autoUpdate="true" showDetail="true" />
-					<div class="col-xs-12 col-md-6 col-lg-3">
-						<div class="">
-							<div class="row no-padding">
-								<div class="col-sm-12 col-lg-12">
-									<h:form id="link-form-simples-aluno" target="_blank">
-										<div class="form-group">
-											<p:inputText placeholder="Nome do Relatório"
-												value="#{nomeRelatorio}" class="form-control" />
-											<h:commandButton
-												action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio)}"
-												process="@form" styleClass="btn btn-primary form-control"
-												value="Relatório Simples Alunos" />
-										</div>
-									</h:form>
+			<div class="col-sm-11 col-lg-11">
+				<div class="panel panel-info">
+					<div class="panel-heading">Relatório simples de alunos</div>
+					<div class="panel-body">
+						<div class="row no-padding">
+							<h:form id="link-form-simples-aluno" target="_blank">
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<h:outputLabel value="Turma:" for="turma-spl" />
+										<h:selectOneMenu value="#{turmaSelecionadaSpl}"
+											styleClass="form-control" id="turma-spl"
+											converter="objectConverter">
+											<f:selectItem value="#{null}" itemLabel="Escolha a turma..."
+												noSelectionOption="true" />
+											<f:selectItems value="#{turmaBean.turmas}" var="varTurma"
+												itemLabel="#{varTurma.codigo}" itemValue="#{varTurma}" />
+										</h:selectOneMenu>
+									</div>
 								</div>
-							</div>
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<h:outputLabel value="Nome do Relatório:" for="nomeRelatorio" />
+										<h:inputText id="nomeRelatorio" value="#{nomeRelatorio}"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="col-sm-4 col-lg-4">
+									<div class="form-group">
+										<br />
+										<h:commandButton
+											action="#{relatorioBean.relatorioAlunoSimples(nomeRelatorio,turmaSelecionadaSpl)}"
+											process="@form" styleClass="btn btn-primary form-control"
+											value="Gerar" />
+									</div>
+								</div>
+							</h:form>
 						</div>
 					</div>
-
-					<div class="col-xs-12 col-md-6 col-lg-3">
-						<div class="">
-							<div class="row no-padding">
-								<div class="col-sm-12 col-lg-12">
-									<h:form id="link-form-faltas-horario" target="_blank">
-										<div class="form-group">
-											<br />
-											<h:commandButton
-												action="#{relatorioBean.relatorioFaltaHorarios}"
-												process="@form" styleClass="btn btn-primary form-control"
-												value="Relatório Faltas por Horário" />
-										</div>
-									</h:form>
+				</div>
+			</div>
+			<br />
+			<div class="col-sm-11 col-lg-11">
+				<div class="panel panel-danger">
+					<div class="panel-heading">Penalidades por horário</div>
+					<div class="panel-body">
+						<div class="row no-padding">
+							<h:form id="link-form-faltas-horario" target="_blank">
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<h:outputLabel value="Turma:" for="turma-penal" />
+										<h:selectOneMenu value="#{turmaSelecionadaPenal}"
+											styleClass="form-control" id="turma-penal"
+											converter="objectConverter">
+											<f:selectItem value="#{null}" itemLabel="Escolha a turma..."
+												noSelectionOption="true" />
+											<f:selectItems value="#{turmaBean.turmas}" var="varTurma"
+												itemLabel="#{varTurma.codigo}" itemValue="#{varTurma}" />
+										</h:selectOneMenu>
+									</div>
 								</div>
-							</div>
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<br />
+										<h:commandButton
+											action="#{relatorioBean.relatorioInfracaoHorarios(turmaSelecionadaPenal)}"
+											process="@form" styleClass="btn btn-primary form-control"
+											value="Gerar" />
+									</div>
+								</div>
+							</h:form>
 						</div>
 					</div>
-
-					<div class="col-xs-12 col-md-6 col-lg-3">
-						<div class="">
-							<div class="row no-padding">
-								<div class="col-sm-12 col-lg-12">
-									<h:form id="link-form-presenca" target="_blank">
-										<div class="form-group">
-											<p:inputText placeholder="AAAA-MM-DD" value="#{data}"
-												class="form-control">
-												<f:convertDateTime pattern="yyyy-MM-dd" />
-											</p:inputText>
-											<h:commandButton
-												action="#{relatorioBean.relatorioPresencaPorData(data)}"
-												process="@form" styleClass="btn btn-primary form-control"
-												value="Relatório de presença" />
-										</div>
-									</h:form>
+				</div>
+			</div>
+			<br />
+			<div class="col-sm-11 col-lg-11">
+				<div class="panel panel-success">
+					<div class="panel-heading">Presenças e faltas</div>
+					<div class="panel-body">
+						<div class="row no-padding">
+							<h:form id="link-form-presenca" target="_blank">
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<h:outputLabel value="Turma:" for="turma-pres" />
+										<h:selectOneMenu value="#{turmaSelecionadaPres}"
+											styleClass="form-control" id="turma-pres"
+											converter="objectConverter">
+											<f:selectItem value="#{null}" itemLabel="Escolha a turma..."
+												noSelectionOption="true" />
+											<f:selectItems value="#{turmaBean.turmas}" var="varTurma"
+												itemLabel="#{varTurma.codigo}" itemValue="#{varTurma}" />
+										</h:selectOneMenu>
+									</div>
 								</div>
-							</div>
+								<div class="col-sm-3 col-lg-3">
+									<div class="form-group">
+										<h:outputLabel value="Data:" for="data" />
+										<p:inputMask value="#{data}" placeholder="dd/MM/yyyy"
+											id="data" styleClass="form-control" maxlength="15"
+											mask="99/99/9999" style="width: 150px">
+											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+												for="data" />
+										</p:inputMask>
+									</div>
+								</div>
+								<div class="col-sm-4 col-lg-4">
+									<div class="form-group">
+										<br />
+										<h:commandButton
+											action="#{relatorioBean.relatorioPresencaPorData(data, turmaSelecionadaPres)}"
+											process="@form" styleClass="btn btn-primary form-control"
+											value="Gerar" />
+									</div>
+								</div>
+							</h:form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</ui:define>
 
 </ui:composition>

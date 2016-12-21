@@ -1,18 +1,8 @@
 package app.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the plastico database table.
@@ -22,7 +12,7 @@ import javax.persistence.TemporalType;
 @Table(name = "plastico", schema = "futurodb")
 @NamedQueries({ @NamedQuery(name = "Plastico.findAll", query = "SELECT p FROM Plastico p"),
 		@NamedQuery(name = "Plastico.findByPersonId", query = "SELECT p FROM Plastico p WHERE p.pessoa.id = :wantedId"),
-		@NamedQuery(name = "Plastico.findByDigitableLine", query = "SELECT p FROM Plastico p WHERE p.linhaDigitavel = :digitableLine")})
+		@NamedQuery(name = "Plastico.findByDigitableLine", query = "SELECT p FROM Plastico p WHERE p.linhaDigitavel = :digitableLine") })
 public class Plastico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -82,6 +72,23 @@ public class Plastico implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	@Override
+	public Plastico clone() {
+		Plastico p = new Plastico();
+		p.setId(this.id);
+		p.setDataCadastro(this.dataCadastro);
+		p.setLinhaDigitavel(this.linhaDigitavel);
+		p.setPessoa(this.pessoa);
+		p.setStatus(this.status);
+		return p;
+	}
+
+	@Override
+	public String toString() {
+		return "Plastico[id=" + id + ", dataCadastro=" + dataCadastro + ", linhaDigitavel=" + linhaDigitavel
+				+ ", status=" + status + "]";
 	}
 
 }

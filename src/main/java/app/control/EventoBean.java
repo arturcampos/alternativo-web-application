@@ -10,9 +10,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.log4j.Logger;
+
 import app.dao.EventoDAO;
 import app.model.Evento;
 import app.model.Pessoa;
+import app.util.ListUtil;
 
 @ManagedBean(name="eventoBean")
 @SessionScoped
@@ -25,6 +28,7 @@ public class EventoBean implements Serializable {
 	private EventoDAO dao;
 	private Evento evento;
 	private List<Evento> eventos;
+	private static Logger LOGGER = Logger.getLogger(RelatorioBean.class);
 
 	@PostConstruct
 	public void init() {
@@ -79,17 +83,14 @@ public class EventoBean implements Serializable {
 		this.eventos = eventos;
 	}
 
-	public int buscarFaltasHorariosPorPessoa(Pessoa pessoa) {
+	public int buscarInfracoesHorariosPorPessoa(Pessoa pessoa) {
 		int qtd = 0;
 		this.eventos = this.dao.findEventsByPersonIdAndStatus(pessoa.getId(), "NOK");
-		if (this.eventos == null) {
-			qtd = 0;
-		} else if (this.eventos.isEmpty()) {
-			qtd = 0;
-		} else {
+		if(ListUtil.isValid(this.eventos)){
 			qtd = this.eventos.size();
+		}else{
+			qtd = 0;
 		}
-
 		return qtd;
 
 	}
@@ -102,8 +103,7 @@ public class EventoBean implements Serializable {
 		this.eventos = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), dataTmp);
 
 		for (Evento e : this.eventos) {
-			System.out.println(e.getId());
-			System.out.println(e.getDataHoraEntrada());
+			LOGGER.info(e.toString());
 		}
 		return "listarEvento?faces-redirect=true";
 	}
