@@ -13,17 +13,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * The persistent class for the pessoa database table.
  *
  */
-@Entity
-@Table(name = "pessoa", schema = "futurodb")
-@NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")
+@Entity(name="pessoa")
+@NamedQuery(name = "pessoa.findAll", query = "SELECT p FROM pessoa p")
 public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,71 +59,26 @@ public class Pessoa implements Serializable {
 
 	private String sexo;
 
+	private String tipoPessoa;
+
 	private String uf;
 
 	// bi-directional many-to-one association to Documento
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Documento> documentos;
 
 	// bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Endereco> enderecos;
 
 	// bi-directional many-to-one association to Plastico
-	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Plastico> plasticos;
 
-	private String tipopessoa;
-
 	public Pessoa() {
-	}
-
-	/**
-	 * @param id
-	 * @param dataNasc
-	 * @param email
-	 * @param estadoCivil
-	 * @param etnia
-	 * @param nacionalidade
-	 * @param naturalidade
-	 * @param necessidadesEspeciais
-	 * @param nome
-	 * @param nomeMae
-	 * @param nomePai
-	 * @param numeroCelular
-	 * @param responsavelLegal
-	 * @param sexo
-	 * @param uf
-	 * @param documentos
-	 * @param enderecos
-	 * @param eventos
-	 * @param plasticos
-	 * @param tipopessoa
-	 */
-	public Pessoa(Long id, Date dataNasc, String email, String estadoCivil, String etnia, String nacionalidade,
-			String naturalidade, String necessidadesEspeciais, String nome, String nomeMae, String nomePai,
-			String numeroCelular, String responsavelLegal, String sexo, String uf, List<Documento> documentos,
-			List<Endereco> enderecos, List<Plastico> plasticos, String tipopessoa) {
-		super();
-		this.id = id;
-		this.dataNasc = dataNasc;
-		this.email = email;
-		this.estadoCivil = estadoCivil;
-		this.etnia = etnia;
-		this.nacionalidade = nacionalidade;
-		this.naturalidade = naturalidade;
-		this.necessidadesEspeciais = necessidadesEspeciais;
-		this.nome = nome;
-		this.nomeMae = nomeMae;
-		this.nomePai = nomePai;
-		this.numeroCelular = numeroCelular;
-		this.responsavelLegal = responsavelLegal;
-		this.sexo = sexo;
-		this.uf = uf;
-		this.documentos = documentos;
-		this.enderecos = enderecos;
-		this.plasticos = plasticos;
-		this.tipopessoa = tipopessoa;
 	}
 
 	public Long getId() {
@@ -135,7 +91,6 @@ public class Pessoa implements Serializable {
 
 	public Date getDataNasc() {
 		return this.dataNasc;
-
 	}
 
 	public void setDataNasc(Date dataNasc) {
@@ -238,6 +193,14 @@ public class Pessoa implements Serializable {
 		this.sexo = sexo;
 	}
 
+	public String getTipoPessoa() {
+		return this.tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
 	public String getUf() {
 		return this.uf;
 	}
@@ -255,6 +218,9 @@ public class Pessoa implements Serializable {
 	}
 
 	public Documento addDocumento(Documento documento) {
+		if(documentos == null){
+			documentos = new ArrayList<Documento>();
+		}
 		getDocumentos().add(documento);
 		documento.setPessoa(this);
 
@@ -277,6 +243,9 @@ public class Pessoa implements Serializable {
 	}
 
 	public Endereco addEndereco(Endereco endereco) {
+		if(enderecos == null){
+			enderecos = new ArrayList<Endereco>();
+		}
 		getEnderecos().add(endereco);
 		endereco.setPessoa(this);
 
@@ -299,36 +268,47 @@ public class Pessoa implements Serializable {
 	}
 
 	public Plastico addPlastico(Plastico plastico) {
-		if(this.plasticos == null){
-			this.plasticos = new ArrayList<Plastico>();
+		if (getPlasticos() == null) {
+			plasticos = new ArrayList<Plastico>();
 		}
-		this.plasticos.add(plastico);
+		getPlasticos().add(plastico);
 		plastico.setPessoa(this);
 
 		return plastico;
 	}
 
 	public Plastico removePlastico(Plastico plastico) {
-		getPlasticos().remove(plastico);
-		plastico.setPessoa(null);
-
+		if ((getPlasticos() != null) && !getPlasticos().isEmpty()) {
+			getPlasticos().remove(plastico);
+			plastico.setPessoa(null);
+		}
 		return plastico;
-	}
-
-	public String getTipopessoa() {
-		return this.tipopessoa;
-	}
-
-	public void setTipopessoa(String tipopessoa) {
-		this.tipopessoa = tipopessoa;
 	}
 
 	@Override
 	public Pessoa clone() {
-		return new Pessoa(this.id, this.dataNasc, this.email, this.estadoCivil, this.etnia, this.nacionalidade,
-				this.naturalidade, this.necessidadesEspeciais, this.nome, this.nomeMae, this.nomePai,
-				this.numeroCelular, this.responsavelLegal, this.sexo, this.uf, this.documentos, this.enderecos,
-				this.plasticos, this.tipopessoa);
+		Pessoa pessClone = new Pessoa();
+		pessClone.setId(id);
+		pessClone.setDataNasc(dataNasc);
+		pessClone.setEmail(email);
+		pessClone.setEstadoCivil(estadoCivil);
+		pessClone.setEtnia(etnia);
+		pessClone.setNacionalidade(nacionalidade);
+		pessClone.setNaturalidade(naturalidade);
+		pessClone.setNecessidadesEspeciais(necessidadesEspeciais);
+		pessClone.setNome(nome);
+		pessClone.setNomeMae(nomeMae);
+		pessClone.setNomePai(nomePai);
+		pessClone.setNumeroCelular(numeroCelular);
+		pessClone.setResponsavelLegal(responsavelLegal);
+		pessClone.setSexo(sexo);
+		pessClone.setUf(uf);
+		pessClone.setDocumentos(documentos);
+		pessClone.setEnderecos(enderecos);
+		pessClone.setPlasticos(plasticos);
+		pessClone.setTipoPessoa(tipoPessoa);
+
+		return pessClone;
 	}
 
 	public void restaurar(Pessoa pessoa) {
@@ -350,20 +330,14 @@ public class Pessoa implements Serializable {
 		this.documentos = pessoa.getDocumentos();
 		this.enderecos = pessoa.getEnderecos();
 		this.plasticos = pessoa.getPlasticos();
-		this.tipopessoa = pessoa.getTipopessoa();
+		this.tipoPessoa = pessoa.getTipoPessoa();
 	}
 
 	public String toString() {
-		return new String("id = " + this.id + "\n" + "dataNasc = " + this.dataNasc + "\n" + "email = " + this.email
-				+ "\n" + "estadoCivil = " + this.estadoCivil + "\n" + "etnia = " + this.etnia + "\n"
-				+ "nacionalidade = " + this.nacionalidade + "\n" + "naturalidade = " + this.naturalidade + "\n"
-				+ "necessidadesEspeciais = " + this.necessidadesEspeciais + "\n" + "nome = " + this.nome + "\n"
-				+ "nomeMae = " + this.nomeMae + "\n" + "nomePai = " + this.nomePai + "\n" + "numeroCelular = "
-				+ this.numeroCelular + "\n" + "responsavelLegal = " + this.responsavelLegal + "\n" + "sexo = "
-				+ this.sexo + "\n" + "uf = " + this.uf + "\n" + "documentos = " + this.documentos + "\n"
-				+ "enderecos = " + this.enderecos + "\n" + "plasticos = " + this.plasticos + "\n" + "tipopessoa = "
-				+ this.tipopessoa + "\n"
-
-		);
+		return "Pessoa[id=" + id + ", dataNasc=" + dataNasc + ", email=" + email + ", estadoCivil=" + estadoCivil + ", etnia=" + etnia
+				+ ", nacionalidade=" + nacionalidade + ", naturalidade=" + naturalidade + ", necessidadesEspeciais=" + necessidadesEspeciais
+				+ ", nome=" + nome + ", nomeMae=" + nomeMae + ", nomePai=" + nomePai + ", numeroCelular=" + numeroCelular + ", responsavelLegal="
+				+ responsavelLegal + ", sexo=" + sexo + ", uf=" + uf + ", tipopessoa=" + tipoPessoa + "]";
 	}
+
 }
