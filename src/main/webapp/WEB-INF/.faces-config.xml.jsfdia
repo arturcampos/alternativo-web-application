@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#atualizarAluno.xhtml"
+  PATH="/atualizarAluno.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:0" NAME="item"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
+    NAME="output" PATH="/listarAluno.xhtml"
+    TARGET="rules:#listarAluno.xhtml"
+    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:1" NAME="item1"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
+    NAME="output" PATH="/listarAluno.xhtml"
+    TARGET="rules:#listarAluno.xhtml"
+    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:2" NAME="item2"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarDocumento?faces-redirect=true::#listarDocumento.xhtml"
+    NAME="output" PATH="/listarDocumento.xhtml"
+    TARGET="rules:#listarDocumento.xhtml"
+    TITLE="listarDocumento?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:3" NAME="item3"
+   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listarEndereco?faces-redirect=true::#listarEndereco.xhtml"
+    NAME="output" PATH="/listarEndereco.xhtml"
+    TARGET="rules:#listarEndereco.xhtml"
+    TITLE="listarEndereco?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#Inicio.xhtml" PATH="/Inicio.xhtml"
   SHAPE="512,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#Inicio.xhtml:0" NAME="item"
@@ -40,41 +75,6 @@
     ID="relatorios?faces-redirect=true::#relatorios.xhtml" NAME="output"
     PATH="/relatorios.xhtml" TARGET="rules:#relatorios.xhtml"
     TITLE="relatorios?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#atualizarAluno.xhtml"
-  PATH="/atualizarAluno.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:0" NAME="item"
-   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
-    NAME="output" PATH="/listarAluno.xhtml"
-    TARGET="rules:#listarAluno.xhtml"
-    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:1" NAME="item1"
-   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="listarAluno?faces-redirect=true::#listarAluno.xhtml"
-    NAME="output" PATH="/listarAluno.xhtml"
-    TARGET="rules:#listarAluno.xhtml"
-    TITLE="listarAluno?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:2" NAME="item2"
-   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="listarDocumento?faces-redirect=true::#listarDocumento.xhtml"
-    NAME="output" PATH="/listarDocumento.xhtml"
-    TARGET="rules:#listarDocumento.xhtml"
-    TITLE="listarDocumento?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#atualizarAluno.xhtml:3" NAME="item3"
-   PATH="/atualizarAluno.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="listarEndereco?faces-redirect=true::#listarEndereco.xhtml"
-    NAME="output" PATH="/listarEndereco.xhtml"
-    TARGET="rules:#listarEndereco.xhtml"
-    TITLE="listarEndereco?faces-redirect=true" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#listarAluno.xhtml" PATH="/listarAluno.xhtml"

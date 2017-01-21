@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import app.dao.UsuarioDAO;
 import app.model.Usuario;
+import app.util.MessageHandle;
 
 @ManagedBean(name = "LoginBean")
 @SessionScoped
@@ -36,21 +38,12 @@ public class LoginManagedBean implements Serializable{
 
                   return "Inicio?faces-redirect=true";
             } else {
-
-            	FacesContext.getCurrentInstance().addMessage(
-                        null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                "Usuario e Senha incorretos",
-                                "Por favor retorne a pagina de login"));
+            	MessageHandle.warn("Usuario e Senha incorretos");
             	return "login?faces-redirect=true";
             }
     	  	}catch(Exception e){
     	  		LOGGER.error("Erro ao efetuar login", e);
-    	  		FacesContext.getCurrentInstance().addMessage(
-                        null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                "Erro ao efetuar login:",
-                                e.getMessage()));
+    	  		MessageHandle.warn("Erro ao efetuar login");
     	  		return "login?faces-redirect=true";
     	  	}
 

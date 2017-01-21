@@ -30,7 +30,6 @@ public class UsuarioDAO extends DAOImpl<Usuario>{
 			}
 
 		} catch (NoResultException e) {
-			System.out.println("Login error -->" + e.getMessage());
 			logger.error("Login error -->" + e.getMessage(), e);
 			return false;
 		}

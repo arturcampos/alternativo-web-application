@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="alternativowebPU">
+		<description>br.com.futuro.alternativo-web-application Mapeamento JPA</description>
+		<!--  -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.futuroalternativo.modelo.Aluno</class>
+		<class>org.futuroalternativo.modelo.Disciplina</class>
+		<class>org.futuroalternativo.modelo.Documento</class>
+		<class>org.futuroalternativo.modelo.Endereco</class>
+		<class>org.futuroalternativo.modelo.Evento</class>
+		<class>org.futuroalternativo.modelo.Pessoa</class>
+		<class>org.futuroalternativo.modelo.Plastico</class>
+		<class>org.futuroalternativo.modelo.Professor</class>
+		<class>org.futuroalternativo.modelo.Turma</class>
+		<class>org.futuroalternativo.modelo.Usuario</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/futurodb" />
+			<property name="javax.persistence.jdbc.user" value="futuroint" />
+			<property name="javax.persistence.jdbc.password" value="f1t1r0" />
+			<property name="hibernate.default_schema" value="futurodb" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="connection.autoReconnect" value="true" />
+
+			<property name="hibernate.c3p0.max_size" value="200" />
+			<property name="hibernate.c3p0.min_size" value="2" />
+			<property name="hibernate.c3p0.acquire_increment" value="1" />
+			<property name="hibernate.c3p0.idle_test_period" value="300" />
+			<property name="hibernate.c3p0.max_statements" value="1" />
+			<property name="hibernate.c3p0.timeout" value="60" />
+			<!-- property name="hibernate.hbm2ddl.auto" value="update" / -->
+		</properties>
+	</persistence-unit>
+</persistence>

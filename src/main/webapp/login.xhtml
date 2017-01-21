@@ -34,9 +34,9 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Log in</div>
 				<div class="panel-body">
-					<h:form role="form">
-					<h:messages id="messages" />
+					<h:form role="form" id="form-login">
 						<fieldset>
+						<h:messages id="messages" autoUpdate="true" showDetail="true" />
 							<div class="form-group">
 								<!-- h:outputLabel for="nomeUsuario" value="Nome Usuário:" /-->
                     			<h:inputText class="form-control" id="nomeUsuario" value="#{LoginBean.usuario.nomeUsuario}" placeholder="Nome Usuário">
@@ -52,8 +52,7 @@
 									<input name="remember" type="checkbox" value="Remember Me"/>Remember Me
 								</label>
 							</div>
-							 <h:commandButton value="Acessar" icon="ui-icon-star" class="btn btn-primary" action="#{LoginBean.login}" ajax="false">
-                    		</h:commandButton>
+							 <h:commandButton value="Acessar" icon="ui-icon-star" class="btn btn-primary" action="#{LoginBean.login}" process="@form"/>
 						</fieldset>
 					</h:form>
 				</div>
