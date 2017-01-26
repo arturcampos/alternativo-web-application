@@ -107,6 +107,7 @@ public class AlunoBean implements Serializable {
 
 			if (this.enderecos.size() > 0) {
 				// adicionando endereco pessoa
+
 				LOGGER.info("Vinculando enderecos a pessoa");
 				this.pessoa.setEnderecos(this.enderecos);
 				vincularEndereco(this.pessoa, this.enderecos);
@@ -347,12 +348,9 @@ public class AlunoBean implements Serializable {
 	 */
 	public String atualizar(Aluno aluno) {
 		LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
-		if(!ListUtil.isValid(this.alunos)){
-			this.alunos = this.dao.findByStatus(Status.ATIVO.toString());
-		}
 		this.aluno = aluno.clone();
 		this.alunoAnterior = aluno;
-		this.plastico = aluno.getPessoa().getPlasticos().get(0);
+		this.plastico = this.aluno.getPessoa().getPlasticos().get(0);
 		this.editado = true;
 
 		LOGGER.info("Pronto para atualizar");
@@ -387,6 +385,7 @@ public class AlunoBean implements Serializable {
 			LOGGER.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 
 			alunoAnterior = new Aluno();
+			aluno = new Aluno();
 			plastico = new Plastico();
 			turmaBean.buscarPorStatus("ATIVO");
 			turmas = this.turmaBean.getTurmas();

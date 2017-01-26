@@ -65,17 +65,14 @@ public class Pessoa implements Serializable {
 
 	// bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Documento> documentos;
 
 	// bi-directional many-to-one association to Endereco
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Endereco> enderecos;
 
 	// bi-directional many-to-one association to Plastico
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Plastico> plasticos;
 
 	public Pessoa() {

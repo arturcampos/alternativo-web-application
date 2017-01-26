@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package app.dao;
 
@@ -7,8 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import app.util.JpaUtil;
 
@@ -16,13 +17,14 @@ import app.util.JpaUtil;
  * @author artur.rodrigues
  *
  */
+@Transactional
 public class DAOImpl<T> implements IDAO<T> {
 
 	protected EntityManager entitymanager;
 	protected Class<T> classe;
 
 	/**
-	 * 
+	 *
 	 * @param clazz
 	 */
 	public DAOImpl(Class<T> clazz) {
@@ -36,16 +38,12 @@ public class DAOImpl<T> implements IDAO<T> {
 	}
 
 	/**
-	 * @param obj - Objeto do tipo gen�rico
+	 * @param obj
+	 *            - Objeto do tipo gen�rico
 	 */
 	public void save(T obj) {
-		EntityTransaction tx = entitymanager.getTransaction();
-		tx.begin();
-		try {
-			entitymanager.persist(obj);
-		} finally {
-			tx.commit();
-		}
+
+		entitymanager.persist(obj);
 	}
 
 	/**
@@ -55,13 +53,7 @@ public class DAOImpl<T> implements IDAO<T> {
 	public T remove(Serializable id) {
 		T obj = findById(id);
 		if (obj != null) {
-			EntityTransaction tx = entitymanager.getTransaction();
-			tx.begin();
-			try {
-				entitymanager.remove(obj);
-			} finally {
-				tx.commit();
-			}
+			entitymanager.remove(obj);
 		}
 		return obj;
 	}
@@ -85,19 +77,13 @@ public class DAOImpl<T> implements IDAO<T> {
 		return results;
 
 	}
-	
+
 	/**
-	 * @param obj - objeto tipo gen�rico
+	 * @param obj
+	 *            - objeto tipo gen�rico
 	 */
-	
 	public void update(T obj) {
-		EntityTransaction tx = entitymanager.getTransaction();
-		tx.begin();
-		try {
-			entitymanager.merge(obj);
-		} finally {
-			tx.commit();
-		}
+		entitymanager.merge(obj);
 	}
 
 }
