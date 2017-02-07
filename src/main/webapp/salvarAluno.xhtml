@@ -195,113 +195,122 @@
 									<!-- INICIO TAB DOCUMENTO -->
 									<div class="tab-pane #{alunoBean.documentoTab}"
 										id="tab-documento">
-										<div class="col-md-4">
-											<div class="form-group">
-												<h:outputLabel value="Tipo de documento:" for="tipo-doc" />
-												<h:selectOneMenu value="#{alunoBean.documento.tipo}"
-													styleClass="form-control" id="tipo-doc">
-													<f:selectItem itemValue="" itemLabel="-"
-														noSelectionOption="true" />
-													<f:selectItem itemValue="CPF" itemLabel="CPF" />
-													<f:selectItem itemValue="RG" itemLabel="RG" />
-													<f:selectItem itemValue="PASSAPORTE" itemLabel="Passaporte" />
-													<f:selectItem itemValue="CNPJ" itemLabel="CNPJ" />
-													<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
-												</h:selectOneMenu>
+										<h:panelGroup id="docs-group">
+											<div class="col-md-4">
+												<div class="form-group">
+													<h:outputLabel value="Tipo de documento:" for="tipo-doc" />
+													<h:selectOneMenu value="#{alunoBean.documento.tipo}"
+														styleClass="form-control" id="tipo-doc">
+														<f:selectItem itemValue="" itemLabel="-"
+															noSelectionOption="true" />
+														<f:selectItem itemValue="CPF" itemLabel="CPF" />
+														<f:selectItem itemValue="RG" itemLabel="RG" />
+														<f:selectItem itemValue="PASSAPORTE"
+															itemLabel="Passaporte" />
+														<f:selectItem itemValue="CNPJ" itemLabel="CNPJ" />
+														<f:selectItem itemValue="OUTRO" itemLabel="Outro" />
+														<f:ajax render="docs-group" />
+													</h:selectOneMenu>
+												</div>
+												<div class="form-group">
+													<h:outputLabel value="Numero:" for="numero-doc" />
+													<h:inputText value="#{alunoBean.documento.numero}"
+														styleClass="form-control" id="numero-doc" />
+												</div>
 											</div>
-											<div class="form-group">
-												<h:outputLabel value="Numero:" for="numero-doc" />
-												<h:inputText value="#{alunoBean.documento.numero}"
-													styleClass="form-control" id="numero-doc" />
+											<div class="col-md-4">
+												<div class="form-group">
+													<h:outputLabel value="Data de expedição:"
+														for="data-emissao"
+														rendered="#{alunoBean.documento.tipo != 'CPF'}" />
+													<p:inputMask value="#{alunoBean.documento.dataExpedicao}"
+														styleClass="form-control" id="data-emissao" maxlength="15"
+														mask="99/99/9999"
+														rendered="#{alunoBean.documento.tipo != 'CPF'}">
+														<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+															for="data-emissao" />
+													</p:inputMask>
+												</div>
+												<div class="form-group">
+													<h:outputLabel value="Data vencimento:" for="data-validade"
+														rendered="#{alunoBean.documento.tipo != 'CPF'}" />
+													<p:inputMask value="#{alunoBean.documento.dataValidade}"
+														styleClass="form-control" id="data-validade"
+														maxlength="15" mask="99/99/9999"
+														rendered="#{alunoBean.documento.tipo != 'CPF'}">
+														<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+															for="data-validade" />
+													</p:inputMask>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<h:outputLabel value="Data de expedição:" for="data-emissao" />
-												<p:inputMask value="#{alunoBean.documento.dataExpedicao}"
-													styleClass="form-control" id="data-emissao" maxlength="15"
-													mask="99/99/9999">
-													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-														for="data-emissao" />
-												</p:inputMask>
+											<div class="col-md-4">
+												<div class="form-group">
+													<h:outputLabel value="UF:" for="uf-doc" rendered="#{alunoBean.documento.tipo != 'CPF'}"/>
+													<h:inputText value="#{alunoBean.documento.uf}"
+														styleClass="form-control" id="uf-doc" style="width: 70px" rendered="#{alunoBean.documento.tipo != 'CPF'}"/>
+												</div>
+												<div class="form-group">
+													<h:outputLabel value="Orgão emissor:" for="emissor-doc" rendered="#{alunoBean.documento.tipo != 'CPF'}"/>
+													<h:inputText value="#{alunoBean.documento.orgaoEmissor}"
+														styleClass="form-control" id="emissor-doc" rendered="#{alunoBean.documento.tipo != 'CPF'}"/>
+												</div>
 											</div>
-											<div class="form-group">
-												<h:outputLabel value="Data vencimento:" for="data-validade" />
-												<p:inputMask value="#{alunoBean.documento.dataValidade}"
-													styleClass="form-control" id="data-validade" maxlength="15"
-													mask="99/99/9999">
-													<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-														for="data-validade" />
-												</p:inputMask>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<h:commandButton value="Adicionar"
+														action="#{alunoBean.adicionarDocumento}"
+														styleClass="btn btn-secondary"
+														process="@this, tipo-doc, numero-doc, data-validade, data-emissao, uf-doc, emissor-doc"
+														id="btn-add-doc" />
+												</div>
 											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<h:outputLabel value="UF:" for="uf-doc" />
-												<h:inputText value="#{alunoBean.documento.uf}"
-													styleClass="form-control" id="uf-doc" style="width: 70px" />
-											</div>
-											<div class="form-group">
-												<h:outputLabel value="Orgão emissor:" for="emissor-doc" />
-												<h:inputText value="#{alunoBean.documento.orgaoEmissor}"
-													styleClass="form-control" id="emissor-doc" />
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group">
-												<h:commandButton value="Adicionar"
-													action="#{alunoBean.adicionarDocumento}"
-													styleClass="btn btn-secondary"
-													process="@this, tipo-doc, numero-doc, data-validade, data-emissao, uf-doc, emissor-doc"
-													id="btn-add-doc" />
-											</div>
-										</div>
-										<div class="col-lg-12">
-											<div class="form-group">
-												<table data-toggle="table" id="docs-table">
-													<thead>
-														<tr>
-															<th data-field="numero" data-sortable="true">Número</th>
-															<th data-field="tipo" data-sortable="true">Tipo de
-																documento</th>
-															<th data-field="dataexpedicao" data-sortable="true">Data
-																de Expedicao</th>
-															<th data-field="datavalidade" data-sortable="true">Data
-																de validade</th>
-															<th data-field="uf" data-sortable="true">UF</th>
-															<th data-field="orgaoemissor" data-sortable="true">Orgão
-																Emissor</th>
-															<th data-field="remover" data-sortable="true">Remover</th>
-														</tr>
-													</thead>
-													<tbody id="docs-table-body">
-														<ui:repeat value="#{alunoBean.documentos}" var="docc"
-															varStatus="status">
+											</h:panelGroup>
+											<div class="col-lg-12">
+												<div class="form-group">
+													<table data-toggle="table" id="docs-table">
+														<thead>
 															<tr>
-																<td>#{docc.numero}</td>
-																<td>#{docc.tipo}</td>
-																<td><h:outputText id="dataexpedicao"
-																		value="#{docc.dataExpedicao}">
-																		<f:convertDateTime
-																			for="dataexpedicao" pattern="dd/MM/yyyy"/>
-																	</h:outputText></td>
-																<td><h:outputText value="#{docc.dataValidade}"
-																		id="datavalidade">
-																		<f:convertDateTime pattern="dd/MM/yyyy"
-																			for="datavalidade" />
-																	</h:outputText></td>
-																<td>#{docc.uf}</td>
-																<td>#{docc.orgaoEmissor}</td>
-																<td><h:commandLink
-																		actionListener="#{alunoBean.removerDocumento(docc)}"
-																		process="@this" class="glyphicon glyphicon-trash"
-																		update="@form"> Remover</h:commandLink></td>
+																<th data-field="numero" data-sortable="true">Número</th>
+																<th data-field="tipo" data-sortable="true">Tipo de
+																	documento</th>
+																<th data-field="dataexpedicao" data-sortable="true">Data
+																	de Expedicao</th>
+																<th data-field="datavalidade" data-sortable="true">Data
+																	de validade</th>
+																<th data-field="uf" data-sortable="true">UF</th>
+																<th data-field="orgaoemissor" data-sortable="true">Orgão
+																	Emissor</th>
+																<th data-field="remover" data-sortable="true">Remover</th>
 															</tr>
-														</ui:repeat>
-													</tbody>
-												</table>
+														</thead>
+														<tbody id="docs-table-body">
+															<ui:repeat value="#{alunoBean.documentos}" var="docc"
+																varStatus="status">
+																<tr>
+																	<td>#{docc.numero}</td>
+																	<td>#{docc.tipo}</td>
+																	<td><h:outputText id="dataexpedicao"
+																			value="#{docc.dataExpedicao}">
+																			<f:convertDateTime for="dataexpedicao"
+																				pattern="dd/MM/yyyy" />
+																		</h:outputText></td>
+																	<td><h:outputText value="#{docc.dataValidade}"
+																			id="datavalidade">
+																			<f:convertDateTime pattern="dd/MM/yyyy"
+																				for="datavalidade" />
+																		</h:outputText></td>
+																	<td>#{docc.uf}</td>
+																	<td>#{docc.orgaoEmissor}</td>
+																	<td><h:commandLink
+																			actionListener="#{alunoBean.removerDocumento(docc)}"
+																			process="@this" class="glyphicon glyphicon-trash"
+																			update="@form"> Remover</h:commandLink></td>
+																</tr>
+															</ui:repeat>
+														</tbody>
+													</table>
+												</div>
 											</div>
-										</div>
 									</div>
 									<!-- FIM TAB DOCUMENTO -->
 									<!-- INICIO TAB ENDERECO -->

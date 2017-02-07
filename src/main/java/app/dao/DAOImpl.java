@@ -7,9 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.apache.log4j.Logger;
 
 import app.util.JpaUtil;
 
@@ -17,11 +18,12 @@ import app.util.JpaUtil;
  * @author artur.rodrigues
  *
  */
-@Transactional
+
 public class DAOImpl<T> implements IDAO<T> {
 
 	protected EntityManager entitymanager;
 	protected Class<T> classe;
+	private static Logger LOGGER = Logger.getLogger(DAOImpl.class);
 
 	/**
 	 *
@@ -39,11 +41,18 @@ public class DAOImpl<T> implements IDAO<T> {
 
 	/**
 	 * @param obj
-	 *            - Objeto do tipo gen�rico
+	 *            - Objeto do tipo generico
 	 */
 	public void save(T obj) {
-
-		entitymanager.persist(obj);
+		EntityTransaction tx = entitymanager.getTransaction();
+		tx.begin();
+		try {
+			entitymanager.persist(obj);
+		}catch(Exception e){
+			LOGGER.error("Erro ao salvar ->>", e);
+		} finally {
+			tx.commit();
+		}
 	}
 
 	/**
@@ -53,7 +62,17 @@ public class DAOImpl<T> implements IDAO<T> {
 	public T remove(Serializable id) {
 		T obj = findById(id);
 		if (obj != null) {
-			entitymanager.remove(obj);
+			EntityTransaction tx = entitymanager.getTransaction();
+			tx.begin();
+			try {
+
+				entitymanager.remove(obj);
+			}catch(Exception e){
+				LOGGER.error("Erro ao remover ->>", e);
+			} finally {
+				tx.commit();
+			}
+
 		}
 		return obj;
 	}
@@ -71,7 +90,8 @@ public class DAOImpl<T> implements IDAO<T> {
 	 * @return
 	 */
 	public List<T> findAll() {
-		TypedQuery<T> query = entitymanager.createNamedQuery(classe.getSimpleName() + ".findAll", this.classe);
+		TypedQuery<T> query = entitymanager.createNamedQuery(
+				classe.getSimpleName() + ".findAll", this.classe);
 		List<T> results = query.getResultList();
 
 		return results;
@@ -83,7 +103,17 @@ public class DAOImpl<T> implements IDAO<T> {
 	 *            - objeto tipo gen�rico
 	 */
 	public void update(T obj) {
-		entitymanager.merge(obj);
+		EntityTransaction tx = entitymanager.getTransaction();
+		tx.begin();
+		try {
+
+			entitymanager.merge(obj);
+		}catch(Exception e){
+			LOGGER.error("Erro ao atualizar ->>", e);
+		} finally {
+			tx.commit();
+		}
+
 	}
 
 }

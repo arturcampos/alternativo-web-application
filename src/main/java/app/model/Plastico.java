@@ -21,8 +21,10 @@ public class Plastico implements Serializable {
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name="datacadastro")
 	private Date dataCadastro;
 
+	@Column(name="linhadigitavel")
 	private String linhaDigitavel;
 
 	private String status;

@@ -30,7 +30,7 @@ public class UsuarioDAO extends DAOImpl<Usuario>{
 			}
 
 		} catch (NoResultException e) {
-			logger.error("Login error -->" + e.getMessage(), e);
+			logger.error("Login error -->" + e.getMessage());
 			return false;
 		}
 		return false;
@@ -42,7 +42,7 @@ public class UsuarioDAO extends DAOImpl<Usuario>{
 			entitymanager.persist(usuario);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			return false;
 		}
 	}
@@ -52,7 +52,7 @@ public class UsuarioDAO extends DAOImpl<Usuario>{
 			entitymanager.remove(usuario);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			return false;
 		}
 	}

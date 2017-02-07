@@ -88,6 +88,11 @@ public class Aluno implements Serializable {
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+		if(this.pessoa != null){
+			if(this.pessoa.getPlasticos() != null){
+				this.pessoa.getPlasticos().get(0).setLinhaDigitavel(matricula);
+			}
+		}
 	}
 
 	public String getStatus() {

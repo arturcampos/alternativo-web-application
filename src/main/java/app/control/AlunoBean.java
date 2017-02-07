@@ -1,8 +1,6 @@
 package app.control;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -126,20 +124,16 @@ public class AlunoBean implements Serializable {
 			this.aluno.setMatricula(matricula);
 
 			// Converte data e cria plastico
-			Date dataCadastro;
-			try {
-				LOGGER.info("Formatando data de cadastro");
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				String formatado = sdf.format(new Date());
-				dataCadastro = sdf.parse(formatado);
-			} catch (ParseException e) {
-				LOGGER.warn("Erro de conversao, data atual sera utilizada", e);
-				dataCadastro = new Date();
-			}
-			criarPlastico(matricula, dataCadastro);
-
+			LOGGER.info("Criando novo cartao Plastico");
+			
+			Plastico plas = new Plastico();
+			plas.setLinhaDigitavel(matricula);
+			plas.setDataCadastro(new Date());
+			plas.setStatus(Status.ATIVO.toString());
+			LOGGER.info(plas.toString());
+			
 			// adicionando plastico a pessoa
-			this.pessoa.addPlastico(plastico);
+			this.pessoa.addPlastico(plas);
 
 			// adicionando pessoa ao aluno
 			this.aluno.setPessoa(this.pessoa);
@@ -154,10 +148,24 @@ public class AlunoBean implements Serializable {
 					+ this.aluno.getMatricula());
 			MessageHandle.info("Informacoes salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
-			init();
+			
 			if(!ListUtil.isValid(this.alunos)){
 				this.alunos = this.dao.findByStatus(Status.ATIVO.toString());
 			}
+			this.alunos.add(0, this.aluno.clone());
+			this.aluno = new Aluno();
+			this.pessoa = new Pessoa();
+			this.documentos = new ArrayList<Documento>();
+			this.enderecos = new ArrayList<Endereco>();
+			this.endereco = new Endereco();
+			this.documento = new Documento();
+			this.alunoTab = "active";
+			this.enderecoTab = "";
+			this.documentoTab = "";
+			this.plastico = new Plastico();
+			this.turma = new Turma();
+			
+			
 			LOGGER.info("Novo aluno adicionado na lista");
 			return "listarAluno?faces-redirect=true";
 
@@ -239,7 +247,6 @@ public class AlunoBean implements Serializable {
 	public String adicionarDocumento() {
 		LOGGER.info("Adicioando documento:\n" + documento.toString());
 		Documento doc = this.documento.clone();
-		LOGGER.info(doc.toString());
 		this.documentos.add(doc);
 		this.documento = new Documento();
 		this.alunoTab = "";
@@ -350,7 +357,6 @@ public class AlunoBean implements Serializable {
 		LOGGER.info("Iniciando atualizacao do aluno:\n" + aluno.getPessoa().toString() + "\n" + aluno.toString());
 		this.aluno = aluno.clone();
 		this.alunoAnterior = aluno;
-		this.plastico = this.aluno.getPessoa().getPlasticos().get(0);
 		this.editado = true;
 
 		LOGGER.info("Pronto para atualizar");
@@ -365,30 +371,21 @@ public class AlunoBean implements Serializable {
 	public String salvarAtualizar() {
 		try {
 			LOGGER.info("Atualizando aluno:\n" + this.aluno.toString());
-			this.plastico.setLinhaDigitavel(aluno.getMatricula());
-			this.dao.update(this.aluno);
 
-			LOGGER.info("Atualizando nnmero do cartao");
-			this.plasticoBean.atualizar(this.plastico);
-
-			aluno.getPessoa().getPlasticos().clear();
-			Plastico p = plastico.clone();
-			aluno.getPessoa().getPlasticos().add(p);
 			int indice = alunos.indexOf(alunoAnterior);
-			alunos.remove(this.alunoAnterior);
-			turma = aluno.getTurma();
+			turma = alunoAnterior.getTurma();
 			turma.addAluno(aluno);
+			alunos.remove(this.alunoAnterior);
 			alunos.add(indice, aluno);
+			this.dao.update(this.aluno);
+			
 			editado = false;
 
 			MessageHandle.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 			LOGGER.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
 
-			alunoAnterior = new Aluno();
+			alunoAnterior = null;
 			aluno = new Aluno();
-			plastico = new Plastico();
-			turmaBean.buscarPorStatus("ATIVO");
-			turmas = this.turmaBean.getTurmas();
 			return "listarAluno?faces-redirect=true";
 		} catch (Exception e) {
 			LOGGER.error("Erro ao atualizar as informacoes", e);
@@ -495,20 +492,6 @@ public class AlunoBean implements Serializable {
 		this.aluno.setTipoCotaIngresso(-1);
 		this.aluno.setTurma(null);
 		this.aluno.setId(null);
-	}
-
-	/**
-	 *
-	 * @param matricula
-	 *            - the student's registration number
-	 * @param dataCadastro
-	 *            - the studant's data of plastic creation
-	 */
-	public void criarPlastico(String matricula, Date dataCadastro) {
-		LOGGER.info("Criando novo cartao (Plastico");
-		this.plastico.setLinhaDigitavel(matricula);
-		this.plastico.setDataCadastro(dataCadastro);
-		this.plastico.setStatus(Status.ATIVO.toString());
 	}
 
 	/**
