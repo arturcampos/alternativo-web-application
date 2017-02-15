@@ -11,10 +11,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
  
 @WebFilter(filterName = "AuthFilter", urlPatterns = { "*.xhtml" })
 public class AutorizadorFilter implements Filter {
  
+	private static Logger LOGGER = Logger.getLogger(AutorizadorFilter.class);
+	
     public AutorizadorFilter() {
     }
  
@@ -34,6 +38,7 @@ public class AutorizadorFilter implements Filter {
  
             String reqURI = reqt.getRequestURI();
             if (reqURI.indexOf("/login.xhtml") >= 0
+            		|| (reqURI.indexOf("/catraca.xhtml") >= 0)
                     || (ses != null && ses.getAttribute("nomeUsuario") != null)
                     || reqURI.indexOf("/public/") >= 0
                     || reqURI.contains("javax.faces.resource"))
@@ -41,7 +46,7 @@ public class AutorizadorFilter implements Filter {
             else
                 resp.sendRedirect(reqt.getContextPath() + "/login.xhtml");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e);
         }
     }
  

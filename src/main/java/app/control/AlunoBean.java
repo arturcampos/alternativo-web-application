@@ -2,6 +2,8 @@ package app.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -123,18 +125,6 @@ public class AlunoBean implements Serializable {
 			String matricula = AlunoUtil.GerarMatricula();
 			this.aluno.setMatricula(matricula);
 
-			// Converte data e cria plastico
-			LOGGER.info("Criando novo cartao Plastico");
-			
-			Plastico plas = new Plastico();
-			plas.setLinhaDigitavel(matricula);
-			plas.setDataCadastro(new Date());
-			plas.setStatus(Status.ATIVO.toString());
-			LOGGER.info(plas.toString());
-			
-			// adicionando plastico a pessoa
-			this.pessoa.addPlastico(plas);
-
 			// adicionando pessoa ao aluno
 			this.aluno.setPessoa(this.pessoa);
 
@@ -144,12 +134,25 @@ public class AlunoBean implements Serializable {
 			// executando metod DAO para salvar aluno
 			this.dao.save(this.aluno);
 
+			// Converte data e cria plastico
+			LOGGER.info("Criando novo cartao Plastico");
+
+			Plastico plas = new Plastico();
+			plas.setLinhaDigitavel(matricula);
+			plas.setDataCadastro(new Date());
+			plas.setStatus(Status.ATIVO.toString());
+			LOGGER.info(plas.toString());
+
+			this.pessoa.addPlastico(plas);
+
+			this.dao.update(aluno);
+
 			LOGGER.info("Informacoes salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
 					+ this.aluno.getMatricula());
-			MessageHandle.info("Informacoes salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n" + "Matricula: "
-					+ this.aluno.getMatricula());
-			
-			if(!ListUtil.isValid(this.alunos)){
+			MessageHandle.info("Informacoes salvas com sucesso.\n" + "Nome: " + this.pessoa.getNome() + "\n"
+					+ "Matricula: " + this.aluno.getMatricula());
+
+			if (!ListUtil.isValid(this.alunos)) {
 				this.alunos = this.dao.findByStatus(Status.ATIVO.toString());
 			}
 			this.alunos.add(0, this.aluno.clone());
@@ -164,8 +167,7 @@ public class AlunoBean implements Serializable {
 			this.documentoTab = "";
 			this.plastico = new Plastico();
 			this.turma = new Turma();
-			
-			
+
 			LOGGER.info("Novo aluno adicionado na lista");
 			return "listarAluno?faces-redirect=true";
 
@@ -378,7 +380,7 @@ public class AlunoBean implements Serializable {
 			alunos.remove(this.alunoAnterior);
 			alunos.add(indice, aluno);
 			this.dao.update(this.aluno);
-			
+
 			editado = false;
 
 			MessageHandle.info("Dados de " + this.aluno.getPessoa().getNome() + " atualizados");
@@ -789,6 +791,5 @@ public class AlunoBean implements Serializable {
 	public void setTurmaBean(TurmaBean turmaBean) {
 		this.turmaBean = turmaBean;
 	}
-
 
 }

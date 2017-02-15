@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Catraca</title>
+
+
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/datepicker3.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/styles.css" />
+
+	<!--Icons-->
+	<script src="#{request.contextPath}/resources/js/lumino.glyphs.js"></script>
+	<!--h:outputScript name="#{request.contextPath}/resources/js/locales.js" library="js"></h:outputScript-->
+	<!--[if lt IE 9]>
+<script src="#{request.contextPath}/resources/js/html5shiv.js"></script>
+<script src="#{request.contextPath}/resources/js/respond.min.js"></script>
+<![endif]-->
+
+	<style>
+body {
+	background-image:
+		url("#{request.contextPath}/resources/algaworks/images/futuro.jpg");
+	background-size: inherit;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	opacity: 0.98;
+}
+</style>
+
+</h:head>
+
+<h:body>
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="page-header" align="center">Futuro Pré-Vestibular
+				Alternativo</h2>
+		</div>
+		<div class="col-md-10 col-md-offset-1">
+			<h:messages id="messages" showDetail="true"  />
+		</div>
+	</div>
+	<div class="row">
+		<div
+			class="col-xs-12 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading" align="center">Catraca</div>
+				<div class="panel-body">
+					<h:form id="form-datahora">
+						<fieldset>
+							<div class="form-group col-md-5 col-md-offset-1" align="center">
+								<h:outputLabel value="Hora entrada (HH:mm:ss):"
+									for="hora-entrada" />
+								<h:inputText value="#{catracaBean.HORA_ENTRADA}" required="true"
+									styleClass="form-control" id="hora-entrada"
+									rendered="#{catracaBean.HORA_ENTRADA == null}" />
+								<h:outputText value="#{catracaBean.HORA_ENTRADA}" id="entrada" />
+							</div>
+							<div class="form-group col-md-5" align="left">
+								<h:outputLabel value="Hora saida (HH:mm:ss):" for="hora-saida" />
+								<h:inputText value="#{catracaBean.HORA_SAIDA}" required="true"
+									styleClass="form-control" id="hora-saida"
+									rendered="#{catracaBean.HORA_SAIDA == null}" />
+								<h:outputText value="#{catracaBean.HORA_SAIDA}" id="saida" />
+							</div>
+							<div class="col-md-12" align="center">
+								<h:commandButton styleClass="btn btn-primary" value="Submit"
+									update="form-login form-datahora"
+									rendered="#{(catracaBean.HORA_ENTRADA == null) and (catracaBean.HORA_SAIDA == null)}" />
+							</div>
+						</fieldset>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div
+			class="col-xs-12 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div>
+				<div>
+					<h:form role="form" id="form-login"
+						rendered="#{(catracaBean.HORA_ENTRADA != null) and (catracaBean.HORA_SAIDA != null)}">
+						<fieldset>
+							<p:focus for="linhaDigitavel" />
+							<div class="form-group">
+								<h:inputText class="form-control" id="linhaDigitavel"
+									value="#{catracaBean.linhaDigitavel}"
+									placeholder="Digite a matrícula ou passe o seu cartão"
+									onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+									<p:ajax event="change" listener="#{catracaBean.novoEvento}"
+										update="messages @form" />
+								</h:inputText>
+							</div>
+						</fieldset>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+
+	<script src="#{request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+	<script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script
+		src="#{request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
+	<script src="#{request.contextPath}/resources/js/bootstrap-table.js"></script>
+	<script
+		src="#{request.contextPath}/resources/futuro/javascripts/jquery.steps.js"></script>
+	<script
+		src="#{request.contextPath}/resources/futuro/javascripts/jquery.steps.min.js"></script>
+	<script src="#{request.contextPath}/resources/js/chart.min.js"></script>
+	<!-- script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
+				$(this).find('em:first').toggleClass("glyphicon-minus");	  
+			}); 
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script-->
+
+</h:body>
+
+
+</html>

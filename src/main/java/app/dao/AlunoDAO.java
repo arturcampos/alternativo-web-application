@@ -60,4 +60,9 @@ public class AlunoDAO extends DAOImpl<Aluno> {
 		return (List<Aluno>) entitymanager.createNamedQuery("Aluno.findByTurmaId", Aluno.class)
 		.setParameter("turmaId", id).getResultList();
 	}
+	
+	public Aluno findByPersonId(Long id) {
+		return (Aluno) entitymanager.createNamedQuery("Aluno.findByPersonId", Aluno.class)
+		.setParameter("pessoaId", id).getSingleResult();
+	}
 }

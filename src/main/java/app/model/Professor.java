@@ -13,7 +13,8 @@ import java.util.List;
 @Table(name="professor", schema="futurodb")
 @NamedQueries({
 @NamedQuery(name="Professor.findAll", query="SELECT p FROM Professor p"),
-@NamedQuery(name="Professor.findByName", query="SELECT p FROM Professor p WHERE p.pessoa.nome LIKE :nome")})
+@NamedQuery(name="Professor.findByName", query="SELECT p FROM Professor p WHERE p.pessoa.nome LIKE :nome"),
+@NamedQuery(name = "Professor.findByPersonId", query = "SELECT p FROM Professor p WHERE p.pessoa.id = :pessoaId")})
 public class Professor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
