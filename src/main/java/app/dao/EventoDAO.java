@@ -1,5 +1,6 @@
 package app.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -16,10 +17,9 @@ public class EventoDAO extends DAOImpl<Evento> {
 	@SuppressWarnings("unchecked")
 	public List<Evento> findEventsByPersonIdAndStatus(Long personId, String status) {
 		Query query = entitymanager.createNamedQuery("Evento.findEventsByPersonIdAndStatus", Evento.class)
-				.setParameter("personId", personId)
-				.setParameter("status", status);
+				.setParameter("personId", personId).setParameter("status", status);
 		try {
-			return (List<Evento>)query.getResultList();
+			return (List<Evento>) query.getResultList();
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			return null;
@@ -27,12 +27,13 @@ public class EventoDAO extends DAOImpl<Evento> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Evento> findEventsByPersonIdAndDate(Long personId, String data) {
+	public List<Evento> findEventsByPersonIdAndDate(Long personId, Date data) {
+
 		Query query = entitymanager.createNamedQuery("Evento.findEventsByPersonIdAndDate", Evento.class)
-						.setParameter("personId", personId)
-						.setParameter("date" , data);
+				.setParameter("personId", personId).setParameter("date", data);
+
 		try {
-			return ((List<Evento>)query.getResultList());
+			return ((List<Evento>) query.getResultList());
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			return null;

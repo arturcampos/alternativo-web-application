@@ -90,14 +90,14 @@ body {
 					<h:form role="form" id="form-login"
 						rendered="#{(catracaBean.HORA_ENTRADA != null) and (catracaBean.HORA_SAIDA != null)}">
 						<fieldset>
-							<p:focus for="linhaDigitavel" />
+							<!--  <p:focus for="linhaDigitavel" /> -->
 							<div class="form-group">
 								<h:inputText class="form-control" id="linhaDigitavel"
 									value="#{catracaBean.linhaDigitavel}"
 									placeholder="Digite a matrícula ou passe o seu cartão"
 									onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
 									<p:ajax event="change" listener="#{catracaBean.novoEvento}"
-										update="messages @form" />
+										update="messages linhaDigitavel"/>
 								</h:inputText>
 							</div>
 						</fieldset>

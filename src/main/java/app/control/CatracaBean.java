@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -28,6 +27,7 @@ import app.model.Professor;
 import app.util.MessageHandle;
 import app.util.Status;
 import app.util.TipoPessoa;
+import javafx.scene.input.KeyCode;
 
 @ManagedBean
 @ViewScoped
@@ -144,7 +144,7 @@ public class CatracaBean implements Serializable {
 				MessageHandle.error(retorno);
 			}
 		}
-		linhaDigitavel = "";
+		linhaDigitavel = null;
 
 	}
 
@@ -235,7 +235,7 @@ public class CatracaBean implements Serializable {
 		List<Evento> eventos = new ArrayList<Evento>();
 		try {
 			Date date = new Date();
-			eventos = eventoDAO.findEventsByPersonIdAndDate(pessoaId, date.toString());
+			eventos = eventoDAO.findEventsByPersonIdAndDate(pessoaId, date);
 			return eventos;
 		} catch (Exception e) {
 			LOGGER.error("Erro!!", e);

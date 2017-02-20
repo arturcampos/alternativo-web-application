@@ -96,11 +96,7 @@ public class EventoBean implements Serializable {
 	}
 
 	public String buscarPorPessoaEData(Pessoa pessoa, Date data) {
-		String dataTmp = null;
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		dataTmp = sdf.format(data);
-		this.eventos = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), dataTmp);
+		this.eventos = this.dao.findEventsByPersonIdAndDate(pessoa.getId(), data);
 
 		for (Evento e : this.eventos) {
 			LOGGER.info(e.toString());
