@@ -61,9 +61,9 @@ public class CatracaBean implements Serializable {
 		// Caso a linha digitavel esteja vazia, ERRO
 		if ((linhaDigitavel.equals("")) || (linhaDigitavel == null)) {
 			retorno = new String(
-					"Leitura falhou, tente novamente ou entre em contato com a Equipe do Futuro-Alternativo.");
-			LOGGER.error(retorno);
-			MessageHandle.error(retorno);
+					"Número do cartão não pode ser vazio, tente novamente.");
+			LOGGER.warn(retorno);
+			MessageHandle.warn(retorno);
 		} else {
 
 			try {
@@ -157,7 +157,6 @@ public class CatracaBean implements Serializable {
 			String dataFormatada = df.format(evento.getDataHoraEntrada());
 
 			mensagem = "Bem vindo " + pessoa.getNome() + "\nEntrada registrada: " + dataFormatada;
-			LOGGER.info(mensagem);
 		} else if (tipoMsg.equals("ENTRADANOK")) {
 
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -165,7 +164,6 @@ public class CatracaBean implements Serializable {
 
 			mensagem = pessoa.getNome() + "\n Voce esta entrando no SEGUNDO HORARIO \nEntrada registrada: "
 					+ dataFormatada;
-			LOGGER.info(mensagem);
 
 		} else if (tipoMsg.equals("SAIDANOK")) {
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -173,17 +171,14 @@ public class CatracaBean implements Serializable {
 
 			mensagem = pessoa.getNome() + "\nVoce esta saindo antes do fim das Aulas de hoje \nSaida registrada: "
 					+ dataFormatada;
-			LOGGER.info(mensagem);
 		} else if (tipoMsg.equals("SAIDAOK")) {
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			String dataFormatada = df.format(evento.getDataHoraSaida());
 
 			mensagem = "\t" + pessoa.getNome() + "\nAte a proxima aula! \nSaida registrada: " + dataFormatada;
-			LOGGER.info(mensagem);
 
 		} else {
 			mensagem = "Nao foi especificado tipo de mensagem";
-			LOGGER.warn(mensagem);
 		}
 		return mensagem;
 	}
