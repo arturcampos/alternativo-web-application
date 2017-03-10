@@ -87,17 +87,17 @@ body {
 			class="col-xs-12 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div>
 				<div>
-					<h:form role="form" id="form-login"
+					<h:form role="form" id="form-catraca"
 						rendered="#{(catracaBean.HORA_ENTRADA != null) and (catracaBean.HORA_SAIDA != null)}">
 						<fieldset>
-							<!--  <p:focus for="linhaDigitavel" /> -->
 							<div class="form-group">
+							    <p:focus for="linhaDigitavel" />
 								<h:inputText class="form-control" id="linhaDigitavel"
 									value="#{catracaBean.linhaDigitavel}"
 									placeholder="Digite a matrícula ou passe o seu cartão"
-									onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+									onkeypress="if (event.keyCode == 13) {event.target.blur(); event.stopPropagation(); return false;} else {return true;};">
 									<p:ajax event="change" listener="#{catracaBean.novoEvento}"
-										update="messages linhaDigitavel"/>
+										update="messages form-catraca"/>
 								</h:inputText>
 							</div>
 						</fieldset>

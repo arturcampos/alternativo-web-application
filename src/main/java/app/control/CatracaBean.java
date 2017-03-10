@@ -13,6 +13,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 import app.dao.AlunoDAO;
 import app.dao.EventoDAO;
